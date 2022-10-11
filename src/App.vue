@@ -4,12 +4,9 @@
   </base-wrap>
 </template>
 
-<script>
+<script setup>
 import "@/assets/tailwind.css";
 import BaseWrap from "@/components/BaseWrap.vue";
-export default {
-  components: { BaseWrap }
-};
 </script>
 
 <style>
@@ -38,5 +35,9 @@ export default {
   src: local("HelveticaEnglish"),
     url(@/assets/fonts/Helvetica-English/Helvetica-Obl.ttf) format("truetype");
   font-weight: bold;
+}
+
+body {
+  background: #11101a;
 }
 </style>
