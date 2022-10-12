@@ -11,7 +11,7 @@ defineRule("lowercase", (value) => {
     if (!value || !value.length) {
         return true;
     }
-    const lowercaseLettersRegex = /[^a-z]/g;
+    const lowercaseLettersRegex = /[^a-z0-9]/g;
     if (!lowercaseLettersRegex.test(value)) {
     return true;
   } else {
