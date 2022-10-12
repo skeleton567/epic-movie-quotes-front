@@ -36,7 +36,6 @@ import BaseWrap from "@/components/BaseWrap.vue";
     url(@/assets/fonts/Helvetica-English/Helvetica-Obl.ttf) format("truetype");
   font-weight: bold;
 }
-
 body {
   background: #11101a;
 }
