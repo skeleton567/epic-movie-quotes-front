@@ -51,9 +51,7 @@ const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
     const response = await axios.post("register", values);
-    if (response.status === 200) {
-      router.push({ name: "emailSent" });
-    }
+    router.push({ name: "emailSent" });
   } catch (error) {
     const errors = error.response?.data.errors;
     for (const loopError in errors) {
