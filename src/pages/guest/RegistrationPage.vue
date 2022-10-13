@@ -47,20 +47,18 @@ import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const submit = (values, actions) => {
+const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
-  axios
-    .post("register", values)
-    .then((response) => {
-      if (response.status === 200) {
-        router.push({ name: "emailSent" });
-      }
-    })
-    .catch((error) => {
-      const errors = error.response?.data.errors;
-      for (const loopError in errors) {
-        actions.setFieldError(loopError, errors[loopError]);
-      }
-    });
+  try {
+    const response = await axios.post("register", values);
+    if (response.status === 200) {
+      router.push({ name: "emailSent" });
+    }
+  } catch (error) {
+    const errors = error.response?.data.errors;
+    for (const loopError in errors) {
+      actions.setFieldError(loopError, errors[loopError]);
+    }
+  }
 };
 </script>
