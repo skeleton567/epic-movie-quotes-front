@@ -57,6 +57,7 @@ const router = createRouter({
           path: "/create-password",
           name: "createPassword",
           component: CreatePassword,
+          props: true
         }
       ]
     }

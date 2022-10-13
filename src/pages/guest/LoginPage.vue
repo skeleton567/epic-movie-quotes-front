@@ -51,16 +51,15 @@ import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
 import { setJwtToken } from "@/helpers/jwt/index.js";
-const submit = (values, actions) => {
-  axios
-    .post("login", values)
-    .then((response) => {
-      if (response.status === 200) {
-        setJwtToken(response.data.access_token, response.data.expires_in);
-      }
-    })
-    .catch((error) => {
-      actions.setFieldError("name", error.response.data.error);
-    });
+const submit = async (values, actions) => {
+  try {
+    const response = await axios.post("login", values);
+    console.log(response);
+    if (response.status === 200) {
+      setJwtToken(response.data.access_token, response.data.expires_in);
+    }
+  } catch (error) {
+    actions.setFieldError("name", error.response.data.error);
+  }
 };
 </script>
