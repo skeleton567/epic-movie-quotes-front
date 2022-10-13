@@ -25,11 +25,12 @@
         ></text-input>
         <div class="flex justify-between text-xs w-full mt-6 space-x-2">
           <div class="flex items-center space-x-1 md:space-x-2">
-            <input
+            <Field
               id="remember"
               class="block border border-gray-300 rounded"
               type="checkbox"
               name="remember"
+              value="true"
             />
             <label class="text-white" for="remember_token"> Remember me </label>
           </div>
@@ -47,7 +48,7 @@
 </template>
 
 <script setup>
-import { Form } from "vee-validate";
+import { Form, Field } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
 import { setJwtToken } from "@/helpers/jwt/index.js";
@@ -55,9 +56,7 @@ const submit = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
     console.log(response);
-    if (response.status === 200) {
-      setJwtToken(response.data.access_token, response.data.expires_in);
-    }
+    setJwtToken(response.data.access_token, response.data.expires_in);
   } catch (error) {
     actions.setFieldError("name", error.response.data.error);
   }

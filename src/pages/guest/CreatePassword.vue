@@ -39,9 +39,7 @@ const submit = async (values, actions) => {
     values["password_confirmation"] = values.confirmation;
     const response = await axios.post("reset-password", values);
     console.log(response);
-    if (response.status === 200) {
-      router.push({ name: "passwordChanged" });
-    }
+    router.push({ name: "passwordChanged" });
   } catch (error) {
     console.log(error);
     actions.setFieldError("password", error.response.data.error);
