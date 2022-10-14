@@ -8,6 +8,10 @@ import ForgotPassword from '@/pages/guest/ForgotPassword.vue'
 import RecoverInstructions from '@/pages/guest/RecoverInstructions.vue'
 import PasswordChanged from '@/pages/guest/PasswordChanged.vue'
 import CreatePassword from '@/pages/guest/CreatePassword.vue'
+import NewsFeed from '@/pages/auth/NewsFeed.vue'
+import NotFound from "@/pages/error/NotFound.vue";
+import NotAuthorized from "@/pages/error/NotAuthorized.vue";
+import { getJwtToken } from "@/helpers/jwt";
 
 
 const router = createRouter({
@@ -17,6 +21,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: StartPage,
+      meta: {guest: true},
       children: [
         {
           path: "/register",
@@ -32,11 +37,13 @@ const router = createRouter({
           path: "/sent",
           name: "emailSent",
           component: EmailSent,
+          meta: {guest: false},
         },
         {
           path: "/success",
           name: "success",
           component: SuccesfullActivation,
+          meta: {guest: false},
         },
         {
           path: "/forgot-password",
@@ -47,6 +54,7 @@ const router = createRouter({
           path: "/recover-instructions",
           name: "recoverInstructions",
           component: RecoverInstructions,
+          meta: {guest: true},
         },
         {
           path: "/password-changed",
@@ -57,11 +65,36 @@ const router = createRouter({
           path: "/create-password",
           name: "createPassword",
           component: CreatePassword,
-          props: true
         }
       ]
-    }
+    },
+    {
+      path: "/news-feed",
+      name: "newsFeed",
+      component: NewsFeed,
+      meta: {auth: true}
+    },
+    {
+      path: "/not-authorized",
+      name: "notAuthorized",
+      component: NotAuthorized,
+    },
+    {
+      path: "/:notFound(.*)",
+      name: "notFound",
+      component: NotFound,
+    },
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !getJwtToken()) {
+    next({ name: 'notAuthorized' })
+  } else if (to.meta.guest && getJwtToken()) {
+    next({ name: 'notAuthorized' })
+  } else {
+    next();
+  }
+})
 
 export default router;
