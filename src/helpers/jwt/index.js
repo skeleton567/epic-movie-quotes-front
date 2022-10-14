@@ -15,3 +15,4 @@ export const setJwtToken = (token, expires_in) => {
 
   axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 };
+

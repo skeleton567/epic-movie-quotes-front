@@ -4,6 +4,6 @@
     text="We have sent a password recover instructions 
     to your email"
     button-text="Go to my email"
-    url="upArrow.png"
+    image="upArrow.png"
   ></mailing-message>
 </template>

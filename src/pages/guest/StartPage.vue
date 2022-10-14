@@ -10,11 +10,12 @@
           <h1 class="text-[#DDCCAA] text-2xl lg:text-6xl text-center">
             Find any quote in millions of movie lines
           </h1>
-          <button
+          <router-link
+            :to="{ name: 'registration' }"
             class="text-white py-2 px-3 bg-[#E31221] rounded-[4px] lg:text-xl"
           >
             Get Started
-          </button>
+          </router-link>
         </div>
       </div>
     </div>
