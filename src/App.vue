@@ -28,13 +28,13 @@ import BaseWrap from "@/components/BaseWrap.vue";
   src: local("HelveticaEnglish"),
     url(@/assets/fonts/Helvetica-English/Helvetica-Medium.ttf)
       format("truetype");
-  font-weight: normal;
+  font-weight: bold;
 }
 @font-face {
   font-family: "HelveticaEnglish";
   src: local("HelveticaEnglish"),
-    url(@/assets/fonts/Helvetica-English/Helvetica-Obl.ttf) format("truetype");
-  font-weight: bold;
+    url(@/assets/fonts/Helvetica-English/Helvetica-light.ttf) format("truetype");
+  font-weight: normal;
 }
 body {
   background: #11101a;

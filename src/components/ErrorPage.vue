@@ -1,18 +1,6 @@
 <template>
   <div class="h-[100vh] flex flex-col justify-center items-center">
-    <div class="relative">
-      <img
-        v-if="$route.name === 'notAuthorized'"
-        class="absolute top-[25%] right-[15%] z-0"
-        src="@/assets/images/union.png"
-        alt="image"
-      />
-      <img
-        class="z-10 relative"
-        :src="'src/assets/images/' + image"
-        alt="image"
-      />
-    </div>
+    <error-icon :image="image" />
     <h2 class="text-white text-2xl lg:text-3xl text-center mt-4 lg:mt-8">
       {{ title }}
     </h2>
@@ -30,6 +18,7 @@
 import { defineProps } from "vue";
 import { computed } from "vue";
 import { getJwtToken } from "@/helpers/jwt";
+import ErrorIcon from "@/components/icons/ErrorIcon.vue";
 
 const props = defineProps({
   title: { type: String, required: true },

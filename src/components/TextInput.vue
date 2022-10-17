@@ -3,14 +3,16 @@
     <label class="w-full text-white lg:text-xl" :for="name"
       >{{ label }}<span class="text-red-500"> *</span></label
     >
-    <Field
-      :id="name"
-      class="outline-none w-full px-5 py-2 bg-[#CED4DA] mt-3 placeholder-gray-500 rounded-sm"
-      :name="name"
-      :type="textType"
-      :rules="rule"
-      :placeholder="placeholder"
-    />
+    <Field v-slot="{ field, errors }" :name="name" :rules="rule">
+      <input
+        :id="name"
+        v-bind="field"
+        class="outline-none w-full px-5 py-2 bg-[#CED4DA] mt-3 placeholder-gray-500 rounded-sm"
+        :class="{ 'border-2 border-red-500': !!errors?.length }"
+        :type="textType"
+        :placeholder="placeholder"
+      />
+    </Field>
     <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" :name="name" />
     <img
       v-if="type === 'password'"

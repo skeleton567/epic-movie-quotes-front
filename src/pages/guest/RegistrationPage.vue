@@ -45,20 +45,20 @@
 import { Form } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
+import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
     const response = await axios.post("register", values);
+    setJwtToken(response.data.access_token, response.data.expires_in);
     router.push({
-      name: "emailSent",
-      params: {
-        email: values.email
-      }
+      name: "emailSent"
     });
   } catch (error) {
     const errors = error.response?.data.errors;
+    console.log(error);
     for (const loopError in errors) {
       actions.setFieldError(loopError, errors[loopError]);
     }

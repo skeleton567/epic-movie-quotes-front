@@ -18,3 +18,4 @@ defineRule("lowercase", (value) => {
     return "Only lowercase letters are allowed";
   }
   });
+

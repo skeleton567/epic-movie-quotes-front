@@ -90,6 +90,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !getJwtToken()) {
     next({ name: 'notAuthorized' })
+  } else if (to.name === 'home' && getJwtToken()) {
+    next({ name: 'newsFeed' })
   } else if (to.meta.guest && getJwtToken()) {
     next({ name: 'notAuthorized' })
   } else {
