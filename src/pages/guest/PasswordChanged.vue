@@ -4,5 +4,6 @@
     text="Your password changed successfully."
     button-text="Login"
     image="checked.png"
+    url="login"
   ></mailing-message>
 </template>

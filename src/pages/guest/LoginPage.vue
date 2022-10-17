@@ -57,7 +57,7 @@ const router = useRouter();
 const submit = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
-    console.log(response);
+    console.log(response.data.expires_in);
     setJwtToken(response.data.access_token, response.data.expires_in);
     router.replace({ name: "newsFeed" });
   } catch (error) {

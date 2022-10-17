@@ -9,34 +9,23 @@
       </h2>
       <p class="text-[#6C757D] text-center mb-6">{{ text }}</p>
       <router-link
-        :to="url"
-        class="text-white py-2 px-3 bg-[#E31221] rounded-md w-full my-6"
+        :to="{ name: url }"
+        class="text-white py-3 px-4 bg-[#E31221] rounded-md w-full my-6 text-center"
       >
         {{ buttonText }}
       </router-link>
-      <router-link
-        v-if="routeName"
-        class="text-[#6C757D] text-center block"
-        :to="{ name: 'login' }"
-        >Skip, I will confirm later</router-link
-      >
     </div>
   </form-wrap>
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { defineProps } from "vue";
-import { useRoute } from "vue-router";
 
 const props = defineProps({
   title: { type: String, required: true },
   text: { type: String, required: true },
   buttonText: { type: String, required: true },
-  image: { type: String, required: true }
-});
-const route = useRoute();
-const routeName = computed(() => {
-  return route.name === "emailSent";
+  image: { type: String, required: true },
+  url: { type: String, required: true }
 });
 </script>
