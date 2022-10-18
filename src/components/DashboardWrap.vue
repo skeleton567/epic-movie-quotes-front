@@ -6,24 +6,11 @@
       <h2 class="text-sm uppercase text-[#DDCCAA] font-bold hidden md:block">
         Movie quotes
       </h2>
-      <img
-        class="block md:hidden"
-        src="@/assets/images/responsiveNavButton.svg"
-        alt="responsiveNavButton"
-        @click="showSide"
-        @click.stop=""
-      />
+      <responsive-button @showEvent="showSide" />
       <nav class="flex items-center space-x-8">
-        <img
-          v-if="$route.name === 'newsFeed'"
-          class="md:hidden"
-          src="@/assets/images/loop.svg"
-          alt="loop"
-          @click="showSearch"
-          @click.stop=""
-        />
+        <search-loop :position="true" @showEvent="showSearch" />
         <div class="relative">
-          <img src="@/assets/images/notificaton.png" alt="bell" />
+          <notification-icon />
           <span
             class="absolute -top-2 right-0 rounded-full bg-[#E33812] text-white p-1 text-[0.6rem]"
             >3</span
@@ -34,7 +21,7 @@
             <option class="text-black" selected value="">Eng</option>
             <option class="text-black" value="">ქარ</option>
           </select>
-          <img src="@/assets/images/arrow-down.png" alt="arrow" />
+          <arrow-down />
         </div>
         <button
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] hidden md:inline"
@@ -47,24 +34,20 @@
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101A] md:block md:fixed md:z-0 md:h-full md:w-[30%]"
+        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101A] md:block md:fixed md:z-0 md:h-full md:w-[22%]"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
-          <img
-            class="rounded-full h-10"
-            src="@/assets/images/profile.jpg"
-            alt="profile"
-          />
+          <profile-picture image="profile.jpg" />
           <div>
-            <p class="text-xl text-white">Nino Tabagari</p>
+            <p class="text-xl text-white">{{ store?.name }}</p>
             <router-link class="text-sm text-[#CED4DA]" :to="{ name: 'home' }"
               >Edit your profile</router-link
             >
           </div>
         </div>
         <div class="flex space-x-10 ml-11">
-          <img src="@/assets/images/house.svg" alt="house" />
+          <home-icon />
           <router-link
             class="text-xl text-white my-10"
             :to="{ name: 'newsFeed' }"
@@ -72,7 +55,7 @@
           >
         </div>
         <div class="flex space-x-10 ml-11">
-          <img src="@/assets/images/camera.svg" alt="camera" />
+          <camera-icon />
           <router-link class="text-xl text-white" :to="{ name: 'home' }"
             >List of movies</router-link
           >
@@ -92,12 +75,7 @@
         <div
           class="flex space-x-5 pl-11 py-5 items-center border-b border-[rgba(239, 239, 239, 0.3)]"
         >
-          <img
-            class="h-3"
-            src="@/assets/images/arrow-left.svg"
-            alt="profile"
-            @click="hideSearch"
-          />
+          <arrow-left @hide-event="hideSearch" />
           <input
             class="outline-none w-full bg-inherit text-white py-1 px-1 placeholder-white"
             type="text"
@@ -112,7 +90,7 @@
         </p>
       </div>
     </div>
-    <div class="w-full flex justify-center pt-16">
+    <div class="w-full md:flex justify-center pt-16">
       <slot></slot>
     </div>
   </div>
@@ -120,8 +98,17 @@
 
 <script setup>
 import axios from "@/config/axios/index.js";
+import ResponsiveButton from "@/components/icons/ResponsiveButton.vue";
+import SearchLoop from "@/components/icons/SearchLoop.vue";
+import HomeIcon from "@/components/icons/HomeIcon.vue";
+import CameraIcon from "@/components/icons/CameraIcon.vue";
+import ArrowLeft from "@/components/icons/ArrowLeft.vue";
+import ArrowDown from "@/components/icons/ArrowDown.vue";
+import NotificationIcon from "@/components/icons/NotificationIcon.vue";
+import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+const store = useUserStore();
 const router = useRouter();
 const logOut = async () => {
   try {
@@ -129,6 +116,7 @@ const logOut = async () => {
     console.log(response);
     document.cookie =
       "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    store.removeAuthUser();
     router.replace({ name: "home" });
   } catch (error) {
     console.log(error);

@@ -11,6 +11,7 @@ import CreatePassword from '@/pages/guest/CreatePassword.vue'
 import NewsFeed from '@/pages/auth/NewsFeed.vue'
 import NotFound from "@/pages/error/NotFound.vue";
 import NotAuthorized from "@/pages/error/NotAuthorized.vue";
+import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
 
 
@@ -94,6 +95,12 @@ router.beforeEach((to, from, next) => {
     next({ name: 'newsFeed' })
   } else if (to.meta.guest && getJwtToken()) {
     next({ name: 'notAuthorized' })
+  } else if (to.meta.auth && getJwtToken()) {
+    const store = useUserStore();
+    if (!store.id) {
+      store.getAuthUser();
+    }
+    next();
   } else {
     next();
   }

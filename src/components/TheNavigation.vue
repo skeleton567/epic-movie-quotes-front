@@ -7,7 +7,7 @@
           <option class="text-black" selected value="">Eng</option>
           <option class="text-black" value="">ქარ</option>
         </select>
-        <img src="@/assets/images/arrow-down.png" alt="arrow" />
+        <arrow-down />
       </div>
       <router-link
         :to="{ name: 'registration' }"
@@ -24,6 +24,10 @@
     </nav>
   </header>
 </template>
+
+<script setup>
+import ArrowDown from "@/components/icons/ArrowDown.vue";
+</script>
 
 <style scoped>
 .selecttxt {
