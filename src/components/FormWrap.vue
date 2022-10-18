@@ -9,7 +9,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { Form } from "vee-validate";
-</script>
