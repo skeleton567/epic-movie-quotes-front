@@ -1,5 +1,5 @@
 <template>
-  <div class="m-0" @click="hideSide">
+  <div class="m-0 bg-lightBlue-image" @click="hideSide">
     <header
       class="h-20 px-10 md:px-16 flex justify-between items-center fixed w-full bg-[#22203033] z-10"
     >
@@ -34,13 +34,17 @@
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101A] md:block md:fixed md:z-0 md:h-full md:w-[22%]"
+        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-lightBlue-image md:bg-none md:block md:fixed md:z-0 md:h-full md:w-[22%]"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
           <profile-picture image="profile.jpg" />
           <div>
-            <p class="text-xl text-white">{{ store?.name }}</p>
+            <p
+              class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none"
+            >
+              {{ store?.name ? store.name : store.email }}
+            </p>
             <router-link class="text-sm text-[#CED4DA]" :to="{ name: 'home' }"
               >Edit your profile</router-link
             >
@@ -69,7 +73,7 @@
       </div>
       <div
         v-if="search"
-        class="h-[60vh] w-full fixed z-10 bg-[#11101A]"
+        class="h-[60vh] w-full fixed z-10 bg-lightBlue-image"
         @click.stop=""
       >
         <div
@@ -77,6 +81,7 @@
         >
           <arrow-left @hide-event="hideSearch" />
           <input
+            v-model="postStore.searchValue"
             class="outline-none w-full bg-inherit text-white py-1 px-1 placeholder-white"
             type="text"
             placeholder="Search"
@@ -90,7 +95,7 @@
         </p>
       </div>
     </div>
-    <div class="w-full md:flex justify-center pt-16">
+    <div class="w-full md:flex justify-center pt-16 bg-lightBlue-image">
       <slot></slot>
     </div>
   </div>
@@ -108,7 +113,9 @@ import NotificationIcon from "@/components/icons/NotificationIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { usePostStore } from "@/stores/post.js";
 const store = useUserStore();
+const postStore = usePostStore();
 const router = useRouter();
 const logOut = async () => {
   try {
