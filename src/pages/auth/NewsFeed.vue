@@ -19,18 +19,32 @@
           <p v-if="!searchActive" class="text-white inline">Search by</p>
           <input
             v-else
+            v-model="store.searchValue"
             type="text"
             placeholder="Enter @ to search movies, Enter # to search quotes"
             class="outline-none bg-inherit text-xs text-white w-full"
           />
         </div>
       </div>
-      <user-post>
-        <user-comment />
-      </user-post>
-      <user-post>
-        <user-comment />
-      </user-post>
+      <div v-for="post in store.postSearch">
+        <user-post
+          :user="post.user?.name ? post.user.name : post.user.email"
+          :movie="post.movie.title"
+          :qoute="post.quote"
+          :comment="post.comment.length"
+          :likes="post.like"
+          :index="post.id"
+        >
+          <div v-for="comment in post.comment">
+            <user-comment
+              :user="
+                comment.user?.name ? comment.user.name : comment.user.email
+              "
+              :comment="comment.comment"
+            />
+          </div>
+        </user-post>
+      </div>
     </div>
   </dashboard-wrap>
 </template>
@@ -40,18 +54,14 @@ import SearchLoop from "@/components/icons/SearchLoop.vue";
 import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
 import UserComment from "@/components/UserComment.vue";
-import axios from "@/config/axios/index.js";
-import { onBeforeMount, onMounted, ref } from "vue";
+import { usePostStore } from "@/stores/post.js";
+import { onUnmounted, onMounted, ref } from "vue";
+const store = usePostStore();
 let searchActive = ref(false);
 const toggleSearch = () => {
   return (searchActive.value = !searchActive.value);
 };
-onMounted(async () => {
-  try {
-    const response = await axios.get("quote");
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-});
+onMounted(() => store.getPosts());
+window.addEventListener("scroll", store.handleScroll);
+onUnmounted(() => window.removeEventListener("scroll", store.handleScroll));
 </script>
