@@ -45,7 +45,9 @@
             >
               {{ store?.name ? store.name : store.email }}
             </p>
-            <router-link class="text-sm text-[#CED4DA]" :to="{ name: 'home' }"
+            <router-link
+              class="text-sm text-[#CED4DA]"
+              :to="{ name: 'profile' }"
               >Edit your profile</router-link
             >
           </div>

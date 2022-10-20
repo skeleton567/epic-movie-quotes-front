@@ -1,6 +1,7 @@
 <template>
   <img
-    class="rounded-full h-10"
+    class="rounded-full"
+    :class="height"
     :src="`src/assets/images/${image}`"
     alt="profile"
   />
@@ -10,6 +11,7 @@
 import { defineProps } from "vue";
 
 const props = defineProps({
-  image: { type: String, required: true }
+  image: { type: String, required: true },
+  height: { type: String, required: false, default: "h-10" }
 });
 </script>

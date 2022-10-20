@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import axios from "@/config/axios/index.js";
-import { ref } from "vue";
+
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     name: "",
-    id: ref(null),
+    id: null,
     email: "",
     email_verified_at: ""
   }),

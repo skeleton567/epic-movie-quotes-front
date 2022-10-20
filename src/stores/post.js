@@ -22,7 +22,7 @@ export const usePostStore = defineStore("post", {
     actions: {
         async getPosts() {
             try {
-                const response = await axios.get(`quote?page=${this.page}`);
+                const response = await axios.get(`post?page=${this.page}`);
                 if (response.data.length) {
                     this.page++;
                 }
@@ -34,23 +34,9 @@ export const usePostStore = defineStore("post", {
             }
         },
         handleScroll() {
-            if (window.scrollY + window.innerHeight >= document.body.scrollHeight ) {
+            if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
                 this.getPosts();
             }
         },
-        async refreshPosts() {
-            try {
-                const response = await axios.get(`quote?page=${this.page - 1}`);
-                if (response.data.length) {
-                    this.posts = response.data
-                } else {
-                    this.posts.push(...response.data)
-                } 
-                console.log(response);
-                console.log(this.posts);
-            } catch (error) {
-                console.log(error);
-            }
-        }
     }
 });
