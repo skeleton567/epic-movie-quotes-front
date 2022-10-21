@@ -34,6 +34,7 @@
           :comment="post.comment.length"
           :likes="post.like"
           :index="post.id"
+          :post="post"
         >
           <div v-for="comment in post.comment">
             <user-comment

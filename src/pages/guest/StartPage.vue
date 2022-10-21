@@ -20,6 +20,7 @@
       </div>
     </div>
     <div
+      v-for="quote in store.quotes"
       class="h-[100vh] bg-[url('@/assets/images/interstellar.png')] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
     >
       <div
@@ -30,10 +31,10 @@
         </div>
         <div>
           <blockquote class="text-white text-sm lg:text-5xl">
-            “You have to leave somethig behind to go forward”
+            “{{ quote.quote }}”
           </blockquote>
           <address class="text-white text-xs lg:text-3xl mt-4">
-            Interstellar, 2014
+            {{ quote.movie }}
           </address>
         </div>
       </div>
@@ -43,12 +44,15 @@
 
 <script setup>
 import TheNavigation from "@/components/TheNavigation.vue";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useQuotesStore } from "@/stores/quotes.js";
+const store = useQuotesStore();
 const route = useRoute();
 const routeName = computed(() => {
   return route.name !== "home";
 });
+onMounted(() => store.getQuotes());
 </script>
 
 <style scoped>

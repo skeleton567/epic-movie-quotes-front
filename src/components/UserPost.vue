@@ -46,7 +46,7 @@
 import HeartIcon from "@/components/icons/HeartIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
 import { useUserStore } from "@/stores/user.js";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import axios from "@/config/axios/index.js";
 import { usePostStore } from "@/stores/post.js";
 const postStore = usePostStore();
@@ -56,7 +56,8 @@ const props = defineProps({
   qoute: { type: String, required: true },
   comment: { type: Number, required: false },
   likes: { type: Array, required: false },
-  index: { type: Number, required: true }
+  index: { type: Number, required: true },
+  post: { type: Object, required: true }
 });
 let commentValue = ref("");
 const bgStyle = computed(() => {
@@ -67,27 +68,33 @@ const bgStyle = computed(() => {
   }
 });
 const store = useUserStore();
-const liked = computed(() => {
-  return !!props.likes.filter((like) => like.user.id === store.id).length;
+const likes = ref(props.likes);
+const commentArray = ref(props.post.comment);
+let liked = computed(() => {
+  return !!likes.value.filter((like) => like.user.id === store.id).length;
 });
+
 const like = async () => {
   if (liked.value) {
-    const like = props.likes.filter((like) => like.user.id === store.id)[0];
+    const like = likes.value.filter((like) => like.user.id === store.id)[0];
     await axios.delete("likes", { data: { id: like.id } });
-    postStore.refreshPosts();
+    likes.value = likes.value.filter((filterLike) => like.id !== filterLike.id);
   } else {
-    await axios.post("likes", { user_id: store.id, quote_id: props.index });
-    postStore.refreshPosts();
+    const response = await axios.post("likes", {
+      user_id: store.id,
+      quote_id: props.index
+    });
+    likes.value.push(response.data);
   }
 };
 const addComment = async (e) => {
-  await axios.post("comment", {
+  const response = await axios.post("comment", {
     user_id: store.id,
     quote_id: props.index,
     comment: commentValue.value
   });
+  commentArray.value.push(response.data);
   commentValue.value = "";
   e.rows = 1;
-  postStore.refreshPosts();
 };
 </script>

@@ -28,6 +28,7 @@ const submit = async (values, actions) => {
     console.log(response);
     router.push({ name: "recoverInstructions" });
   } catch (error) {
+    console.log(error);
     actions.setFieldError("email", error.response.data.error);
   }
 };

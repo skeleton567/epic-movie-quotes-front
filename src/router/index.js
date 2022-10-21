@@ -11,6 +11,7 @@ import CreatePassword from '@/pages/guest/CreatePassword.vue'
 import NewsFeed from '@/pages/auth/NewsFeed.vue'
 import NotFound from "@/pages/error/NotFound.vue";
 import NotAuthorized from "@/pages/error/NotAuthorized.vue";
+import UserProfile from '@/pages/auth/UserProfile.vue';
 import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
 
@@ -73,6 +74,12 @@ const router = createRouter({
       path: "/news-feed",
       name: "newsFeed",
       component: NewsFeed,
+      meta: {auth: true}
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: UserProfile,
       meta: {auth: true}
     },
     {
