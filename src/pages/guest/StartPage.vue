@@ -1,7 +1,7 @@
 <template>
   <router-view></router-view>
   <div :class="{ hidden: routeName }" class="lg:block">
-    <div class="h-[80vh] pt-8 px-8 lg:px-16">
+    <div class="h-[80vh] pt-8 px-8 lg:px-16 paralax">
       <the-navigation></the-navigation>
       <div class="h-[60vh] w-full flex justify-center items-center">
         <div
@@ -22,6 +22,7 @@
     <div
       v-for="quote in store.quotes"
       class="h-[100vh] bg-[url('@/assets/images/interstellar.png')] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
+      :class="{ paralax: scrolled }"
     >
       <div
         class="max-w-[200px] md:max-w-[500px] lg:max-w-[900px] flex space-x-1"
@@ -44,13 +45,21 @@
 
 <script setup>
 import TheNavigation from "@/components/TheNavigation.vue";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useQuotesStore } from "@/stores/quotes.js";
+let scrolled = ref(false);
 const store = useQuotesStore();
 const route = useRoute();
 const routeName = computed(() => {
   return route.name !== "home";
+});
+window.addEventListener("scroll", () => {
+  if (window.scrollY >= window.innerHeight * 0.8) {
+    scrolled.value = true;
+  } else {
+    scrolled.value = false;
+  }
 });
 onMounted(() => store.getQuotes());
 </script>
@@ -58,5 +67,9 @@ onMounted(() => store.getQuotes());
 <style scoped>
 .fit {
   background-size: 100% 100%;
+}
+.paralax {
+  background-position: center center;
+  background-attachment: fixed;
 }
 </style>
