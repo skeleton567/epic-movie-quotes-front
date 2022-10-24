@@ -4,7 +4,7 @@
       <profile-picture image="profile.jpg" />
       <p class="text-white">{{ user }}</p>
     </div>
-    <p class="text-white">
+    <p class="text-white break-words">
       {{ comment }}
     </p>
   </div>

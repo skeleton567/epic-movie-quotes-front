@@ -95,6 +95,6 @@ const addComment = async (e) => {
   });
   commentArray.value.push(response.data);
   commentValue.value = "";
-  e.rows = 1;
+  e.blur();
 };
 </script>

@@ -3,7 +3,12 @@
     <label class="w-full text-white lg:text-xl" :for="name"
       >{{ label }}<span class="text-red-500"> *</span></label
     >
-    <Field v-slot="{ field, errors }" :name="name" :rules="rule">
+    <Field
+      v-slot="{ field, errors }"
+      :name="name"
+      :rules="rule"
+      :validate-on-input="true"
+    >
       <input
         :id="name"
         v-bind="field"

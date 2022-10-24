@@ -97,7 +97,10 @@
         </p>
       </div>
     </div>
-    <div class="w-full md:flex justify-center pt-16 bg-lightBlue-image">
+    <div
+      class="w-full md:flex justify-center pt-16 bg-lightBlue-image"
+      :class="height"
+    >
       <slot></slot>
     </div>
   </div>
@@ -145,6 +148,9 @@ const showSearch = () => {
 const hideSearch = () => {
   return (search.value = false);
 };
+const props = defineProps({
+  height: { type: String, required: false }
+});
 </script>
 
 <style scoped>
