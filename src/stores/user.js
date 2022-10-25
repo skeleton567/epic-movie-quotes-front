@@ -7,7 +7,9 @@ export const useUserStore = defineStore("user", {
     name: "",
     id: null,
     email: "",
-    email_verified_at: ""
+    email_verified_at: "",
+    gAuth: false,
+    secondaryEmails: []
   }),
   actions: {
     async getAuthUser() {
@@ -17,6 +19,8 @@ export const useUserStore = defineStore("user", {
         this.email = response.data.email;
         this.id = response.data.id;
         this.email_verified_at = response.data.email_verified_at;
+        this.gAuth = response.data?.google_auth;
+        await this.getUserEmails();
       } catch (error) {
         console.log(error);
       }
@@ -26,6 +30,19 @@ export const useUserStore = defineStore("user", {
       this.email = "";
       this.id = null;
       this.email_verified_at = "";
+    },
+    async getUserEmails() {
+      try {
+        const response = await axios.get('secondary-email', {
+          params: {
+            id: this.id
+          }
+        });
+        this.secondaryEmails = response.data.secondary_emails;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
+
 });

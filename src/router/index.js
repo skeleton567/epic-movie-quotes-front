@@ -12,6 +12,11 @@ import NewsFeed from '@/pages/auth/NewsFeed.vue'
 import NotFound from "@/pages/error/NotFound.vue";
 import NotAuthorized from "@/pages/error/NotAuthorized.vue";
 import UserProfile from '@/pages/auth/UserProfile.vue';
+import EditName from '@/pages/auth/EditName.vue';
+import EditPassword from '@/pages/auth/EditPassword.vue';
+import EditEmail from '@/pages/auth/EditEmail.vue';
+import EmailPage from '@/pages/auth/EmailPage.vue';
+import YouSure from '@/pages/auth/YouSure.vue';
 import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
 
@@ -83,7 +88,34 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: UserProfile,
-      meta: {auth: true}
+      meta: { auth: true },
+      children: [
+        {
+          path: "/edit-name",
+          name: "editName",
+          component: EditName,
+        },
+        {
+          path: "/you-sure",
+          name: "youSure",
+          component: YouSure
+        },
+        {
+          path: "/edit-password",
+          name: "editPassword",
+          component: EditPassword,
+        },
+        {
+          path: "/edit-email",
+          name: "editEmail",
+          component: EditEmail,
+        },
+        {
+          path: "/email",
+          name: "emailPage",
+          component: EmailPage,
+        },
+      ]
     },
     {
       path: "/not-authorized",
