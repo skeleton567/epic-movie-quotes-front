@@ -32,13 +32,28 @@ const add = async () => {
       });
       profileStore.popup = true;
       profileStore.popupText = "Username changed succsessfully";
+      store.getAuthUser();
       router.push({ name: "profile" });
-      console.log(response);
     } catch (error) {
-      console.log(error.response.data.errors?.name);
-      router.push({
+      router.replace({
         name: "editName",
-        query: { name: error.response.data.errors?.name }
+        query: { name: error.response.data.errors?.name[0] }
+      });
+    }
+  } else if (route.query.email) {
+    try {
+      const response = await axios.post("add-email", {
+        email: route.query.email,
+        user_id: store.id
+      });
+      profileStore.popup = true;
+      profileStore.popupText = "Email addded succsessfully";
+      store.getAuthUser();
+      router.push({ name: "profile" });
+    } catch (error) {
+      router.replace({
+        name: "editEmail",
+        query: { email: error.response.data.errors?.email[0] }
       });
     }
   }

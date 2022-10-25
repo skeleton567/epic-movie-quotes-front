@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 relative">
+  <div class="mt-4 relative text-black">
     <label class="w-full text-white lg:text-xl" :for="name"
       >{{ label }}<span class="text-red-500"> *</span></label
     >

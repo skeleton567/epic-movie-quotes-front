@@ -1,245 +1,163 @@
 <template>
-  <profile-popup v-if="popup" :text="popupText" @close-event="popup = false" />
-  <dashboard-wrap height=" h-[100vh] md:h-[97vh]">
+  <profile-popup
+    v-if="profileStore.popup"
+    :text="profileStore.popupText"
+    @close-event="profileStore.popup = false"
+  />
+  <dashboard-wrap >
     <div class="m-6 md:hidden">
-      <router-link :to="{ name: 'newsFeed' }"
-        ><arrow-left></arrow-left
-      ></router-link>
+      <a class="text-white cursor-pointer" @click="$router.back()"><arrow-left/></a>
     </div>
-    <div>
-      <div class="hidden md:block pl-20 mb-24">
+    <div class="mb-10">
+      <div class="hidden md:block pl-20 mb-16">
         <h1 class="text-2xl">My Profile</h1>
       </div>
       <div
-        class="w-full h-[80vh] md:h-fit md:w-[450px] lg:w-[650px] bg-[#24222F] md:bg-[#0a0a12] md:pb-20 md:px-16 md:rounded-xl"
-        :class="{ hidden: beganEdit }"
+        class="w-full h-[80vh] md:h-fit md:w-[550px] lg:w-[750px] bg-[#24222F] md:bg-[#0a0a12] md:pb-10 md:px-8 md:rounded-xl md:block"
+        :class="{ hidden: $route.name !== 'profile' }"
       >
         <div
-          class="mt-6 md:mt-0 md:p-0 h-40 grid place-items-center md:-translate-y-12"
+          class="mt-6 md:mb-0 mb-20 md:mt-0 md:p-0 h-40 grid place-items-center md:-translate-y-12"
         >
           <profile-picture height="h-24 md:m-0" image="profile.jpg" />
-          <p class="text-white text-xl mt-2 md:m-0 text-center">
+          <button class="text-white text-xl mt-2 md:m-0 text-center">
             Upload new photo
-          </p>
+          </button>
         </div>
         <profile-data
           label="Username"
           :name="store?.name ? store?.name : 'No name set yet'"
-        />
-        <div v-if="gAuth">
+        >
+          <router-link
+            :to="{ name: 'editName' }"
+            class="text-white cursor-pointer md:pb-12"
+          >
+            Edit
+          </router-link></profile-data
+        >
+        <div v-if="store.gAuth">
           <profile-data label="Email" :name="store.email" />
         </div>
         <div v-else>
           <div
-            class="flex justify-between mx-8 border-b border-[#CED4DA80] py-4 mt-8"
+            class="hidden md:flex justify-between md:justify-start md:items-center mt-8 md:mt-1 mx-8 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
           >
-            <p class="text-white">Password</p>
-            <p class="text-white cursor-pointer" @click="editPassword">Edit</p>
-          </div>
-          <div class="flex justify-between mx-8 py-4 mt-8">
-            <p class="text-white">Email</p>
-            <arrow-right @click-event="editEmail" />
-          </div>
-        </div>
-      </div>
-      <Form v-if="beginEditName" @submit="submitName">
-        <div
-          class="px-8 w-full h-[30vh] bg-[#24222F] flex justify-center items-center mb-10"
-        >
-          <text-input
-            name="name"
-            label="Enter new username"
-            rule="required|min:3|max:15|alpha_num|lowercase"
-          ></text-input>
-        </div>
-        <profile-buttons text="Add" />
-      </Form>
-      <Form
-        v-if="beginEditPassword"
-        v-slot="{ errors, values }"
-        @submit="submitPassword"
-      >
-        <div
-          class="px-8 w-full h-[60vh] bg-[#24222F] flex justify-center items-center mb-10"
-        >
-          <div>
-            <div class="bg-[#11101A] w-full p-6 rounded mb-8">
-              <h2 class="text-white mb-4">Passwords should contain:</h2>
-              <ul>
-                <li
-                  :class="
-                    values?.password ? more(errors?.password) : 'text-[#9C9A9A]'
-                  "
-                >
-                  <span
-                    :class="
-                      values?.password
-                        ? moreSpan(errors?.password)
-                        : 'text-[#9C9A9A]'
-                    "
-                    >&#x2022;</span
-                  >
-                  8 or more characters
-                </li>
-                <li
-                  :class="
-                    values?.password ? less(errors?.password) : 'text-[#9C9A9A]'
-                  "
-                >
-                  <span
-                    :class="
-                      values?.password
-                        ? lessSpan(errors?.password)
-                        : 'text-[#9C9A9A]'
-                    "
-                    >&#x2022;</span
-                  >
-                  less than 15 lowercase character
-                </li>
-              </ul>
+            <div>
+              <p
+                class="relative px-4 py-2 md:px-3 bg-[#19875433] border border-[#198754] rounded md:w-52 lg:w-[400px]"
+              >
+                {{ store.email }}
+                <green-check classes="w-4 absolute top-3 right-3" />
+              </p>
             </div>
-            <text-input
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="Password"
-              rule="required|min:8|max:15|alpha_num|lowercase"
-            ></text-input>
-            <text-input
-              name="confirmation"
-              label="Confirm password"
-              type="password"
-              placeholder="Enter your name"
-              rule="confirmed:@password"
-            ></text-input>
+            <p>Primary Email</p>
           </div>
-        </div>
-        <profile-buttons text="Add" />
-      </Form>
-      <div v-if="beginEditEmail">
-        <div class="p-8 w-full bg-[#24222F] mb-10">
-          <div class="pb-6 border-b border-[#CED4DA80]">
-            <h2 class="mb-6">Primary Email</h2>
-            <p
-              class="relative px-4 py-2 bg-[#19875433] border border-[#198754] rounded"
+
+          <div
+          v-for="email in store.secondaryEmails"
+            class="hidden md:flex justify-between md:justify-start md:items-center mt-8 md:mt-1 mx-8 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
+          >
+            <div class="md:w-52 lg:w-[400px]">
+              <p
+                :class="[
+                  email?.email_verified_at
+                    ? 'md:bg-[#CED4DA] md:text-black'
+                    :  'text-white md:bg-[#EC952433] md:border border-[#EC9524]'
+                ]"
+                class="md:rounded md:px-3 md:py-2 relative"
+              >
+                {{ email.email }}
+                <div class="absolute top-3 right-3">
+                  <span class="relative tooltip"><p class="absolute left-[50%] top-0 translate-x-[-50%] w-80 bg-white z-10 text-black rounded tooltipText flex space-x-3 px-2 py-4"> <green-check class="w-4"/> <span>Please verify new email address</span> </p><warning-icon /></span>
+                </div>
+                
+              </p>
+            </div>
+            <button @click="profileStore.makePrimary(email.email, store.id)">Make Primary</button>
+            <button>Remove</button>
+          </div>
+          <div
+            class="border-b border-[#CED4DA80] pb-10 md:w-52 lg:w-[400px] mx-8 hidden md:block"
+          >
+            <router-link
+              :to="{ name: 'editEmail' }"
+              class="w-48 text-center border border-white py-2 px-3 rounded md:flex justify-center items-center space-x-3 mt-10"
             >
-              {{ store.email }}
-              <green-check classes="w-4 absolute top-3 right-3" />
-            </p>
+              <plus-icon /> <span>Add New Email</span>
+            </router-link>
           </div>
-          <div class="mt-12 pb-6 border-b border-[#CED4DA80]">
-            <h2 class="mb-6">ninotabagari12345@gmail.com</h2>
-            <div class="flex justify-between">
-              <button class="border border-white py-2 px-3 rounded">
-                Make this primary
-              </button>
-              <button class="text-[#CED4DA]">Remove</button>
-            </div>
-          </div>
-          <div class="mt-12 pb-6 border-b border-[#CED4DA80]">
-            <h2 class="mb-6">ninotabagari12345@gmail.com</h2>
-            <div class="flex justify-between">
-              <button class="border border-white py-2 px-3 rounded">
-                Make this primary
-              </button>
-              <button class="text-[#CED4DA]">Remove</button>
-            </div>
-          </div>
-          <h2 class="uppercase mt-12 mb-5">Add new email</h2>
-          <button
-            class="w-full text-center border border-white py-2 px-3 rounded flex justify-center items-center space-x-3"
-            @click="addEmail"
+          <div
+            class="flex justify-between md:justify-start md:items-center mt-8 md:mt-4 mx-8 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
           >
-            <plus-icon /> <span>Add</span>
-          </button>
+            <div class="md:w-52 lg:w-[400px]">
+              <p class="text-white md:w-52">Password</p>
+            </div>
+            <router-link
+              class="cursor-pointer block md:hidden"
+              :to="{ name: 'editPassword' }"
+              >Edit</router-link
+            >
+            <button
+              v-if="!changePassword"
+              class="hidden md:block"
+              @click="editPassword"
+            >
+              Edit
+            </button>
+          </div>
+          <div v-if="changePassword">
+            <new-password />
+          </div>
+          <div class="flex justify-between mx-8 py-4 mt-8 md:hidden">
+            <p class="text-white">Email</p>
+            <router-link :to="{ name: 'emailPage' }"
+              ><arrow-right
+            /></router-link>
+          </div>
         </div>
-        <profile-buttons text="Add" />
       </div>
-      <you-sure v-if="nameConfrimation" @click-event="confirmName" />
-      <you-sure v-if="passwordConfrimation" @click-event="confirmPassword" />
-      <you-sure v-if="emailConfrimation" @click-event="confirmEmail" />
     </div>
+    <router-view></router-view>
   </dashboard-wrap>
 </template>
 
 <script setup>
+import GreenCheck from "@/components/icons/GreenCheck.vue";
 import ArrowLeft from "@/components/icons/ArrowLeft.vue";
 import ArrowRight from "@/components/icons/ArrowRight.vue";
-import ProfileButtons from "@/components/ProfileButtons.vue";
-import YouSure from "@/components/YouSure.vue";
 import ProfilePopup from "@/components/ProfilePopup.vue";
-import GreenCheck from "@/components/icons/GreenCheck.vue";
-import PlusIcon from "@/components/icons/PlusIcon.vue";
 import ProfileData from "@/components/ProfileData.vue";
-import { Form } from "vee-validate";
+import PlusIcon from "@/components/icons/PlusIcon.vue";
+import NewPassword from "@/components/NewPassword.vue";
+import WarningIcon from "@/components/icons/WarningIcon.vue";
 import { useUserStore } from "@/stores/user.js";
+import { useProfileStore } from "@/stores/profile.js";
 import { ref } from "vue";
 const store = useUserStore();
-let beginEditName = ref(false);
-let beginEditPassword = ref(false);
-let beginEditEmail = ref(false);
-let beganEdit = ref(false);
-let nameConfrimation = ref(false);
-let passwordConfrimation = ref(false);
-let emailConfrimation = ref(false);
-let popup = ref(false);
-let gAuth = ref(false);
-let newEmail = ref(false);
-let popupText = ref("Username changed succsessfully");
-const editName = () => {
-  beginEditName.value = true;
-  beganEdit.value = true;
-};
+const profileStore = useProfileStore();
+let changePassword = ref(false);
 const editPassword = () => {
-  beginEditPassword.value = true;
-  beganEdit.value = true;
-};
-const editEmail = () => {
-  beginEditEmail.value = true;
-  beganEdit.value = true;
-};
-const submitName = () => {
-  beginEditName.value = false;
-  nameConfrimation.value = true;
-};
-const confirmName = () => {
-  beganEdit.value = false;
-  nameConfrimation.value = false;
-  popup.value = true;
-};
-const submitPassword = () => {
-  beginEditPassword.value = false;
-  passwordConfrimation.value = true;
-};
-const confirmPassword = () => {
-  popupText.value = "New password updated succsessfully";
-  popup.value = true;
-  beganEdit.value = false;
-  passwordConfrimation.value = false;
-};
-const addEmail = () => {
-  beginEditEmail.value = false;
-  newEmail.value = true;
-};
-const more = (errors) => {
-  return !errors?.includes(8) && !errors?.includes("required")
-    ? "text-white"
-    : "text-[#9C9A9A]";
-};
-const moreSpan = (errors) => {
-  return !errors?.includes(8) && !errors?.includes("required")
-    ? "text-[#198754]"
-    : "text-[#9C9A9A]";
-};
-
-const less = (errors) => {
-  return !errors?.includes(15) && !errors?.includes("lowercase")
-    ? "text-white"
-    : "text-[#9C9A9A]";
-};
-const lessSpan = (errors) => {
-  return !errors?.includes(15) && !errors?.includes("lowercase")
-    ? "text-[#198754]"
-    : "text-[#9C9A9A]";
+  changePassword.value = true;
 };
 </script>
+
+
+<style scoped>
+.tooltipText {
+  visibility: hidden;
+}
+.tooltipText::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: 9px solid;
+  border-color: #FFF #0000 #0000 #0000;
+}
+
+.tooltip:hover  .tooltipText {
+  top: -600%;
+  visibility: visible;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="m-0 bg-lightBlue-image" @click="hideSide">
+  <div class="m-0 bg-[#11101a]" @click="hideSide">
     <header
       class="h-20 px-10 md:px-16 flex justify-between items-center fixed w-full bg-[#22203033] z-10"
     >
@@ -34,7 +34,7 @@
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-lightBlue-image md:bg-none md:block md:fixed md:z-0 md:h-full md:w-[22%]"
+        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:h-full md:w-[22%]"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
@@ -75,7 +75,7 @@
       </div>
       <div
         v-if="search"
-        class="h-[60vh] w-full fixed z-10 bg-lightBlue-image"
+        class="h-[60vh] w-full fixed z-10 bg-[#11101a]"
         @click.stop=""
       >
         <div
@@ -98,7 +98,7 @@
       </div>
     </div>
     <div
-      class="w-full md:flex justify-center pt-16 bg-lightBlue-image"
+      class="w-full md:flex justify-center pt-16 bg-[#11101a]"
       :class="height"
     >
       <slot></slot>
