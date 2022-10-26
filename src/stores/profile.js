@@ -8,14 +8,31 @@ export const useProfileStore = defineStore("profile", {
         store: useUserStore(),
         popup: false,
         popupText: '',
-        errors: {}
+        errors: {},
+        message: '',
+        password: '',
+        password_confirmation: ''
     }),
     getters: {
     },
-    actions: {    
-        async makePrimary(email, id) {
-            const response = await axios.post('make-primary', { email: email, id: id });
-            this.store.getAuthUser();
+    actions: {
+        async makePrimary(email, id, verified) {
+            try {
+                const response = await axios.post('make-primary', { email: email, id: id, verified: verified });
+                this.store.getAuthUser();
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
+        async deleteEmail(id) {
+            try {
+                const response = await axios.delete('destroy-email', { data: { id: id } });
+                this.store.getAuthUser();
+            } catch (error) {
+                console.log(error);
+            }
+
         }
     }
 });

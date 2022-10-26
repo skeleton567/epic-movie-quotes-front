@@ -1,7 +1,7 @@
 <template>
-  <p class="text-white md:mt-0 mx-8 mt-4">{{ label }}</p>
+  <p class="text-white md:mt-0 mt-4">{{ label }}</p>
   <div
-    class="flex justify-between md:justify-start md:items-center mt-1 mx-8 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
+    class="flex justify-between md:justify-start md:items-center mt-1 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
   >
     <div class="md:border-b border-[#CED4DA80] md:pb-12 md:w-52 lg:w-[400px]">
       <p
