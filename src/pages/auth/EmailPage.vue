@@ -16,12 +16,27 @@
       <h2 class="mb-6">{{ email.email }}</h2>
       <div class="flex justify-between">
         <button
+          v-if="email.email_verified_at"
           class="border border-white py-2 px-3 rounded"
-          @click="makePrimary"
+          @click="
+            profileStore.makePrimary(
+              email.email,
+              store.id,
+              email.email_verified_at
+            )
+          "
         >
           Make this primary
         </button>
-        <button class="text-[#CED4DA]">Remove</button>
+        <button v-else class="border border-white py-2 px-3 rounded">
+          Not Verified
+        </button>
+        <button
+          class="text-[#CED4DA]"
+          @click="profileStore.deleteEmail(email.id)"
+        >
+          Remove
+        </button>
       </div>
     </div>
     <h2 class="uppercase mt-12 mb-5">Add new email</h2>
@@ -39,7 +54,8 @@ import GreenCheck from "@/components/icons/GreenCheck.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
+import { useProfileStore } from "@/stores/profile.js";
+const profileStore = useProfileStore();
 const store = useUserStore();
 const router = useRouter();
-const makePrimary = () => {};
 </script>

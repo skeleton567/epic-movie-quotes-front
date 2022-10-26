@@ -2,10 +2,13 @@
   <Form
     v-slot="{ errors, values }"
     class="md:w-52 lg:w-[400px]"
-    @submit="submitPassword"
+    :initial-errors="{
+      password: $route.query.password
+    }"
+    @submit="submit"
   >
     <div
-      class="px-8 md:mx-8 md:px-0 w-full h-[60vh] bg-[#24222F] md:h-fit md:bg-inherit flex justify-center items-center mb-10 md:block"
+      class="px-8 md:px-0 w-full h-[60vh] bg-[#24222F] md:h-fit md:bg-inherit flex justify-center items-center mb-10 md:block"
     >
       <div class="md:bg-inherit">
         <div class="bg-[#11101A] w-full p-6 rounded mb-8">
@@ -44,6 +47,7 @@
           </ul>
         </div>
         <text-input
+          v-model="profileStore.password"
           name="password"
           label="Password"
           type="password"
@@ -51,6 +55,7 @@
           rule="required|min:8|max:15|alpha_num|lowercase"
         ></text-input>
         <text-input
+          v-model="profileStore.password_confirmation"
           name="confirmation"
           label="Confirm password"
           type="password"
@@ -59,18 +64,17 @@
         ></text-input>
       </div>
     </div>
-    <profile-buttons text="Add" link="profile" />
+    <profile-buttons text="Add" />
   </Form>
 </template>
 
 <script setup>
 import ProfileButtons from "@/components/ProfileButtons.vue";
 import { Form } from "vee-validate";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const submitPassword = () => {
-  router.push({ name: "youSure" });
-};
+import { defineEmits } from "vue";
+import { useProfileStore } from "@/stores/profile.js";
+const profileStore = useProfileStore();
+const emit = defineEmits(["submit-event"]);
 const more = (errors) => {
   return !errors?.includes(8) && !errors?.includes("required")
     ? "text-white"
@@ -91,5 +95,8 @@ const lessSpan = (errors) => {
   return !errors?.includes(15) && !errors?.includes("lowercase")
     ? "text-[#198754]"
     : "text-[#9C9A9A]";
+};
+const submit = (values) => {
+  emit("submit-event", values);
 };
 </script>

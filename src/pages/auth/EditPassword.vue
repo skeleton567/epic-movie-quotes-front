@@ -1,7 +1,15 @@
 <template>
-  <new-password />
+  <new-password @submit-event="submitPassword" />
 </template>
 
 <script setup>
 import NewPassword from "@/components/NewPassword.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const submitPassword = (values) => {
+  router.push({
+    name: "youSure",
+    query: { password: values.password, confirmation: values.confirmation }
+  });
+};
 </script>

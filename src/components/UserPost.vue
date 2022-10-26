@@ -1,7 +1,7 @@
 <template>
   <div class="w-full px-12 my-8 py-7 md:rounded-xl" :class="bgStyle">
     <div class="flex items-center space-x-4">
-      <profile-picture image="profile.jpg" />
+      <profile-picture :image="store.profile" />
       <p class="text-white">{{ user }}</p>
     </div>
     <p class="text-white mt-3 text-sm">
@@ -25,7 +25,7 @@
     </div>
     <slot></slot>
     <div class="flex space-x-2 mt-4 mb-6">
-      <profile-picture image="profile.jpg" />
+      <profile-picture :image="store.profile" />
       <textarea
         id=""
         v-model="commentValue"

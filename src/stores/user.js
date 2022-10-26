@@ -9,18 +9,20 @@ export const useUserStore = defineStore("user", {
     email: "",
     email_verified_at: "",
     gAuth: false,
-    secondaryEmails: []
+    secondaryEmails: [],
+    profile: '',
   }),
   actions: {
     async getAuthUser() {
       try {
         const response = await axios.post("authorized-user");
+        this.id = response.data.id;
+        await this.getUserEmails();
         this.name = response.data?.name;
         this.email = response.data.email;
-        this.id = response.data.id;
         this.email_verified_at = response.data.email_verified_at;
         this.gAuth = response.data?.google_auth;
-        await this.getUserEmails();
+        this.profile = response.data?.profile_picture;
       } catch (error) {
         console.log(error);
       }

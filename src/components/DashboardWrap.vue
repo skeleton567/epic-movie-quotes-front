@@ -38,7 +38,7 @@
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
-          <profile-picture image="profile.jpg" />
+          <profile-picture :image="store.profile" />
           <div>
             <p
               class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none"

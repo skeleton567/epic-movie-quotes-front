@@ -32,6 +32,7 @@ const add = async () => {
       });
       profileStore.popup = true;
       profileStore.popupText = "Username changed succsessfully";
+      profileStore.message = "";
       store.getAuthUser();
       router.push({ name: "profile" });
     } catch (error) {
@@ -48,12 +49,32 @@ const add = async () => {
       });
       profileStore.popup = true;
       profileStore.popupText = "Email addded succsessfully";
+      profileStore.message = "Please check email to verify new address";
       store.getAuthUser();
       router.push({ name: "profile" });
     } catch (error) {
       router.replace({
         name: "editEmail",
         query: { email: error.response.data.errors?.email[0] }
+      });
+    }
+  } else if (route.query.password) {
+    try {
+      const response = await axios.patch("update-password", {
+        password: route.query.password,
+        password_confirmation: route.query.confirmation,
+        id: store.id
+      });
+      console.log(response);
+      profileStore.popup = true;
+      profileStore.popupText = "Password updated successfully";
+      profileStore.message = "";
+      router.push({ name: "profile" });
+    } catch (error) {
+      console.log(error);
+      router.replace({
+        name: "editPassword",
+        query: { password: error.response.data.errors?.password[0] }
       });
     }
   }
