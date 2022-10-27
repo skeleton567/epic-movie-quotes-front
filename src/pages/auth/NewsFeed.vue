@@ -29,6 +29,7 @@
       <div v-for="post in store.postSearch">
         <user-post
           :user="post.user?.name ? post.user.name : post.user.email"
+          :image="post.user.image"
           :movie="post.movie.title"
           :qoute="post.quote"
           :comment="post.comment.length"
@@ -42,6 +43,7 @@
                 comment.user?.name ? comment.user.name : comment.user.email
               "
               :comment="comment.comment"
+              :image="comment.user.image"
             />
           </div>
         </user-post>

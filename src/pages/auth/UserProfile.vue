@@ -20,7 +20,7 @@
         <div
           class="mt-6 md:mb-0 mb-20 md:mt-0 md:p-0 h-40 grid place-items-center md:-translate-y-12"
         >
-          <profile-picture height="h-24 md:m-0" :image="store.profile" />
+          <profile-picture height="h-24 w-24 md:m-0" :image="store.profile" />
           <label class="text-white text-xl mt-2 md:m-0 text-center cursor-pointer" for="file">
             Upload new photo
             <input v-show="false" id="file" type="file" @input="uploadImage($event.target.files[0])">
@@ -181,7 +181,8 @@ const submitPassword = async (values) => {
 const uploadImage = async (file) => {
   try {
     const fd = new FormData();
-    fd.set('image', file );
+    fd.set('image', file);
+    fd.set('id', store.id);
     const response = await axios.post("profile-image", fd);
     store.getAuthUser();
   } catch (error) {

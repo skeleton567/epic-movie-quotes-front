@@ -10,11 +10,68 @@
       <nav class="flex items-center space-x-8">
         <search-loop :position="true" @showEvent="showSearch" />
         <div class="relative">
-          <notification-icon />
+          <notification-icon
+            @notificationEvent="notificationOpened = !notificationOpened"
+          />
           <span
-            class="absolute -top-2 right-0 rounded-full bg-[#E33812] text-white p-1 text-[0.6rem]"
-            >3</span
+            class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem]"
+            @click="notificationOpened = !notificationOpened"
+            >{{ notifications.length }}</span
           >
+          <div
+            v-if="notificationOpened"
+            class="absolute top-12 right-0 translate-x-10 w-[100vw] max-h-[80vh] overflow-scroll"
+          >
+            <div class="bg-black z-20 w-full block py-5 px-6">
+              <div class="flex justify-between items-center">
+                <h1 class="font-bold text-xl">Notifications</h1>
+                <p class="underline text-sm">Mark as all read</p>
+              </div>
+              <div
+                v-for="notification in notifications"
+                class="border border-[#6C757D80] p-4 mt-4"
+                @click="log(notification)"
+              >
+                <div class="flex space-x-5">
+                  <div>
+                    <profile-picture
+                      height="w-12 h-12"
+                      :image="notification.notification.user.image"
+                      border="border border-black"
+                    />
+                    <p class="text-[#198754] mt-3">New</p>
+                  </div>
+                  <div>
+                    <p
+                      class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none"
+                    >
+                      {{
+                        notification.notification.user?.name
+                          ? notification.notification.user.name
+                          : notification.notification.user.email
+                      }}
+                    </p>
+                    <p class="my-1 text-sm text-[#CED4DA]">
+                      <span
+                        v-if="notification.notification.type === 'like'"
+                        class="flex items-center text-center space-x-2"
+                      >
+                        <like-notification /> <span>Reacted to your quote</span>
+                      </span>
+                      <span
+                        v-else
+                        class="flex items-center text-center space-x-2"
+                      >
+                        <comment-notification />
+                        <span>Commented to your quote..</span></span
+                      >
+                    </p>
+                    <p>{{ timeSince(notification.notification.created_at) }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="hidden w-14 md:flex items-center justify-between">
           <select id="" class="selecttxt text-white" name="">
@@ -115,10 +172,13 @@ import CameraIcon from "@/components/icons/CameraIcon.vue";
 import ArrowLeft from "@/components/icons/ArrowLeft.vue";
 import ArrowDown from "@/components/icons/ArrowDown.vue";
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
+import CommentNotification from "@/components/icons/CommentNotification.vue";
+import LikeNotification from "@/components/icons/LikeNotification.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
+import Pusher from "pusher-js";
 const store = useUserStore();
 const postStore = usePostStore();
 const router = useRouter();
@@ -151,6 +211,44 @@ const hideSearch = () => {
 const props = defineProps({
   height: { type: String, required: false }
 });
+const notificationOpened = ref(false);
+const notifications = ref([]);
+const pusher = new Pusher("7d784fb1c6f937c3410d", {
+  cluster: "eu"
+});
+const channel = pusher.subscribe("notificaitons");
+channel.bind("notificaiton", function (data) {
+  notifications.value.push(data);
+});
+
+const timeSince = (sqldate) => {
+  let date = new Date(sqldate).getTime();
+  let seconds = Math.floor((new Date() - date) / 1000);
+
+  let interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years ago";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months ago";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days ago";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours ago";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " min ago";
+  }
+  return Math.floor(seconds) + " seconds ago";
+};
+let log = (a) => console.log(a);
 </script>
 
 <style scoped>
