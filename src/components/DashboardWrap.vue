@@ -11,62 +11,88 @@
         <search-loop :position="true" @showEvent="showSearch" />
         <div class="relative">
           <notification-icon
+            classes="bell"
             @notificationEvent="notificationOpened = !notificationOpened"
           />
           <span
             class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem]"
             @click="notificationOpened = !notificationOpened"
-            >{{ notifications.length }}</span
+            >{{ counter }}</span
           >
           <div
             v-if="notificationOpened"
-            class="absolute top-12 right-0 translate-x-10 w-[100vw] max-h-[80vh] overflow-scroll"
+            class="absolute top-16 right-0 translate-x-10 w-[100vw] max-h-[80vh] md:w-[500px] md:top-16 md:-right-3 md:rounded-xl notification"
           >
-            <div class="bg-black z-20 w-full block py-5 px-6">
+            <div
+              v-if="!notifications.length"
+              class="bg-black z-20 w-full block py-5 px-6"
+            >
+              <p class="text-center">No notifications yet!!</p>
+            </div>
+            <div
+              v-else
+              class="bg-black z-20 w-full block py-5 px-6 max-h-[80vh] md:w-[500px] overflow-y-scroll scrollbar"
+            >
               <div class="flex justify-between items-center">
                 <h1 class="font-bold text-xl">Notifications</h1>
-                <p class="underline text-sm">Mark as all read</p>
+                <button class="underline text-sm" @click="markAsRead(false)">
+                  Mark as all read
+                </button>
               </div>
               <div
                 v-for="notification in notifications"
-                class="border border-[#6C757D80] p-4 mt-4"
-                @click="log(notification)"
+                class="border border-[#6C757D80] p-4 md:pb-6 mt-4 cursor-pointer"
+                @click="markAsRead(notification.id)"
               >
-                <div class="flex space-x-5">
-                  <div>
+                <div class="md:flex justify-between items-center">
+                  <div class="flex space-x-5 md:h-10">
                     <profile-picture
                       height="w-12 h-12"
-                      :image="notification.notification.user.image"
-                      border="border border-black"
+                      :image="notification.user.image"
+                      :border="
+                        !notification.seen
+                          ? 'border border-green-500'
+                          : 'border border-black'
+                      "
                     />
-                    <p class="text-[#198754] mt-3">New</p>
+                    <div>
+                      <p
+                        class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none mb-1"
+                      >
+                        {{
+                          notification.user?.name
+                            ? notification.user.name
+                            : notification.user.email
+                        }}
+                      </p>
+                      <p class="my-1 text-sm text-[#CED4DA]">
+                        <span
+                          v-if="notification.type === 'like'"
+                          class="flex items-center text-center space-x-2"
+                        >
+                          <like-notification />
+                          <span>Reacted to your quote</span>
+                        </span>
+                        <span
+                          v-else
+                          class="flex items-center text-center space-x-2"
+                        >
+                          <comment-notification />
+                          <span>Commented to your quote..</span></span
+                        >
+                      </p>
+                    </div>
                   </div>
-                  <div>
+                  <div class="flex space-x-5 mt-1 md:flex-col-reverse">
                     <p
-                      class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none"
+                      class="w-12 md:text-right md:w-full"
+                      :class="
+                        !notification.seen ? 'text-[#198754]' : 'text-black'
+                      "
                     >
-                      {{
-                        notification.notification.user?.name
-                          ? notification.notification.user.name
-                          : notification.notification.user.email
-                      }}
+                      New
                     </p>
-                    <p class="my-1 text-sm text-[#CED4DA]">
-                      <span
-                        v-if="notification.notification.type === 'like'"
-                        class="flex items-center text-center space-x-2"
-                      >
-                        <like-notification /> <span>Reacted to your quote</span>
-                      </span>
-                      <span
-                        v-else
-                        class="flex items-center text-center space-x-2"
-                      >
-                        <comment-notification />
-                        <span>Commented to your quote..</span></span
-                      >
-                    </p>
-                    <p>{{ timeSince(notification.notification.created_at) }}</p>
+                    <p>{{ timeSince(notification.created_at) }}</p>
                   </div>
                 </div>
               </div>
@@ -211,14 +237,37 @@ const hideSearch = () => {
 const props = defineProps({
   height: { type: String, required: false }
 });
+let counter = ref(0);
+const getNotification = async () => {
+  try {
+    await store.getAuthUser();
+    const response = await axios.get("notifications", {
+      params: {
+        id: store.id
+      }
+    });
+    for (let data of response.data) {
+      if (!data.seen) {
+        counter.value++;
+      }
+    }
+    notifications.value.push(...response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const notificationOpened = ref(false);
-const notifications = ref([]);
+getNotification();
+let notifications = ref([]);
 const pusher = new Pusher("7d784fb1c6f937c3410d", {
   cluster: "eu"
 });
 const channel = pusher.subscribe("notificaitons");
 channel.bind("notificaiton", function (data) {
-  notifications.value.push(data);
+  if (data.notification.user_to_notify.id === store.id) {
+    counter.value++;
+    notifications.value.unshift(data.notification);
+  }
 });
 
 const timeSince = (sqldate) => {
@@ -246,9 +295,30 @@ const timeSince = (sqldate) => {
   if (interval > 1) {
     return Math.floor(interval) + " min ago";
   }
-  return Math.floor(seconds) + " seconds ago";
+  return Math.floor(seconds) + " sec ago";
 };
-let log = (a) => console.log(a);
+const markAsRead = async (id) => {
+  try {
+    await axios.patch("notifications/update", {
+      id: id,
+      user_to_notify: store.id
+    });
+    const response = await axios.get("notifications", {
+      params: {
+        id: store.id
+      }
+    });
+    counter.value = 0;
+    for (let data of response.data) {
+      if (!data.seen) {
+        counter.value++;
+      }
+    }
+    notifications.value = [...response.data];
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style scoped>
@@ -257,5 +327,24 @@ let log = (a) => console.log(a);
   background: none;
   appearance: none;
   -webkit-appearance: none;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.notification::before {
+  right: 56px;
+  content: "";
+  z-index: 100;
+  position: absolute;
+  top: -30px;
+  transform: translateX(50%);
+  border: 15px solid;
+  border-color: #0000 #0000 #000 #0000;
+}
+@media screen and (min-width: 768px) {
+  .notification::before {
+    right: 13.5%;
+  }
 }
 </style>

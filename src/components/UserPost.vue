@@ -93,7 +93,8 @@ const addComment = async (e) => {
   const response = await axios.post("comment", {
     user_id: store.id,
     quote_id: props.index,
-    comment: commentValue.value
+    comment: commentValue.value,
+    user_to_notify: props.post.user.id
   });
   commentArray.value.push(response.data);
   commentValue.value = "";
