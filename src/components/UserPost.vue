@@ -1,7 +1,7 @@
 <template>
   <div class="w-full px-12 my-8 py-7 md:rounded-xl" :class="bgStyle">
     <div class="flex items-center space-x-4">
-      <profile-picture :image="store.profile" />
+      <profile-picture :image="image" />
       <p class="text-white">{{ user }}</p>
     </div>
     <p class="text-white mt-3 text-sm">
@@ -57,7 +57,8 @@ const props = defineProps({
   comment: { type: Number, required: false },
   likes: { type: Array, required: false },
   index: { type: Number, required: true },
-  post: { type: Object, required: true }
+  post: { type: Object, required: true },
+  image: { type: String, required: false }
 });
 let commentValue = ref("");
 const bgStyle = computed(() => {
@@ -82,7 +83,8 @@ const like = async () => {
   } else {
     const response = await axios.post("likes", {
       user_id: store.id,
-      quote_id: props.index
+      quote_id: props.index,
+      user_to_notify: props.post.user.id
     });
     likes.value.push(response.data);
   }
@@ -91,7 +93,8 @@ const addComment = async (e) => {
   const response = await axios.post("comment", {
     user_id: store.id,
     quote_id: props.index,
-    comment: commentValue.value
+    comment: commentValue.value,
+    user_to_notify: props.post.user.id
   });
   commentArray.value.push(response.data);
   commentValue.value = "";
