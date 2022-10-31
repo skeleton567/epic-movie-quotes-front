@@ -16,6 +16,8 @@ import EditName from '@/pages/auth/EditName.vue';
 import EditPassword from '@/pages/auth/EditPassword.vue';
 import EditEmail from '@/pages/auth/EditEmail.vue';
 import EmailPage from '@/pages/auth/EmailPage.vue';
+import MovieList from '@/pages/auth/MovieList.vue';
+import AddMovie from  '@/pages/auth/AddMovie.vue';
 import YouSure from '@/pages/auth/YouSure.vue';
 import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
@@ -114,6 +116,19 @@ const router = createRouter({
           path: "/email",
           name: "emailPage",
           component: EmailPage,
+        },
+      ]
+    },
+    {
+      path: "/movie-list",
+      name: "movieList",
+      component: MovieList,
+      meta: { auth: true },
+      children: [
+        {
+          path: "/add-movie",
+          name: "addMovie",
+          component: AddMovie,
         },
       ]
     },

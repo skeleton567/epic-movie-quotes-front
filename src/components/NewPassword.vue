@@ -64,6 +64,7 @@
         ></text-input>
       </div>
     </div>
+    <input id="submit" type="submit" value="" class="hidden" />
     <profile-buttons text="Add" />
   </Form>
 </template>
@@ -96,7 +97,7 @@ const lessSpan = (errors) => {
     ? "text-[#198754]"
     : "text-[#9C9A9A]";
 };
-const submit = (values) => {
-  emit("submit-event", values);
+const submit = (values, actions) => {
+  emit("submit-event", values, actions);
 };
 </script>
