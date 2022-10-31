@@ -111,7 +111,7 @@
             </button>
           </div>
           <div v-if="changePassword">
-            <new-password/>
+            <new-password @submit-event="submitPassword"/>
           </div>
           <div class="flex justify-between py-4 mt-8 md:hidden">
             <p class="text-white">Email</p>
@@ -127,12 +127,11 @@
     class="mt-12 flex justify-between items-center md:justify-end md:space-x-7 px-10"
   >
     <a class="text-white cursor-pointer" @click="cancelPasswordChange">Cancel</a>
-    <button
-      class="text-white py-2 px-3 bg-[#E31221] rounded-[4px]"
-      @click="submitPassword"
+    <label for="submit"
+      class="text-white py-2 px-3 bg-[#E31221] rounded-[4px] cursor-pointer"
     >
       Save changes
-    </button>
+    </label >
   </div>
     </div>
     <router-view></router-view>
@@ -161,11 +160,11 @@ const cancelPasswordChange = () => {
 const editPassword = () => {
   changePassword.value = true;
 };
-const submitPassword = async (values) => {
+const submitPassword = async (values, actions) => {
   try {
       const response = await axios.patch("update-password", {
-        password: profileStore.password,
-        password_confirmation: profileStore.password_confirmation,
+        password: values.password,
+        password_confirmation: values.confirmation,
         id: store.id
       });
       console.log(response);
@@ -173,8 +172,9 @@ const submitPassword = async (values) => {
       profileStore.popupText = "Password updated successfully";
       profileStore.message = "";
       changePassword = false;
-    } catch (error) {
+  } catch (error) {
     console.log(error);
+      actions.setFieldError("password", error.response.data.message);
     }
  
 };

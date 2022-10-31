@@ -10,15 +10,19 @@ import "./config/vee-validate/rules";
 import "./config/vee-validate/messages";
 import FormWrap from "@/components/FormWrap.vue";
 import TextInput from "@/components/TextInput.vue";
+import MovieInput from "@/components/MovieInput.vue";
+import TextareaComponent from "@/components/TextareaComponent.vue";
 import MailingMessage from "@/components/MailingMessage.vue";
 import DashboardWrap from "@/components/DashboardWrap.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 const app = createApp(App);
 app.component('form-wrap', FormWrap)
 app.component('text-input', TextInput)
+app.component('movie-input', MovieInput)
 app.component('mailing-message', MailingMessage)
 app.component('dashboard-wrap', DashboardWrap)
 app.component('profile-picture', ProfilePicture)
+app.component('textarea-component', TextareaComponent)
 
 
 app.use(createPinia());

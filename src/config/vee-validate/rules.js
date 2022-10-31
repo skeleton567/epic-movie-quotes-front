@@ -1,5 +1,5 @@
 import { defineRule } from "vee-validate"; // npm install vee-validate --save
-import { required, email, min, max, confirmed, alpha_num } from "@vee-validate/rules"; // npm install @vee-validate/rules
+import { required, email, min, max, confirmed, alpha_num, alpha, numeric } from "@vee-validate/rules"; // npm install @vee-validate/rules
 
 defineRule("required", required);
 defineRule("email", email);
@@ -7,6 +7,8 @@ defineRule("min", min);
 defineRule("max", max);
 defineRule("confirmed", confirmed);
 defineRule("alpha_num", alpha_num);
+defineRule("alpha", alpha);
+defineRule("number", numeric);
 defineRule("lowercase", (value) => {
     if (!value || !value.length) {
         return true;

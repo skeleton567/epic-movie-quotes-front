@@ -9,12 +9,8 @@ export const useProfileStore = defineStore("profile", {
         popup: false,
         popupText: '',
         errors: {},
-        message: '',
-        password: '',
-        password_confirmation: ''
+        message: ''
     }),
-    getters: {
-    },
     actions: {
         async makePrimary(email, id, verified) {
             try {

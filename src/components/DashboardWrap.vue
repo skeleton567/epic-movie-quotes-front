@@ -145,7 +145,7 @@
         </div>
         <div class="flex space-x-10 ml-11">
           <camera-icon />
-          <router-link class="text-xl text-white" :to="{ name: 'home' }"
+          <router-link class="text-xl text-white" :to="{ name: 'movieList' }"
             >List of movies</router-link
           >
         </div>
