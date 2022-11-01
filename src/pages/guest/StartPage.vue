@@ -21,8 +21,9 @@
     </div>
     <div
       v-for="quote in store.quotes"
-      class="h-[100vh] bg-[url('@/assets/images/interstellar.png')] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
+      class="h-[100vh] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
       :class="{ paralax: scrolled }"
+      :style="{ backgroundImage: 'url(' + url(quote) + ')' }"
     >
       <div
         class="max-w-[200px] md:max-w-[500px] lg:max-w-[900px] flex space-x-1"
@@ -62,6 +63,12 @@ window.addEventListener("scroll", () => {
   }
 });
 onMounted(() => store.getQuotes());
+const link = import.meta.env.VITE_IMAGE_BASE_URL;
+const url = (quote) => {
+  return quote.image
+    ? `${link}${quote.image}`
+    : "../src/assets/images/no-image.jpg";
+};
 </script>
 
 <style scoped>

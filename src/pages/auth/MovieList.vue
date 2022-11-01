@@ -11,19 +11,36 @@
         </router-link>
       </div>
       <p class="mb-8">(Total {{ movies.length }})</p>
-
-      <div v-for="movie in movies" class="mb-4">
-        <img :src="`${link}${movie.image}`" alt="movie" />
-        <p>
-          {{ movie.title }} <span>({{ movie.year }})</span>
-        </p>
-      </div>
+      <router-link
+        v-for="movie in movies"
+        :to="{ name: 'viewMovie', query: { id: movie.id } }"
+      >
+        <div class="mb-12">
+          <img
+            :src="
+              movie.image
+                ? `${link}${movie.image}`
+                : 'src/assets/images/no-image.jpg'
+            "
+            alt="movie"
+            class="rounded-xl mb-4"
+          />
+          <p class="mb-5">
+            {{ movie.title }} <span>({{ movie.year }})</span>
+          </p>
+          <p class="flex space-x-4">
+            <span>{{ commentLength(movie) }}</span>
+            <comment-notification />
+          </p>
+        </div>
+      </router-link>
     </div>
   </dashboard-wrap>
   <router-view></router-view>
 </template>
 
 <script setup>
+import CommentNotification from "@/components/icons/CommentNotification.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
@@ -34,11 +51,7 @@ const movies = ref([]);
 const getMovies = async () => {
   try {
     await store.getAuthUser();
-    const response = await axios.get(`movies`, {
-      params: {
-        user_id: store.id
-      }
-    });
+    const response = await axios.get(`movies`);
     console.log(response);
     movies.value.push(...response.data);
   } catch (error) {
@@ -46,4 +59,11 @@ const getMovies = async () => {
   }
 };
 getMovies();
+const commentLength = (movie) => {
+  let count = 0;
+  for (let quote of movie.quote) {
+    count += quote.comment.length;
+  }
+  return count;
+};
 </script>

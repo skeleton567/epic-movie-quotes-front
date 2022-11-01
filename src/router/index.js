@@ -19,6 +19,8 @@ import EmailPage from '@/pages/auth/EmailPage.vue';
 import MovieList from '@/pages/auth/MovieList.vue';
 import AddMovie from  '@/pages/auth/AddMovie.vue';
 import YouSure from '@/pages/auth/YouSure.vue';
+import ViewMovie from '@/pages/auth/ViewMovie.vue';
+import AddQuote from '@/pages/auth/AddQuote.vue';
 import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
 
@@ -33,7 +35,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: StartPage,
-      meta: {guest: true},
+      meta: { guest: true },
       children: [
         {
           path: "/register",
@@ -49,13 +51,13 @@ const router = createRouter({
           path: "/sent",
           name: "emailSent",
           component: EmailSent,
-          meta: {guest: false},
+          meta: { guest: false },
         },
         {
           path: "/success",
           name: "success",
           component: SuccesfullActivation,
-          meta: {guest: false},
+          meta: { guest: false },
         },
         {
           path: "/forgot-password",
@@ -66,7 +68,7 @@ const router = createRouter({
           path: "/recover-instructions",
           name: "recoverInstructions",
           component: RecoverInstructions,
-          meta: {guest: true},
+          meta: { guest: true },
         },
         {
           path: "/password-changed",
@@ -84,7 +86,7 @@ const router = createRouter({
       path: "/news-feed",
       name: "newsFeed",
       component: NewsFeed,
-      meta: {auth: true}
+      meta: { auth: true }
     },
     {
       path: "/profile",
@@ -131,6 +133,18 @@ const router = createRouter({
           component: AddMovie,
         },
       ]
+    },
+    {
+      path: "/view-movie/",
+      name: "viewMovie",
+      component: ViewMovie,
+      meta: { auth: true },
+    },
+    {
+      path: "/add-quote/",
+      name: "addQuote",
+      component: AddQuote,
+      meta: { auth: true },
     },
     {
       path: "/not-authorized",
