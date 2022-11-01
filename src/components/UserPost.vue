@@ -10,7 +10,11 @@
     </p>
     <img
       class="rounded-lg mt-3"
-      src="@/assets/images/interstellar.png"
+      :src="
+        post.image
+          ? `${link}${post.image}`
+          : '../src/assets/images/no-image.jpg'
+      "
       alt="movie"
     />
     <div class="flex items-center space-x-6 my-5">
@@ -61,6 +65,7 @@ const props = defineProps({
   image: { type: String, required: false }
 });
 let commentValue = ref("");
+const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const bgStyle = computed(() => {
   if (props.index % 2 === 0) {
     return "bg-black";

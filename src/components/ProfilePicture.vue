@@ -20,7 +20,7 @@ const props = defineProps({
 const profilePicture = computed(() => {
   return props.image
     ? `${link}${props.image}`
-    : "src/assets/images/profile.jpg";
+    : "../src/assets/images/profile.jpg";
 });
 const classes = computed(() => {
   return props.height + " " + props.border;
