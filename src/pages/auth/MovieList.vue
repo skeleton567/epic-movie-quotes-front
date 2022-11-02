@@ -1,6 +1,9 @@
 <template>
   <dashboard-wrap>
-    <div class="px-10 mt-8">
+    <div
+      class="px-10 mt-8 lg:block"
+      :class="{ hidden: $route.name === 'addMovie' }"
+    >
       <div class="flex justify-between">
         <h2 class="text-xl">My list of movies</h2>
         <router-link

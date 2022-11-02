@@ -4,7 +4,7 @@
     @click="openDropdown = false"
   >
     <form-header :link="{ name: 'movieList' }" title="Add Movie" />
-    <Form class="px-8 py-9" @submit="submit">
+    <Form class="px-8 py-9 mb-5" @submit="submit">
       <movie-input
         name="title_en"
         label="Eng"
@@ -126,14 +126,12 @@ const removeCategory = (value) => {
 const submit = async (values, actions) => {
   try {
     const fd = new FormData();
-    if (movieStore.file !== null) {
-      fd.set("image", movieStore.file);
-    }
     for (let value in values) {
       fd.set(value, values[value]);
     }
     fd.set("user_id", store.id);
     fd.set("categories", JSON.stringify(categories.value));
+    console.log(fd);
     const response = await axios.post("movie", fd);
     router.push({
       name: "movieList"

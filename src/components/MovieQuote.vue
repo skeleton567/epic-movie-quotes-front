@@ -27,15 +27,27 @@
           v-if="edit"
           class="w-40 absolute bg-[#24222F] p-8 bottom-0 right-10 rounded-xl"
         >
-          <div class="flex space-x-4">
+          <router-link
+            :to="{
+              name: 'viewQuote',
+              query: { id: quote.id, movie_id: movieStore.movie.id }
+            }"
+            class="flex space-x-4"
+          >
             <eye-component />
             <p>View post</p>
-          </div>
-          <div class="my-8 flex space-x-4">
+          </router-link>
+          <router-link
+            :to="{
+              name: 'editQuote',
+              query: { id: quote.id, movie_id: movieStore.movie.id }
+            }"
+            class="my-8 flex space-x-4"
+          >
             <pencil-component />
             <p>Edit</p>
-          </div>
-          <div class="flex space-x-4">
+          </router-link>
+          <div class="flex space-x-4" @click="deleteQuote">
             <trash-component />
             <p>Delete</p>
           </div>
@@ -52,10 +64,19 @@ import EyeComponent from "@/components/icons/EyeComponent.vue";
 import PencilComponent from "@/components/icons/PencilComponent.vue";
 import TrashComponent from "@/components/icons/TrashComponent.vue";
 import ThreeDots from "@/components/icons/ThreeDots.vue";
+import { useMoviesStore } from "@/stores/movies.js";
+import { useQuotesStore } from "@/stores/quotes.js";
 import { ref } from "vue";
+const movieStore = useMoviesStore();
+const quoteStore = useQuotesStore();
 const edit = ref(false);
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const props = defineProps({
-  quote: { type: Object, required: true }
+  quote: { type: Object, required: true },
+  movie_id: { type: Number, required: true }
 });
+const deleteQuote = async () => {
+  await quoteStore.delete(props.quote.id);
+  movieStore.getMovie(props.movie_id);
+};
 </script>

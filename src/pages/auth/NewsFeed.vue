@@ -1,12 +1,17 @@
 <template>
   <dashboard-wrap>
-    <div class="w-full md:w-[400px] lg:w-[600px] mt-4 md:mt-2">
+    <div class="w-full md:w-[400px] lg:block lg:w-[600px] mt-4 md:mt-2">
+      <router-view></router-view>
       <div class="flex items-center h-20 space-x-5">
         <div
           class="flex items-center w-full h-full space-x-4 md:w-80 md:h-12 lg:w-[450px] bg-[#24222F] md:rounded-lg"
         >
-          <write-icon></write-icon>
-          <p class="text-white inline">Write new quote</p>
+          <router-link
+            :to="{ name: 'writeQuote' }"
+            class="flex items-center space-x-4"
+            ><write-icon></write-icon>
+            <p class="text-white inline">Write new quote</p></router-link
+          >
         </div>
         <div
           class="hidden md:flex items-center space-x-4"
@@ -57,6 +62,7 @@ import SearchLoop from "@/components/icons/SearchLoop.vue";
 import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
 import UserComment from "@/components/UserComment.vue";
+
 import { usePostStore } from "@/stores/post.js";
 import { onUnmounted, onMounted, ref } from "vue";
 const store = usePostStore();
