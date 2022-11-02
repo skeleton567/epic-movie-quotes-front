@@ -4,6 +4,7 @@ import axios from "@/config/axios/index.js";
 export const useQuotesStore = defineStore("quotes", {
     state: () => ({
         quotes: [],
+        quote: null,
     }),
     actions: {
         async getQuotes() {
@@ -12,6 +13,24 @@ export const useQuotesStore = defineStore("quotes", {
                 this.quotes.push(...response.data)
                 console.log(response);
                 console.log(this.posts);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getQuote(id) {
+            try {
+                const response = await axios.get(`quote/${id}`);
+                this.quote = response.data
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async delete(id = this.quote.id) {
+            try {
+                const response = await axios.delete(`delete-quote/${id}`);
+               
+                console.log(response);
             } catch (error) {
                 console.log(error);
             }

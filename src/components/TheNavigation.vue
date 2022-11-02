@@ -2,7 +2,7 @@
   <header class="pb-10 flex justify-between">
     <h2 class="text-sm uppercase text-[#DDCCAA] font-bold">Movie quotes</h2>
     <nav class="flex items-center space-x-4">
-      <div class="hidden w-14 lg:flex items-center justify-between">
+      <div class="w-14 flex items-center justify-between">
         <select id="" class="selecttxt text-white" name="">
           <option class="text-black" selected value="">Eng</option>
           <option class="text-black" value="">ქარ</option>

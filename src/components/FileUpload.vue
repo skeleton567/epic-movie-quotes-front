@@ -9,13 +9,7 @@
       <p>{{ movieStore.upload }}</p>
     </div>
     <div>
-      <Field
-        id="file"
-        type="file"
-        class="hidden"
-        name="image"
-        @input="movieStore.addfile($event.target.files[0])"
-      />
+      <Field id="file" type="file" class="hidden" name="image" />
       <label class="rounded px-2 py-3 bg-[#9747FF66] cursor-pointer" for="file"
         >Choose file</label
       >

@@ -3,7 +3,7 @@
     <div class="px-10 mt-8">
       <img
         :src="
-          movieStore.movie.image
+          movieStore?.movie?.image
             ? `${link}${movieStore.movie.image}`
             : '../src/assets/images/no-image.jpg'
         "
@@ -45,7 +45,11 @@
         <p class="mb-8 mt-2">(Total {{ movieStore.movie?.quote?.length }})</p>
       </div>
     </div>
-    <movie-quote v-for="quote in movieStore.movie?.quote" :quote="quote" />
+    <movie-quote
+      v-for="quote in movieStore.movie?.quote"
+      :quote="quote"
+      :movie_id="movieStore?.movie?.id"
+    />
   </dashboard-wrap>
 </template>
 

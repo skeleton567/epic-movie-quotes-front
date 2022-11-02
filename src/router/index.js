@@ -21,6 +21,9 @@ import AddMovie from  '@/pages/auth/AddMovie.vue';
 import YouSure from '@/pages/auth/YouSure.vue';
 import ViewMovie from '@/pages/auth/ViewMovie.vue';
 import AddQuote from '@/pages/auth/AddQuote.vue';
+import ViewQuote from '@/pages/auth/ViewQuote.vue';
+import EditQuote from '@/pages/auth/EditQuote.vue';
+import WriteQuote from '@/pages/auth/WriteQuote.vue';
 import { useUserStore } from "@/stores/user.js";
 import { getJwtToken } from "@/helpers/jwt";
 
@@ -86,7 +89,14 @@ const router = createRouter({
       path: "/news-feed",
       name: "newsFeed",
       component: NewsFeed,
-      meta: { auth: true }
+      meta: { auth: true },
+      children: [
+        {
+          path: "/write-quote",
+          name: "writeQuote",
+          component: WriteQuote,
+        },
+      ]
     },
     {
       path: "/profile",
@@ -144,6 +154,18 @@ const router = createRouter({
       path: "/add-quote/",
       name: "addQuote",
       component: AddQuote,
+      meta: { auth: true },
+    },
+    {
+      path: "/view-quote/",
+      name: "viewQuote",
+      component: ViewQuote,
+      meta: { auth: true },
+    },
+    {
+      path: "/edit-quote/",
+      name: "editQuote",
+      component: EditQuote,
       meta: { auth: true },
     },
     {

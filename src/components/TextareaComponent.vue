@@ -5,6 +5,7 @@
     >
       <Field
         v-slot="{ field }"
+        v-model="value"
         :name="name"
         :rules="rule"
         :validate-on-input="true"
@@ -12,9 +13,11 @@
         <textarea
           :id="name"
           v-bind="field"
+          v-model="value"
           class="outline-none w-full bg-inherit placeholder-white px-1 focus:outline-0 focus:border-none"
           :placeholder="placeholder"
           rows="2"
+          :class="{ 'pointer-events-none': $route.name === 'viewQuote' }"
         ></textarea>
       </Field>
       <label :for="name" class="text-[#6C757D]">{{ label }}</label>
@@ -30,6 +33,7 @@ const props = defineProps({
   rule: { type: String, required: true },
   label: { type: String, required: false },
   name: { type: String, required: true },
-  placeholder: { type: String, required: false }
+  placeholder: { type: String, required: false },
+  value: { type: String, required: false }
 });
 </script>

@@ -6,7 +6,7 @@
     </div>
     <p class="text-white mt-3 text-sm">
       “{{ qoute }}” movie-
-      <span class="text-[#DDCCAA]">{{ movie }}</span>
+      <span class="text-[#DDCCAA]">{{ movie }} ({{ post.movie.year }})</span>
     </p>
     <img
       class="rounded-lg mt-3"
