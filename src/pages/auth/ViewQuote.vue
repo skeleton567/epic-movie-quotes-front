@@ -1,6 +1,6 @@
 <template>
   <dashboard-wrap>
-    <div class="absolute top-0 z-10 bg-[#11101a]">
+    <quote-crud>
       <form-header
         :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
         title="View Quote"
@@ -45,7 +45,7 @@
           ></textarea>
         </div>
       </show-quote>
-    </div>
+    </quote-crud>
   </dashboard-wrap>
 </template>
 
@@ -59,6 +59,7 @@ import CommentIcon from "@/components/icons/CommentIcon.vue";
 import HeartIcon from "@/components/icons/HeartIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 import ShowQuote from "@/components/ShowQuote.vue";
+import QuoteCrud from "@/components/QuoteCrud.vue";
 const store = useUserStore();
 const route = useRoute();
 const movieStore = useMoviesStore();

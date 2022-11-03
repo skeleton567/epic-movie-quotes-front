@@ -3,7 +3,7 @@
     v-if="$route.name === 'editQuote'"
     src="@/assets/images/changePhoto.svg"
     alt="bell"
-    class="cursor-pointer absolute top-[30%] right-[30%] z-10"
+    class="cursor-pointer"
     @click="$emit('click-event')"
   />
 </template>

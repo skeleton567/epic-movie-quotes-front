@@ -38,5 +38,18 @@ export const usePostStore = defineStore("post", {
                 this.getPosts();
             }
         },
+        async refreshPosts() {
+            try {
+                const response = await axios.get(`post?page=1`);
+                if (response.data.length) {
+                    this.page = 2;
+                }
+                this.posts = response.data;
+                console.log(response);
+                console.log(this.posts);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 });

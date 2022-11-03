@@ -28,7 +28,7 @@ export const useQuotesStore = defineStore("quotes", {
         },
         async delete(id = this.quote.id) {
             try {
-                const response = await axios.delete(`delete-quote/${id}`);
+                const response = await axios.delete(`quote/${id}`);
                
                 console.log(response);
             } catch (error) {

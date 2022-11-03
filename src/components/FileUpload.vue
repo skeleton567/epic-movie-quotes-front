@@ -1,15 +1,22 @@
 <template>
   <div
-    class="flex justify-between items-center border border-[#6C757D] rounded px-3 py-5"
+    class="flex justify-between md:justify-start space-x-4 items-center border border-[#6C757D] rounded px-3 py-5"
     @dragover.prevent=""
     @drop.prevent="movieStore.addfile($event.dataTransfer.files[0])"
   >
     <div class="flex items-center space-x-3">
       <photo-camera />
-      <p>{{ movieStore.upload }}</p>
+      <p class="md:hidden">{{ movieStore.upload }}</p>
+      <p class="hidden md:block">{{ movieStore.uploadBig }}</p>
     </div>
     <div>
-      <Field id="file" type="file" class="hidden" name="image" />
+      <Field
+        id="file"
+        type="file"
+        class="hidden"
+        name="image"
+        @input="movieStore.addfile($event.target.files[0])"
+      />
       <label class="rounded px-2 py-3 bg-[#9747FF66] cursor-pointer" for="file"
         >Choose file</label
       >

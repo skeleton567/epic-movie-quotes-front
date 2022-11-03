@@ -1,6 +1,6 @@
 <template>
   <dashboard-wrap>
-    <div class="absolute top-0 z-10 bg-[#11101a]">
+    <quote-crud>
       <new-quote-form
         :movie-id="movieStore.movie.id"
         :link="{ name: 'viewMovie', query: { id: movieStore.movie.id } }"
@@ -41,7 +41,7 @@
           </div>
         </div>
       </new-quote-form>
-    </div>
+    </quote-crud>
   </dashboard-wrap>
 </template>
 
@@ -50,6 +50,7 @@ import NewQuoteForm from "@/components/NewQuoteForm.vue";
 import { useMoviesStore } from "@/stores/movies.js";
 import { onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
+import QuoteCrud from "@/components/QuoteCrud.vue";
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const route = useRoute();
 const movieStore = useMoviesStore();
