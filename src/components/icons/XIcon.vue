@@ -3,7 +3,7 @@
     src="@/assets/images/X.svg"
     alt="x"
     class="cursor-pointer"
-    :class="{ white: $route.name !== 'newsFeed', 'h-2': height }"
+    :class="{ white: $route.name !== 'profile', 'h-2': height }"
     @click="$emit('clickEvent')"
   />
 </template>

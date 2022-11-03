@@ -1,0 +1,9 @@
+<template>
+  <img
+    class="cursor-pointer"
+    src="@/assets/images/loop.svg"
+    alt="loop"
+    @click="$emit('showEvent')"
+    @click.stop=""
+  />
+</template>

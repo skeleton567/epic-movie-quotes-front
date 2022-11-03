@@ -1,19 +1,21 @@
 <template>
   <dashboard-wrap>
-    <Form class="absolute top-0 z-10 bg-[#11101a]" @submit="submit">
-      <form-header
-        :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
-        title="Edit Quote"
-      />
-      <show-quote>
-        <button
-          class="w-full bg-[#E31221] rounded text-xl py-3 mt-4 mb-10"
-          type="submit"
-        >
-          Save changes
-        </button>
-      </show-quote>
-    </Form>
+    <quote-crud>
+      <Form @submit="submit">
+        <form-header
+          :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
+          title="Edit Quote"
+        />
+        <show-quote>
+          <button
+            class="w-full bg-[#E31221] rounded text-xl py-3 mt-4 mb-10"
+            type="submit"
+          >
+            Save changes
+          </button>
+        </show-quote>
+      </Form>
+    </quote-crud>
   </dashboard-wrap>
 </template>
 
@@ -24,6 +26,7 @@ import { useQuotesStore } from "@/stores/quotes.js";
 import ShowQuote from "@/components/ShowQuote.vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
+import QuoteCrud from "@/components/QuoteCrud.vue";
 const route = useRoute();
 const router = useRouter();
 const quoteStore = useQuotesStore();
@@ -36,7 +39,7 @@ const submit = async (values, actions) => {
       fd.set(value, values[value]);
     }
     console.log(fd);
-    const response = await axios.post(`update-quote/${route.query.id}`, fd);
+    const response = await axios.post(`quote/${route.query.id}`, fd);
 
     console.log(response);
     router.push({

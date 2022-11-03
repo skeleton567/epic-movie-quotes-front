@@ -5,13 +5,13 @@
     <textarea-component
       name="quote_en"
       placeholder="Create new quote"
-      rule="required"
+      rule="required|alpha_spaces"
       label="Eng"
     />
     <textarea-component
       name="quote_ka"
       placeholder="ახალი ციტატა"
-      rule="required"
+      rule="required|georgian"
       label="ქარ"
     />
     <file-upload />
@@ -84,6 +84,7 @@ const submit = async (values, actions) => {
       fd.set("movie_id", props.movieId);
     }
     const response = await axios.post("quote", fd);
+    postStore.refreshPosts();
     if (route.name === "writeQuote") {
       router.push({
         name: "newsFeed",

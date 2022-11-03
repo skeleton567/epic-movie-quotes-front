@@ -1,5 +1,5 @@
 import { defineRule } from "vee-validate"; 
-import { required, email, min, max, confirmed, alpha_num, alpha, numeric } from "@vee-validate/rules"; 
+import { required, email, min, max, confirmed, alpha_num, alpha_spaces, numeric } from "@vee-validate/rules"; 
 
 defineRule("required", required);
 defineRule("email", email);
@@ -7,7 +7,7 @@ defineRule("min", min);
 defineRule("max", max);
 defineRule("confirmed", confirmed);
 defineRule("alpha_num", alpha_num);
-defineRule("alpha", alpha);
+defineRule("alpha_spaces", alpha_spaces);
 defineRule("number", numeric);
 defineRule("lowercase", (value) => {
     if (!value || !value.length) {
@@ -19,5 +19,17 @@ defineRule("lowercase", (value) => {
   } else {
     return "Only lowercase letters are allowed";
   }
-  });
+});
+  
+defineRule("georgian", (value) => {
+  if (!value || !value.length) {
+      return true;
+  }
+  const georgianRegex = /^[აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ\s]*$/gi;
+  if (georgianRegex.test(value)) {
+  return true;
+} else {
+  return "Only georgian letters are allowed";
+}
+});
 

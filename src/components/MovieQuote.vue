@@ -1,15 +1,24 @@
 <template>
   <div class="w-full md:rounded-xl bg-[#0a0a12] py-5 my-8 px-10">
-    <img
-      class="rounded-lg mt-3 h-40 w-full"
-      :src="
-        quote.image
-          ? `${link}${quote.image}`
-          : '../src/assets/images/no-image.jpg'
-      "
-      alt="movie"
-    />
-    <p class="py-6 border-b border-[#EFEFEF33]">“{{ quote.quote }}”</p>
+    <div
+      class="md:relative md:flex pb-6 border-b border-[#EFEFEF33] md:gap-6 md:items-center"
+    >
+      <img
+        class="rounded-lg mt-3 h-40 w-full md:w-1/3"
+        :src="
+          quote.image
+            ? `${link}${quote.image}`
+            : '../src/assets/images/no-image.jpg'
+        "
+        alt="movie"
+      />
+      <p class="mt-6">“{{ quote.quote }}”</p>
+      <three-dots
+        classes="md:block hidden absolute right-2 top-3"
+        @click-event="edit = !edit"
+      />
+    </div>
+
     <div class="flex items-center justify-between my-5">
       <div class="flex items-center space-x-6">
         <div class="flex items-center space-x-3">
@@ -22,10 +31,10 @@
         </div>
       </div>
       <div class="relative">
-        <three-dots @click-event="edit = !edit" />
+        <three-dots classes="md:hidden" @click-event="edit = !edit" />
         <div
           v-if="edit"
-          class="w-40 absolute bg-[#24222F] p-8 bottom-0 right-10 rounded-xl"
+          class="w-40 absolute bg-[#24222F] p-8 -bottom-4 right-10 rounded-xl"
         >
           <router-link
             :to="{

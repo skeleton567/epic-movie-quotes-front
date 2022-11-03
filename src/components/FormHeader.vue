@@ -2,11 +2,11 @@
   <div class="flex items-center h-20 border-b border-[#EFEFEF33] px-8 w-full">
     <div v-if="correctRoute" class="flex space-x-3 w-20">
       <router-link v-if="route.name === 'viewQuote'" :to="editLink"
-        ><pencil-component
+        ><pencil-component classes="w-5 h-5"
       /></router-link>
       <div v-if="route.name === 'viewQuote'" class="border-r"></div>
       <div @click="deleteQuote">
-        <trash-component />
+        <trash-component classes="w-5 h-5" />
       </div>
     </div>
     <h1 class="text-3xl w-full text-center">{{ title }}</h1>

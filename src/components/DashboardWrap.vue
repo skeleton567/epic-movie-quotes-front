@@ -21,7 +21,7 @@
           >
           <div
             v-if="notificationOpened"
-            class="absolute top-16 right-0 translate-x-10 w-[100vw] max-h-[80vh] md:w-[500px] md:top-16 md:-right-3 md:rounded-xl notification"
+            class="absolute top-16 right-0 translate-x-10 w-[100vw] max-h-[80vh] md:w-[500px] md:top-16 md:-right-3 md:rounded-xl notification z-50"
           >
             <div
               v-if="!notifications.length"
@@ -117,14 +117,14 @@
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:h-full md:w-[22%]"
+        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:h-full md:w-auto md:max-w-sm"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
           <profile-picture :image="store.profile" />
           <div>
             <p
-              class="text-xl text-white break-words md:max-w-[200px] lg:max-w-none"
+              class="text-xl text-white break-words md:max-w-[200px] lg:max-w-sm"
             >
               {{ store?.name ? store.name : store.email }}
             </p>

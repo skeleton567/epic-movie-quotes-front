@@ -1,7 +1,7 @@
 <template>
   <dashboard-wrap>
+    <router-view></router-view>
     <div class="w-full md:w-[400px] lg:block lg:w-[600px] mt-4 md:mt-2">
-      <router-view></router-view>
       <div class="flex items-center h-20 space-x-5">
         <div
           class="flex items-center w-full h-full space-x-4 md:w-80 md:h-12 lg:w-[450px] bg-[#24222F] md:rounded-lg"
@@ -21,7 +21,13 @@
           }"
         >
           <search-loop @show-event="toggleSearch" />
-          <p v-if="!searchActive" class="text-white inline">Search by</p>
+          <p
+            v-if="!searchActive"
+            class="text-white inline"
+            @click="toggleSearch"
+          >
+            Search by
+          </p>
           <input
             v-else
             v-model="store.searchValue"
@@ -41,8 +47,9 @@
           :likes="post.like"
           :index="post.id"
           :post="post"
+          @click="showComment = !showComment"
         >
-          <div v-for="comment in post.comment">
+          <div v-for="comment in post.comment" v-if="showComment">
             <user-comment
               :user="
                 comment.user?.name ? comment.user.name : comment.user.email
@@ -62,9 +69,9 @@ import SearchLoop from "@/components/icons/SearchLoop.vue";
 import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
 import UserComment from "@/components/UserComment.vue";
-
 import { usePostStore } from "@/stores/post.js";
 import { onUnmounted, onMounted, ref } from "vue";
+const showComment = ref(false);
 const store = usePostStore();
 let searchActive = ref(false);
 const toggleSearch = () => {

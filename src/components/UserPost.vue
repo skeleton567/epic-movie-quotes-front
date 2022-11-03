@@ -20,7 +20,7 @@
     <div class="flex items-center space-x-6 my-5">
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ comment }}</p>
-        <comment-icon></comment-icon>
+        <comment-icon @click-event="$emit('click-event')"></comment-icon>
       </div>
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ likes.length }}</p>
@@ -75,7 +75,6 @@ const bgStyle = computed(() => {
 });
 const store = useUserStore();
 const likes = ref(props.likes);
-const commentArray = ref(props.post.comment);
 let liked = computed(() => {
   return !!likes.value.filter((like) => like.user.id === store.id).length;
 });
@@ -101,7 +100,7 @@ const addComment = async (e) => {
     comment: commentValue.value,
     user_to_notify: props.post.user.id
   });
-  commentArray.value.push(response.data);
+  props.post.comment.push(response.data);
   commentValue.value = "";
   e.blur();
 };
