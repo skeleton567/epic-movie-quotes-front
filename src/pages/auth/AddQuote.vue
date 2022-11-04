@@ -27,10 +27,10 @@
                   <span class="text-[#CED4DA]">Director: </span>
                   <span> {{ movieStore.movie.director }}</span>
                 </p>
-                <div class="grid grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                   <p
                     v-for="category in movieStore.movie.categories"
-                    class="w-10 text-center bg-[#6C757D] rounded"
+                    class="w-[70px] text-center bg-[#6C757D] rounded text-sm"
                   >
                     {{ category.category }}
                   </p>

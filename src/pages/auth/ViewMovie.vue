@@ -1,6 +1,9 @@
 <template>
   <dashboard-wrap>
-    <div class="md:px-0 mt-8 lg:block md:w-full md:pl-96 mb-8">
+    <div
+      class="md:px-0 mt-8 lg:block md:w-full md:pl-96 mb-8"
+      :class="{ hidden: $route.name === 'editMovie' }"
+    >
       <h1 class="hidden md:block text-2xl">Movie discription</h1>
       <div class="px-10 md:px-0 mt-8 w-full">
         <div class="md:flex md:space-x-10">
@@ -18,15 +21,15 @@
               class="flex justify-between h-10 items-center mt-5 md:mt-0 gap-5"
             >
               <h1 class="text-2xl text-[#DDCCAA] my-6 md:my-0 mb-10 md:h-full">
-                {{ movieStore.movie.title }}
-                <span>({{ movieStore.movie.year }})</span>
+                {{ movieStore?.movie?.title }}
+                <span>({{ movieStore?.movie?.year }})</span>
               </h1>
               <edit-delete classes="md:flex hidden" />
             </div>
 
             <div class="grid grid-cols-4 gap-4 mb-4">
               <p
-                v-for="category in movieStore.movie.categories"
+                v-for="category in movieStore?.movie?.categories"
                 class="w-20 text-center bg-[#6C757D] rounded"
               >
                 {{ category.category }}
@@ -35,13 +38,13 @@
             <div class="ml-3 md:ml-0">
               <p class="my-5">
                 <span class="text-[#CED4DA]">Director: </span>
-                <span> {{ movieStore.movie.director }}</span>
+                <span> {{ movieStore?.movie?.director }}</span>
               </p>
               <p class="mb-5">
                 <span class="text-[#CED4DA]">Budget: </span>
-                <span> {{ movieStore.movie.budget }}$</span>
+                <span> {{ movieStore?.movie?.budget }}$</span>
               </p>
-              <p>{{ movieStore.movie.description }}</p>
+              <p>{{ movieStore?.movie?.description }}</p>
             </div>
           </div>
         </div>
@@ -66,13 +69,14 @@
             </div>
           </div>
           <movie-quote
-            v-for="quote in movieStore.movie?.quote"
+            v-for="quote in movieStore?.movie?.quote"
             :quote="quote"
             :movie_id="movieStore?.movie?.id"
           />
         </div>
       </div>
     </div>
+    <router-view></router-view>
   </dashboard-wrap>
 </template>
 

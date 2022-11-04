@@ -1,0 +1,68 @@
+<template>
+  <movie-form
+    title="Edit Movie"
+    :link="{ name: 'viewMovie', query: { id: movieStore?.movie?.id } }"
+    :categories="movieStore.movie.categories"
+    @submit-event="submit"
+  >
+    <image-upload :image="movie" @show-image="showImage" />
+  </movie-form>
+</template>
+
+<script setup>
+import MovieForm from "@/components/MovieForm.vue";
+import { useUserStore } from "@/stores/user.js";
+import axios from "@/config/axios/index.js";
+import { useRoute, useRouter } from "vue-router";
+import { useMoviesStore } from "@/stores/movies.js";
+import { onBeforeMount } from "vue";
+import ImageUpload from "@/components/ImageUpload.vue";
+import { computed, ref } from "vue";
+const link = import.meta.env.VITE_IMAGE_BASE_URL;
+const movieStore = useMoviesStore();
+const router = useRouter();
+const store = useUserStore();
+const submit = async (values, actions, categories) => {
+  try {
+    const fd = new FormData();
+    console.log(values);
+    fd.append("_method", "PATCH");
+    for (let value in values) {
+      fd.set(value, values[value]);
+    }
+    fd.set("user_id", store.id);
+    fd.set("categories", JSON.stringify(categories));
+    if (movieStore.file) fd.set("image", movieStore.file);
+    const response = await axios.post(`movies/${route.query.id}`, fd);
+    await movieStore.getMovie(route.query.id);
+    router.push({ name: "viewMovie", query: { id: movieStore.movie.id } });
+    movieStore.upload = "Upload image";
+    movieStore.uploadBig = "Drag & drop your image here or";
+    movieStore.file = null;
+  } catch (error) {
+    const errors = error.response?.data.errors;
+    console.log(error);
+    for (const loopError in errors) {
+      actions.setFieldError(loopError, errors[loopError]);
+    }
+  }
+};
+const newImg = ref(null);
+const movie = computed(() => {
+  if (newImg.value) {
+    return newImg.value;
+  } else if (movieStore?.movie?.image) {
+    return `${link}${movieStore?.movie?.image}`;
+  } else {
+    ("../src/assets/images/no-image.jpg");
+  }
+});
+const showImage = (event) => {
+  newImg.value = URL.createObjectURL(event);
+  movieStore.file = event;
+};
+const route = useRoute();
+onBeforeMount(() => {
+  movieStore.getMovie(route.query.id);
+});
+</script>

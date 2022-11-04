@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "@/config/axios/index.js";
 
+
 export const useMoviesStore = defineStore("movies", {
-    state: () => ({
+  state: () => ({
         movie: [],
+        movies: [],
         upload: "Upload image",
         uploadBig: 'Drag & drop your image here or',
+        file: null,
     }),
     getters: {
     },
@@ -22,6 +25,15 @@ export const useMoviesStore = defineStore("movies", {
             this.upload = "Image Uploaded";
             this.uploadBig = "Image Uploaded";
             this.file = image;
-          }
+      },
+      async getMovies () {
+        try {
+          const response = await axios.get(`movies`);
+          console.log(response);
+          this.movies.push(...response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
 });

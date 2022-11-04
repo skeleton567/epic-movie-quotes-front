@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import gAuth from 'vue3-google-auth';
+import vue3GoogleLogin from 'vue3-google-login'
 
 import App from "./App.vue";
 import router from "./router";
@@ -27,12 +27,9 @@ app.component('textarea-component', TextareaComponent)
 
 app.use(createPinia());
 app.use(router);
+
 const id = import.meta.env.VITE_CLIENT_ID;
-const $gAuth = gAuth.createGAuth({
-    clientId: id,
-    scope: 'email',
-    prompt: 'consent',
-    plugin_name: 'Web client 3'
-  }); 
-app.use($gAuth)
+app.use(vue3GoogleLogin, {
+  clientId: id
+})
 app.mount("#app");

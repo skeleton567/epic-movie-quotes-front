@@ -17,7 +17,8 @@ import EditPassword from '@/pages/auth/EditPassword.vue';
 import EditEmail from '@/pages/auth/EditEmail.vue';
 import EmailPage from '@/pages/auth/EmailPage.vue';
 import MovieList from '@/pages/auth/MovieList.vue';
-import AddMovie from  '@/pages/auth/AddMovie.vue';
+import AddMovie from '@/pages/auth/AddMovie.vue';
+import EditMovie from  '@/pages/auth/EditMovie.vue';
 import YouSure from '@/pages/auth/YouSure.vue';
 import ViewMovie from '@/pages/auth/ViewMovie.vue';
 import AddQuote from '@/pages/auth/AddQuote.vue';
@@ -149,6 +150,13 @@ const router = createRouter({
       name: "viewMovie",
       component: ViewMovie,
       meta: { auth: true },
+      children: [
+        {
+          path: "/edit-movie",
+          name: "editMovie",
+          component: EditMovie,
+        },
+      ]
     },
     {
       path: "/add-quote/",

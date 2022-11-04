@@ -5,6 +5,7 @@ export const useQuotesStore = defineStore("quotes", {
     state: () => ({
         quotes: [],
         quote: null,
+        file: null,
     }),
     actions: {
         async getQuotes() {

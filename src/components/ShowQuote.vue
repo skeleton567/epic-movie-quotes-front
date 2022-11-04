@@ -3,45 +3,42 @@
     <textarea-component
       name="quote_en"
       placeholder="Create new quote"
-      rule="required"
+      rule="required|alpha_spaces"
       label="Eng"
       :value="quoteStore?.quote?.quote_en"
     />
     <textarea-component
       name="quote_ka"
       placeholder="ახალი ციტატა"
-      rule="required"
+      rule="required|georgian"
       label="ქარ"
       :value="quoteStore?.quote?.quote_ka"
     />
-    <div
-      class="flex justify-center items-center h-80 w-full fit"
-      :style="{ backgroundImage: 'url(' + quote + ')' }"
-    >
-      <Field id="file" class="hidden" type="file" name="image" />
-      <label class="" for="file"><change-photo /></label>
-    </div>
+    <image-upload :image="quote" @show-image="showImage" />
     <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" name="image" />
     <slot></slot>
   </div>
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from "vee-validate";
+import ImageUpload from "@/components/ImageUpload.vue";
+import { ErrorMessage } from "vee-validate";
 import { useQuotesStore } from "@/stores/quotes.js";
-import ChangePhoto from "@/components/icons/ChangePhoto.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 const quoteStore = useQuotesStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
+const newImg = ref(null);
 const quote = computed(() => {
-  return quoteStore?.quote?.image
-    ? `${link}${quoteStore?.quote?.image}`
-    : "../src/assets/images/no-image.jpg";
+  if (newImg.value) {
+    return newImg.value;
+  } else if (quoteStore?.quote?.image) {
+    return `${link}${quoteStore?.quote?.image}`;
+  } else {
+    ("../src/assets/images/no-image.jpg");
+  }
 });
+const showImage = (event) => {
+  newImg.value = URL.createObjectURL(event);
+  quoteStore.file = event;
+};
 </script>
-
-<style scoped>
-.fit {
-  background-size: 100% 100%;
-}
-</style>
