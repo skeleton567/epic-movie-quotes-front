@@ -5,6 +5,7 @@
     >
       <Field
         :id="name"
+        v-model="value"
         :type="type"
         :name="name"
         class="outline-none w-full bg-inherit placeholder-white px-1"
@@ -26,6 +27,7 @@ const props = defineProps({
   label: { type: String, required: false },
   name: { type: String, required: true },
   placeholder: { type: String, required: false },
-  type: { type: String, required: false, default: "text" }
+  type: { type: String, required: false, default: "text" },
+  value: { required: false }
 });
 </script>

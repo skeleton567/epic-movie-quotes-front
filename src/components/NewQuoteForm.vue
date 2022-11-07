@@ -80,11 +80,13 @@ const submit = async (values, actions) => {
     for (let value in values) {
       fd.set(value, values[value]);
     }
+    if (movieStore.file) fd.set("image", movieStore.file);
     if (props.movieId) {
       fd.set("movie_id", props.movieId);
     }
     const response = await axios.post("quote", fd);
     postStore.refreshPosts();
+    movieStore.file = null;
     if (route.name === "writeQuote") {
       router.push({
         name: "newsFeed",

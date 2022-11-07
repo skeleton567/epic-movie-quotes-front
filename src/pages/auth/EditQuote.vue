@@ -38,10 +38,9 @@ const submit = async (values, actions) => {
     for (let value in values) {
       fd.set(value, values[value]);
     }
-    console.log(fd);
+    if (quoteStore.file) fd.set("image", quoteStore.file);
     const response = await axios.post(`quote/${route.query.id}`, fd);
-
-    console.log(response);
+    quoteStore.file = null;
     router.push({
       name: "viewMovie",
       query: { id: route.query.movie_id }

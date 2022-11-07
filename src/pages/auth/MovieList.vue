@@ -7,7 +7,9 @@
       <div class="flex justify-between items-center md:h-10 mb-10">
         <div class="md:flex md:space-x-3 md:items-center shrink-2 basis-80">
           <h2 class="text-xl">My list of movies</h2>
-          <p class="mt-5 md:mb-0 md:mt-0">(Total {{ movies.length }})</p>
+          <p class="mt-5 md:mb-0 md:mt-0">
+            (Total {{ movieStore?.movies?.length }})
+          </p>
         </div>
         <div
           class="flex flex-col justify-end items-end md:flex md:flex-row-reverse space-x-3 md:justify-center md:items-center"
@@ -75,32 +77,21 @@
 <script setup>
 import CommentNotification from "@/components/icons/CommentNotification.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
-import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
 import { ref } from "vue";
 import SearchIcon from "@/components/icons/SearchIcon.vue";
 import { computed } from "vue";
+import { useMoviesStore } from "@/stores/movies.js";
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
-const store = useUserStore();
-const movies = ref([]);
+const movieStore = useMoviesStore();
 let searchValue = ref("");
 const searchesMovies = computed(() => {
-  return movies.value.filter((movie) =>
+  return movieStore?.movies?.filter((movie) =>
     movie.title.toLowerCase().includes(searchValue.value.toLowerCase())
   );
 });
 const openedSearch = ref(false);
-const getMovies = async () => {
-  try {
-    await store.getAuthUser();
-    const response = await axios.get(`movies`);
-    console.log(response);
-    movies.value.push(...response.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-getMovies();
+movieStore.getMovies();
 const commentLength = (movie) => {
   let count = 0;
   for (let quote of movie.quote) {
