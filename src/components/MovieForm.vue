@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-10 bg-[#11101a] lg:bg-opacity-75 lg:h-[200vh] top-0 w-full flex justify-center md:mt-24"
+    class="absolute md:fixed z-50 bg-[#11101a] lg:bg-opacity-75 lg:h-[100vh] top-0 w-full flex justify-center md:mt-0"
     @click="$router.push(link)"
   >
     <div
@@ -9,13 +9,16 @@
       @click.stop
     >
       <form-header :link="link" :title="title" />
-      <Form class="px-8 py-9 mb-5 md:py-2 md:mb-2" @submit="submit">
+      <Form
+        class="px-8 py-9 mb-5 md:py-2 md:mb-2 md:h-[80vh] md:overflow-y-scroll scrollbar"
+        @submit="submit"
+      >
         <movie-input
           :value="movieStore?.movie?.title_en"
           name="title_en"
           label="Eng"
           placeholder="Movie name"
-          rule="required|alpha_space"
+          rule="required|alpha_spaces"
         />
         <movie-input
           :value="movieStore?.movie?.title_ka"
@@ -64,7 +67,7 @@
           name="director_en"
           label="Eng"
           placeholder="Director"
-          rule="required|alpha_space"
+          rule="required|alpha_spaces"
         />
         <movie-input
           :value="movieStore?.movie?.director_ka"
@@ -91,7 +94,7 @@
           :value="movieStore?.movie?.description_en"
           name="description_en"
           placeholder="Description"
-          rule="required|alpha_space"
+          rule="required|alpha_spaces"
           label="Eng"
         />
         <textarea-component
@@ -106,7 +109,7 @@
           class="w-full bg-[#E31221] rounded text-xl py-3 mt-4"
           type="submit"
         >
-          Add Movie
+          {{ title }}
         </button>
       </Form>
     </div>
@@ -150,3 +153,10 @@ const getCategory = async () => {
 };
 getCategory();
 </script>
+
+<style scoped>
+.scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+</style>

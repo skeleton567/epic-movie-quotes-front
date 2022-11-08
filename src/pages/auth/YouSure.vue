@@ -34,7 +34,7 @@ const add = async () => {
       profileStore.popupText = "Username changed succsessfully";
       profileStore.message = "";
       store.getAuthUser();
-      router.push({ name: "profile" });
+      router.replace({ name: "profile" });
     } catch (error) {
       router.replace({
         name: "editName",
@@ -51,7 +51,7 @@ const add = async () => {
       profileStore.popupText = "Email addded succsessfully";
       profileStore.message = "Please check email to verify new address";
       store.getAuthUser();
-      router.push({ name: "profile" });
+      router.replace({ name: "profile" });
     } catch (error) {
       router.replace({
         name: "editEmail",
@@ -69,7 +69,7 @@ const add = async () => {
       profileStore.popup = true;
       profileStore.popupText = "Password updated successfully";
       profileStore.message = "";
-      router.push({ name: "profile" });
+      router.replace({ name: "profile" });
     } catch (error) {
       console.log(error);
       router.replace({

@@ -37,7 +37,7 @@
           />
         </div>
       </div>
-      <div v-for="post in store.postSearch">
+      <div v-for="post in store.postSearch" :key="post.id">
         <user-post
           :user="post.user?.name ? post.user.name : post.user.email"
           :image="post.user.image"
@@ -47,17 +47,7 @@
           :likes="post.like"
           :index="post.id"
           :post="post"
-          @click="showComment = !showComment"
         >
-          <div v-for="comment in post.comment" v-if="showComment">
-            <user-comment
-              :user="
-                comment.user?.name ? comment.user.name : comment.user.email
-              "
-              :comment="comment.comment"
-              :image="comment.user.image"
-            />
-          </div>
         </user-post>
       </div>
     </div>
@@ -68,10 +58,8 @@
 import SearchLoop from "@/components/icons/SearchLoop.vue";
 import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
-import UserComment from "@/components/UserComment.vue";
 import { usePostStore } from "@/stores/post.js";
 import { onUnmounted, onMounted, ref } from "vue";
-const showComment = ref(false);
 const store = usePostStore();
 let searchActive = ref(false);
 const toggleSearch = () => {

@@ -14,7 +14,7 @@
                 : '../src/assets/images/no-image.jpg'
             "
             alt="movie"
-            class="rounded-xl w-full md:w-full md:max-w-[400px] lg:max-w-[800px] lg:w-[full] max-h-60 md:h-[400px] md:max-h-[400px]"
+            class="rounded-xl w-full md:w-full md:max-w-[300px] lg:max-w-[800px] lg:w-[full] max-h-60 md:h-[400px] md:max-h-[400px]"
           />
           <div>
             <div
@@ -48,10 +48,10 @@
             </div>
           </div>
         </div>
-        <div class="md:w-full md:max-w-[400px] lg:max-w-[800px] lg:w-[full]">
+        <div class="md:w-full md:max-w-[300px] lg:max-w-[800px] lg:w-[full]">
           <div class="md:flex md:flex-row-reverse md:w-full md:gap-6">
             <div
-              class="border-b md:border-l md:border-b-0 md:pl-5 md:pb-0 pb-10 border-[#54535A] my-10 md:w-full md:max-w-[400px] lg:max-w-[800px] lg:w-[full] flex justify-between"
+              class="border-b md:border-l md:border-b-0 md:pl-5 md:pb-0 pb-10 border-[#54535A] my-10 md:w-full md:max-w-[300px] lg:max-w-[800px] lg:w-[full] flex justify-between"
             >
               <router-link
                 :to="{ name: 'addQuote', query: { id: movieStore.movie?.id } }"
@@ -70,14 +70,15 @@
           </div>
           <movie-quote
             v-for="quote in movieStore?.movie?.quote"
+            :key="quote.id"
             :quote="quote"
             :movie_id="movieStore?.movie?.id"
           />
         </div>
       </div>
     </div>
-    <router-view></router-view>
   </dashboard-wrap>
+  <router-view></router-view>
 </template>
 
 <script setup>
@@ -85,13 +86,12 @@ import { useRoute } from "vue-router";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import { useMoviesStore } from "@/stores/movies.js";
-import { onBeforeMount } from "vue";
+import { onBeforeMount, ref } from "vue";
 import EditDelete from "@/components/EditDelete.vue";
-
 const movieStore = useMoviesStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const route = useRoute();
-onBeforeMount(() => {
-  movieStore.getMovie(route.query.id);
+onBeforeMount(async () => {
+  await movieStore.getMovie(route.query.id);
 });
 </script>
