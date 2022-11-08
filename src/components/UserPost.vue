@@ -20,14 +20,22 @@
     <div class="flex items-center space-x-6 my-5">
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ comment }}</p>
-        <comment-icon @click-event="$emit('click-event')"></comment-icon>
+        <comment-icon @click-event="showComment = !showComment"></comment-icon>
       </div>
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ likes.length }}</p>
         <heart-icon :already-liked="liked" @like-event="like"></heart-icon>
       </div>
     </div>
-    <slot></slot>
+    <user-comment
+      v-for="comment in post.comment"
+      v-if="showComment"
+      :key="comment.id"
+      :user="comment.user?.name ? comment.user.name : comment.user.email"
+      :comment="comment.comment"
+      :image="comment.user.image"
+      @delete-event="deleteComment(comment.id)"
+    />
     <div class="flex space-x-2 mt-4 mb-6">
       <profile-picture :image="store.profile" />
       <textarea
@@ -53,6 +61,7 @@ import { useUserStore } from "@/stores/user.js";
 import { computed, ref, watch } from "vue";
 import axios from "@/config/axios/index.js";
 import { usePostStore } from "@/stores/post.js";
+import UserComment from "@/components/UserComment.vue";
 const postStore = usePostStore();
 const props = defineProps({
   user: { type: String, required: true },
@@ -64,6 +73,7 @@ const props = defineProps({
   post: { type: Object, required: true },
   image: { type: String, required: false }
 });
+const showComment = ref(false);
 let commentValue = ref("");
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const bgStyle = computed(() => {
@@ -103,5 +113,11 @@ const addComment = async (e) => {
   props.post.comment.push(response.data);
   commentValue.value = "";
   e.blur();
+};
+const deleteComment = async (id) => {
+  const response = await axios.delete("comment", { data: { id } });
+  props.post.comment = props.post.comment.filter(
+    (comment) => comment.id !== id
+  );
 };
 </script>

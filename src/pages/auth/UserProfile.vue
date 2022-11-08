@@ -59,6 +59,7 @@
 
           <div
           v-for="email in store.secondaryEmails"
+          :key="email?.id"
             class="hidden md:flex justify-between md:justify-start md:items-center mt-8 md:mt-1 border-b border-[#CED4DA80] py-4 md:border-0 md:space-x-6"
           >
             <div class="md:w-52 lg:w-[400px]">
@@ -150,7 +151,7 @@ import axios from "@/config/axios/index.js";
 import WarningIcon from "@/components/icons/WarningIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useProfileStore } from "@/stores/profile.js";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 const store = useUserStore();
 const profileStore = useProfileStore();
 let changePassword = ref(false);
@@ -171,7 +172,7 @@ const submitPassword = async (values, actions) => {
       profileStore.popup = true;
       profileStore.popupText = "Password updated successfully";
       profileStore.message = "";
-      changePassword = false;
+      changePassword.value = false;
   } catch (error) {
     console.log(error);
       actions.setFieldError("password", error.response.data.message);
@@ -189,6 +190,9 @@ const uploadImage = async (file) => {
     console.log(error);
   }
 }
+onUnmounted(() => {
+  profileStore.popup = false;
+})
 </script>
 
 

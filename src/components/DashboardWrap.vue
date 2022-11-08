@@ -13,6 +13,7 @@
           <notification-icon
             classes="bell"
             @notificationEvent="notificationOpened = !notificationOpened"
+            @click.stop
           />
           <span
             class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem]"
@@ -22,6 +23,7 @@
           <div
             v-if="notificationOpened"
             class="absolute top-16 right-0 translate-x-10 w-[100vw] max-h-[80vh] md:w-[500px] md:top-16 md:-right-3 md:rounded-xl notification z-50"
+            @click.stop
           >
             <div
               v-if="!notifications.length"
@@ -99,13 +101,7 @@
             </div>
           </div>
         </div>
-        <div class="hidden w-14 md:flex items-center justify-between">
-          <select id="" class="selecttxt text-white" name="">
-            <option class="text-black" selected value="">Eng</option>
-            <option class="text-black" value="">ქარ</option>
-          </select>
-          <arrow-down />
-        </div>
+        <locale-changer class="hidden md:flex" />
         <button
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] hidden md:inline"
           @click="logOut"
@@ -149,8 +145,9 @@
             >List of movies</router-link
           >
         </div>
+        <locale-changer class="md:hidden flex ml-11 my-10" />
         <button
-          class="text-white text-sm border border-white py-2 px-3 rounded-[4px] md:hidden inline ml-11 mt-10"
+          class="text-white text-sm border border-white py-2 px-3 rounded-[4px] md:hidden inline ml-11"
           @click="logOut"
         >
           Log Out
@@ -205,6 +202,7 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
 import Pusher from "pusher-js";
+import LocaleChanger from "@/components/LocaleChanger.vue";
 const store = useUserStore();
 const postStore = usePostStore();
 const router = useRouter();
@@ -226,7 +224,9 @@ const showSide = () => {
   return (aside.value = false);
 };
 const hideSide = () => {
-  return (aside.value = true);
+  notificationOpened.value = false;
+  aside.value = true;
+  search.value = false;
 };
 const showSearch = () => {
   return (search.value = true);

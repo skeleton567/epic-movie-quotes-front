@@ -4,6 +4,7 @@ import vue3GoogleLogin from 'vue3-google-login'
 
 import App from "./App.vue";
 import router from "./router";
+import  i18n from "./locale";
 
 import "@/assets/tailwind.css";
 import "./config/vee-validate/rules";
@@ -27,6 +28,7 @@ app.component('textarea-component', TextareaComponent)
 
 app.use(createPinia());
 app.use(router);
+app.use(i18n);
 
 const id = import.meta.env.VITE_CLIENT_ID;
 app.use(vue3GoogleLogin, {

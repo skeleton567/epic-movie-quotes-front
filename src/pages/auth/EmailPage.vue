@@ -11,6 +11,7 @@
     </div>
     <div
       v-for="email in store.secondaryEmails"
+      :key="email.id"
       class="mt-12 pb-6 border-b border-[#CED4DA80]"
     >
       <h2 class="mb-6">{{ email.email }}</h2>

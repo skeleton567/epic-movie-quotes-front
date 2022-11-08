@@ -56,7 +56,7 @@
             <pencil-component />
             <p>Edit</p>
           </router-link>
-          <div class="flex space-x-4" @click="deleteQuote">
+          <div class="flex space-x-4 cursor-pointer" @click="deleteQuote">
             <trash-component />
             <p>Delete</p>
           </div>
@@ -78,8 +78,8 @@ import { useQuotesStore } from "@/stores/quotes.js";
 import { ref } from "vue";
 const movieStore = useMoviesStore();
 const quoteStore = useQuotesStore();
-const edit = ref(false);
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
+const edit = ref(false);
 const props = defineProps({
   quote: { type: Object, required: true },
   movie_id: { type: Number, required: true }

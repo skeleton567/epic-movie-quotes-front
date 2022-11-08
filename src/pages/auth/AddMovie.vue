@@ -11,7 +11,6 @@
 
 <script setup>
 import MovieForm from "@/components/MovieForm.vue";
-import { useUserStore } from "@/stores/user.js";
 import FileUpload from "@/components/FileUpload.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
@@ -19,7 +18,6 @@ import { useMoviesStore } from "@/stores/movies.js";
 const movieStore = useMoviesStore();
 movieStore.movie = null;
 const router = useRouter();
-const store = useUserStore();
 const submit = async (values, actions, categories) => {
   try {
     const fd = new FormData();
@@ -27,7 +25,6 @@ const submit = async (values, actions, categories) => {
       fd.set(value, values[value]);
     }
     if (movieStore.file) fd.set("image", movieStore.file);
-    fd.set("user_id", store.id);
     fd.set("categories", JSON.stringify(categories));
     console.log(fd);
     const response = await axios.post("movies", fd);

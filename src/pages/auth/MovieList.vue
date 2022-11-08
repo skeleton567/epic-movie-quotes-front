@@ -1,4 +1,5 @@
 <template>
+  <router-view></router-view>
   <dashboard-wrap>
     <div
       class="px-10 md:px-0 mt-8 lg:block md:w-full md:ml-96 md:mr-10"
@@ -44,6 +45,7 @@
       <div class="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5">
         <router-link
           v-for="movie in searchesMovies"
+          :key="movie.id"
           :to="{ name: 'viewMovie', query: { id: movie.id } }"
         >
           <div class="mb-12">
@@ -63,14 +65,13 @@
               {{ movie.title }} <span>({{ movie.year }})</span>
             </p>
             <p class="flex space-x-4">
-              <span>{{ commentLength(movie) }}</span>
+              <span>{{ movie?.quote?.length }}</span>
               <comment-notification />
             </p>
           </div>
         </router-link>
       </div>
     </div>
-    <router-view></router-view>
   </dashboard-wrap>
 </template>
 
@@ -92,11 +93,4 @@ const searchesMovies = computed(() => {
 });
 const openedSearch = ref(false);
 movieStore.getMovies();
-const commentLength = (movie) => {
-  let count = 0;
-  for (let quote of movie.quote) {
-    count += quote.comment.length;
-  }
-  return count;
-};
 </script>

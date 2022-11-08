@@ -8,7 +8,7 @@
           class="flex flex-col items-center space-y-6 w-[400px] lg:w-[800px]"
         >
           <h1 class="text-[#DDCCAA] text-2xl lg:text-6xl text-center">
-            Find any quote in millions of movie lines
+            {{ $t("findQuote") }}
           </h1>
           <router-link
             :to="{ name: 'registration' }"
@@ -21,6 +21,7 @@
     </div>
     <div
       v-for="quote in store.quotes"
+      :key="quote.id"
       class="h-[100vh] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
       :class="{ paralax: scrolled }"
       :style="{ backgroundImage: 'url(' + url(quote) + ')' }"

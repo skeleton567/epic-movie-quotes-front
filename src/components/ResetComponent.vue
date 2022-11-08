@@ -1,5 +1,7 @@
 <template>
-  <form-wrap>
+  <form-wrap
+  @submit-event="submit"
+    >
     <div
       class="flex flex-col justify-center items-center h-[100vh] lg:h-auto my-10 mx-10 md:block"
     >
@@ -19,7 +21,11 @@
 
 <script setup>
 import { defineProps } from "vue";
-
+import { defineEmits } from "vue";
+const emit = defineEmits(["submit-event"]);
+const submit = (values, actions) => {
+  emit("submit-event", values, actions);
+};
 const props = defineProps({
   title: { type: String, required: true },
   text: { type: String, required: true },

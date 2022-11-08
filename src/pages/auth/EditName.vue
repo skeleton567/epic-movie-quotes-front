@@ -3,8 +3,9 @@
     :initial-errors="{ name: $route.query.name }"
     class="md:fixed md:h-[100vh] md:w-full bg-black md:bg-opacity-75 md:flex justify-center items-center z-1000 cursor-default"
     @submit="submitName"
+    @click="router.push({ name: 'profile' })"
   >
-    <div class="md:bg-[black] md:rounded-xl md:pt-6 md:pb-10">
+    <div class="md:bg-[black] md:rounded-xl md:pt-6 md:pb-10" @click.stop>
       <h1 class="hidden md:block text-2xl px-8 mb-6">Add new Name</h1>
       <hr class="hidden md:block" color="blue" />
       <div
