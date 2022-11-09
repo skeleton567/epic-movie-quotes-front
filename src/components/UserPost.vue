@@ -30,6 +30,7 @@
     <user-comment
       v-for="comment in post.comment"
       v-if="showComment"
+      :id="comment.user.id"
       :key="comment.id"
       :user="comment.user?.name ? comment.user.name : comment.user.email"
       :comment="comment.comment"
@@ -92,7 +93,7 @@ let liked = computed(() => {
 const like = async () => {
   if (liked.value) {
     const like = likes.value.filter((like) => like.user.id === store.id)[0];
-    await axios.delete("likes", { data: { id: like.id } });
+    await axios.delete(`likes/${like.id}`);
     likes.value = likes.value.filter((filterLike) => like.id !== filterLike.id);
   } else {
     const response = await axios.post("likes", {
@@ -115,7 +116,7 @@ const addComment = async (e) => {
   e.blur();
 };
 const deleteComment = async (id) => {
-  const response = await axios.delete("comment", { data: { id } });
+  const response = await axios.delete(`comment/${id}`);
   props.post.comment = props.post.comment.filter(
     (comment) => comment.id !== id
   );

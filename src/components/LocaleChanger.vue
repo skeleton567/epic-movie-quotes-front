@@ -1,20 +1,13 @@
 <template>
   <div class="w-14 flex items-center justify-between" :class="classes">
     <select
-      id=""
       v-model="$i18n.locale"
       class="selecttxt text-white"
       name="locale"
       @change="changeLocale"
     >
-      <option
-        v-for="locale in $i18n.availableLocales"
-        :key="`locale-${locale}`"
-        class="text-black"
-        :value="locale"
-      >
-        {{ locale }}
-      </option>
+      <option class="text-black" value="en">Eng</option>
+      <option class="text-black" value="ka">ქარ</option>
     </select>
     <arrow-down />
   </div>
@@ -22,17 +15,12 @@
 
 <script setup>
 import ArrowDown from "@/components/icons/ArrowDown.vue";
-import axios from "@/config/axios/index.js";
+import { setLocale } from "@vee-validate/i18n";
 const props = defineProps({
   classes: { type: String, required: false }
 });
-const changeLocale = async (event) => {
-  try {
-    const response = await axios.post("locale", { locale: event.target.value });
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
+const changeLocale = (event) => {
+  setLocale(event.target.value);
 };
 </script>
 

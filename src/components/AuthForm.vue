@@ -35,7 +35,6 @@ import { defineProps } from "vue";
 import axios from "@/config/axios/index.js";
 import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
-import { decodeCredential } from "vue3-google-login";
 import { googleTokenLogin } from "vue3-google-login";
 const router = useRouter();
 const props = defineProps({
@@ -48,7 +47,6 @@ const props = defineProps({
 });
 const login = async () => {
   const response = await googleTokenLogin();
-  console.log("Handle the response", response);
   const resp = await axios.post("google-login", {
     token: response.access_token
   });

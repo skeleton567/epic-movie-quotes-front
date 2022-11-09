@@ -2,7 +2,7 @@
   <movie-form
     title="Add Movie"
     :link="{ name: 'movieList' }"
-    :categories="[]"
+    :categories="categories"
     @submit-event="submit"
   >
     <file-upload />
@@ -15,8 +15,10 @@ import FileUpload from "@/components/FileUpload.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
+import { ref } from "vue";
 const movieStore = useMoviesStore();
 movieStore.movie = null;
+const categories = ref([]);
 const router = useRouter();
 const submit = async (values, actions, categories) => {
   try {

@@ -4,7 +4,7 @@
     @click="$router.push(link)"
   >
     <div
-      class="w-full bg-[#11101a] lg:w-[700px] lg:h-fit"
+      class="w-full bg-black lg:w-[700px] lg:h-fit"
       @click="openDropdown = false"
       @click.stop
     >
@@ -39,7 +39,9 @@
               v-else
               class="w-[100px] text-center bg-[#6C757D] rounded flex justify-between items-center space-x-1 py-1 px-2"
             >
-              <span class="text-xs">{{ category.category }}</span>
+              <span class="text-xs">{{
+                category.category?.[$i18n.locale]
+              }}</span>
               <x-icon
                 :height="true"
                 @click.stop=""
@@ -57,7 +59,7 @@
               class="hover:bg-gray-500 w-full px-1 py-2"
               @click.once="addCategory(category)"
             >
-              {{ category.category }}
+              {{ category.category?.[$i18n.locale] }}
             </p>
           </div>
         </div>
@@ -87,14 +89,14 @@
           :value="movieStore?.movie?.budget"
           name="budget"
           placeholder="Budget"
-          type="number"
-          rule="required|number"
+          type="text"
+          rule="required"
         />
         <textarea-component
           :value="movieStore?.movie?.description_en"
           name="description_en"
           placeholder="Description"
-          rule="required|alpha_spaces"
+          rule="required"
           label="Eng"
         />
         <textarea-component

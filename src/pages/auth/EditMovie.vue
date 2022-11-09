@@ -2,7 +2,7 @@
   <movie-form
     title="Edit Movie"
     :link="{ name: 'viewMovie', query: { id: movieStore?.movie?.id } }"
-    :categories="movieStore.movie.categories"
+    :categories="categories"
     @submit-event="submit"
   >
     <image-upload :image="movie" @show-image="showImage" />
@@ -20,6 +20,7 @@ import ImageUpload from "@/components/ImageUpload.vue";
 import { computed, ref } from "vue";
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const movieStore = useMoviesStore();
+const categories = ref(movieStore.movie.categories);
 const router = useRouter();
 const store = useUserStore();
 const submit = async (values, actions, categories) => {

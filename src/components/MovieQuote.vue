@@ -12,7 +12,7 @@
         "
         alt="movie"
       />
-      <p class="mt-6">“{{ quote.quote }}”</p>
+      <p class="mt-6">“{{ quote?.quote[$i18n.locale] }}”</p>
       <three-dots
         classes="md:block hidden absolute right-2 top-3"
         @click-event="edit = !edit"
