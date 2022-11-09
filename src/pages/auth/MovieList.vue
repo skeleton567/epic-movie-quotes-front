@@ -62,7 +62,7 @@
             </div>
 
             <p class="mb-5">
-              {{ movie.title }} <span>({{ movie.year }})</span>
+              {{ movie.title[$i18n.locale] }} <span>({{ movie.year }})</span>
             </p>
             <p class="flex space-x-4">
               <span>{{ movie?.quote?.length }}</span>
@@ -78,19 +78,24 @@
 <script setup>
 import CommentNotification from "@/components/icons/CommentNotification.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
-import { useUserStore } from "@/stores/user.js";
-import { ref } from "vue";
 import SearchIcon from "@/components/icons/SearchIcon.vue";
 import { computed } from "vue";
 import { useMoviesStore } from "@/stores/movies.js";
+import { usePostStore } from "@/stores/post.js";
+import { onMounted, ref } from "vue";
+const postStore = usePostStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const movieStore = useMoviesStore();
 let searchValue = ref("");
 const searchesMovies = computed(() => {
   return movieStore?.movies?.filter((movie) =>
-    movie.title.toLowerCase().includes(searchValue.value.toLowerCase())
+    movie?.title[postStore.locale]
+      ?.toLowerCase()
+      .includes(searchValue.value.toLowerCase())
   );
 });
 const openedSearch = ref(false);
-movieStore.getMovies();
+onMounted(async () => {
+  await movieStore.getMovies();
+});
 </script>

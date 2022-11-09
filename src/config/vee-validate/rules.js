@@ -17,7 +17,7 @@ defineRule("lowercase", (value) => {
     if (!lowercaseLettersRegex.test(value)) {
     return true;
   } else {
-    return "Only lowercase letters are allowed";
+    return false;
   }
 });
   
@@ -25,11 +25,11 @@ defineRule("georgian", (value) => {
   if (!value || !value.length) {
       return true;
   }
-  const georgianRegex = /^[აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ\s]*$/gi;
+  const georgianRegex = /^[აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ.,!?\s]*$/gi;
   if (georgianRegex.test(value)) {
   return true;
 } else {
-  return "Only georgian letters are allowed";
+  return false;
 }
 });
 

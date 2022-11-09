@@ -35,7 +35,7 @@
             class="bg-black mb-2"
             :value="movie.id"
           >
-            {{ movie.title }}
+            {{ movie.title[$i18n.locale] }}
           </option>
         </Field>
       </div>

@@ -163,7 +163,7 @@ const editPassword = () => {
 };
 const submitPassword = async (values, actions) => {
   try {
-      const response = await axios.patch("update-password", {
+      const response = await axios.patch("password", {
         password: values.password,
         password_confirmation: values.confirmation,
         id: store.id

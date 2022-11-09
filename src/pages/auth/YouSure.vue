@@ -26,7 +26,7 @@ const route = useRoute();
 const add = async () => {
   if (route.query.name) {
     try {
-      const response = await axios.patch("update-name", {
+      const response = await axios.patch("name", {
         name: route.query.name,
         id: store.id
       });
@@ -60,7 +60,7 @@ const add = async () => {
     }
   } else if (route.query.password) {
     try {
-      const response = await axios.patch("update-password", {
+      const response = await axios.patch("password", {
         password: route.query.password,
         password_confirmation: route.query.confirmation,
         id: store.id

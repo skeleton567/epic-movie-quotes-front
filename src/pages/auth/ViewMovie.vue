@@ -21,30 +21,31 @@
               class="flex justify-between h-10 items-center mt-5 md:mt-0 gap-5"
             >
               <h1 class="text-2xl text-[#DDCCAA] my-6 md:my-0 mb-10 md:h-full">
-                {{ movieStore?.movie?.title }}
+                {{ movieStore?.movie?.title?.[$i18n.locale] }}
                 <span>({{ movieStore?.movie?.year }})</span>
               </h1>
               <edit-delete classes="md:flex hidden" />
             </div>
-
-            <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-3 md:grid-cols-4 gap-4 mb-4">
               <p
                 v-for="category in movieStore?.movie?.categories"
-                class="w-20 text-center bg-[#6C757D] rounded"
+                class="w-24 text-center bg-[#6C757D] rounded"
               >
-                {{ category.category }}
+                {{ category.category?.[$i18n.locale] }}
               </p>
             </div>
             <div class="ml-3 md:ml-0">
               <p class="my-5">
                 <span class="text-[#CED4DA]">Director: </span>
-                <span> {{ movieStore?.movie?.director }}</span>
+                <span> {{ movieStore?.movie?.director?.[$i18n.locale] }}</span>
               </p>
               <p class="mb-5">
                 <span class="text-[#CED4DA]">Budget: </span>
                 <span> {{ movieStore?.movie?.budget }}$</span>
               </p>
-              <p>{{ movieStore?.movie?.description }}</p>
+              <p class="max-w-xs">
+                {{ movieStore?.movie?.description?.[$i18n.locale] }}
+              </p>
             </div>
           </div>
         </div>
@@ -86,12 +87,9 @@ import { useRoute } from "vue-router";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import { useMoviesStore } from "@/stores/movies.js";
-import { onBeforeMount, ref } from "vue";
 import EditDelete from "@/components/EditDelete.vue";
 const movieStore = useMoviesStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const route = useRoute();
-onBeforeMount(async () => {
-  await movieStore.getMovie(route.query.id);
-});
+movieStore.getMovie(route.query.id);
 </script>

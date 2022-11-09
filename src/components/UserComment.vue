@@ -5,7 +5,11 @@
         <profile-picture :image="image" />
         <p class="text-white">{{ user }}</p>
       </div>
-      <x-icon :height="true" @click-event="$emit('delete-event')" />
+      <x-icon
+        v-if="id === store.id"
+        :height="true"
+        @click-event="$emit('delete-event')"
+      />
     </div>
     <p class="text-white break-words mt-1 md:mt-2">
       <span class="w-[90%]">{{ comment }}</span>
@@ -19,7 +23,8 @@ import { useUserStore } from "@/stores/user.js";
 const store = useUserStore();
 const props = defineProps({
   user: { type: String, required: true },
-  comment: { type: String, required: false },
-  image: { type: String, required: false }
+  comment: { type: String, required: true },
+  image: { type: String, required: false },
+  id: { type: Number, required: false }
 });
 </script>
