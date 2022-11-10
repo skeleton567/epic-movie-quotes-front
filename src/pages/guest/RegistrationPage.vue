@@ -1,38 +1,38 @@
 <template>
   <form-wrap @submit-event="submit">
     <auth-form
-      title="Create an account"
-      text="Start your journey!"
-      button-text="Get started"
-      account="Already have an account? "
+      :title="$t('CreateAccount')"
+      :text="$t('StartJourney')"
+      :button-text="$t('GetStarted')"
+      :account="$t('AlreadyHave')"
       route="login"
-      auth="Log in"
+      :auth="$t('LogIn')"
     >
       <text-input
         name="name"
-        label="Name"
-        placeholder="Enter your name"
+        :label="$t('name')"
+        :placeholder="$t('EnterName')"
         rule="required|min:3|max:15|alpha_num|lowercase"
       ></text-input>
       <text-input
         name="email"
-        label="Email"
+        :label="$t('email')"
         type="email"
-        placeholder="Enter your email"
+        :placeholder="$t('EnterEmail')"
         rule="required|email"
       ></text-input>
       <text-input
         name="password"
-        label="Password"
+        :label="$t('password')"
         type="password"
-        placeholder="Password"
+        :placeholder="$t('password')"
         rule="required|min:8|max:15|alpha_num|lowercase"
       ></text-input>
       <text-input
         name="confirmation"
-        label="Confirm password"
+        :label="$t('ConfirmPassword')"
         type="password"
-        placeholder="Enter your name"
+        :placeholder="$t('ConfirmPassword')"
         rule="confirmed:@password"
       ></text-input>
     </auth-form>

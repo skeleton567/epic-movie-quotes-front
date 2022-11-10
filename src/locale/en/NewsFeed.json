@@ -1,0 +1,15 @@
+{
+    "LogOut": "Log out",
+    "WriteQuote":"Write new quote",
+    "search": "Search by",
+    "searchBy": "Enter @ to search movies, Enter # to search quotes",
+    "movie": "movie",
+    "WriteComment": "Write comment....",
+    "SearchMovie": "to search movies",
+    "SearchQuote": "to search quote",
+    "enter": "Enter ",
+    "EditProfile":"Edit your profile",
+    "Newsfeed": "News feed",
+    "MovieList": "List of movies"
+    
+}

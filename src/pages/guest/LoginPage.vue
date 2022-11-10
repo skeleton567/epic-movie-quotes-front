@@ -1,25 +1,25 @@
 <template>
   <form-wrap @submit-event="submit">
     <auth-form
-      title="Log in to your account"
-      text="Welcome back! Please enter your details."
-      button-text="Sign in"
-      account="Dont have an account? "
+      :title="$t('LoginAccount')"
+      :text="$t('WelcomeBack')"
+      :button-text="$t('LogIn')"
+      :account="$t('DontHave')"
       route="registration"
-      auth="Sign up"
+      :auth="$t('SignIn')"
     >
       <text-input
         name="name"
-        label="Name"
+        :label="$t('name')"
         type="text"
-        placeholder="Enter your name"
+        :placeholder="$t('EnterName')"
         rule="required|min:3"
       ></text-input>
       <text-input
         name="password"
-        label="Password"
+        :label="$t('password')"
         type="password"
-        placeholder="Password"
+        :placeholder="$t('password')"
         rule="required|min:8|max:15|alpha_num|lowercase"
       ></text-input>
       <div class="flex justify-between text-xs w-full mt-6 space-x-2">
@@ -31,14 +31,16 @@
             name="remember"
             value="true"
           />
-          <label class="text-white" for="remember_token"> Remember me </label>
+          <label class="text-white" for="remember_token">
+            {{ $t("remember") }}</label
+          >
         </div>
         <router-link
           class="text-blue-700 text-xs underline"
           :to="{
             name: 'forgotPassword'
           }"
-          >Forgot password?</router-link
+          >{{ $t("forgot") }}</router-link
         >
       </div>
     </auth-form>

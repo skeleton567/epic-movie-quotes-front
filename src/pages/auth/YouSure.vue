@@ -6,9 +6,9 @@
       <div
         class="pb-2 mb-5 h-[20vh] border-b w-full md:w-[450px] border-[#CED4DA33] md:bg-inherit flex justify-center items-center"
       >
-        <p class="text-white">Are you sure to make changes ?</p>
+        <p class="text-white mx-3 text-center">{{ $t("YouSure") }}</p>
       </div>
-      <profile-buttons text="Confirm" @click-event="add" />
+      <profile-buttons :text="$t('confirm')" @click-event="add" />
     </div>
   </div>
 </template>
@@ -19,6 +19,8 @@ import { useRoute, useRouter } from "vue-router";
 import { useProfileStore } from "@/stores/profile.js";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const store = useUserStore();
 const profileStore = useProfileStore();
 const router = useRouter();
@@ -31,7 +33,7 @@ const add = async () => {
         id: store.id
       });
       profileStore.popup = true;
-      profileStore.popupText = "Username changed succsessfully";
+      profileStore.popupText = t("UsernameChanged");
       profileStore.message = "";
       store.getAuthUser();
       router.replace({ name: "profile" });
@@ -48,8 +50,8 @@ const add = async () => {
         user_id: store.id
       });
       profileStore.popup = true;
-      profileStore.popupText = "Email addded succsessfully";
-      profileStore.message = "Please check email to verify new address";
+      profileStore.popupText = t("EmailAdded");
+      profileStore.message = t("PleaseCheck");
       store.getAuthUser();
       router.replace({ name: "profile" });
     } catch (error) {
@@ -67,7 +69,7 @@ const add = async () => {
       });
       console.log(response);
       profileStore.popup = true;
-      profileStore.popupText = "Password updated successfully";
+      profileStore.popupText = t("PasswordUpdated");
       profileStore.message = "";
       router.replace({ name: "profile" });
     } catch (error) {

@@ -1,16 +1,15 @@
 <template>
   <reset-component
-    title="Forgot password?"
-    text="Enter the email and we’ll send an email with
-instructions to reset your password"
-    button-text="Send instructions"
+    :title="$t('ForgotPassword')"
+    :text="$t('InstructionstoReset')"
+    :button-text="$t('SendInstructions')"
     @submit-event="submit"
   >
     <text-input
       name="email"
-      label="Email"
+      :label="$t('email')"
       type="email"
-      placeholder="Enter your email"
+      :placeholder="$t('EnterEmail')"
       rule="required|email"
     ></text-input>
   </reset-component>

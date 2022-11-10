@@ -14,7 +14,7 @@
             :to="{ name: 'registration' }"
             class="text-white py-2 px-3 bg-[#E31221] rounded-[4px] lg:text-xl"
           >
-            Get Started
+            {{ $t("GetStarted") }}
           </router-link>
         </div>
       </div>

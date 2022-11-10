@@ -18,7 +18,7 @@
         src="@/assets/images/google-icon.png"
         alt="google sign"
       />
-      <span>Sign up with Google</span></span
+      <span>{{ $t("google") }}</span></span
     >
   </button>
 

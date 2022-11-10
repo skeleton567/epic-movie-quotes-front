@@ -1,0 +1,27 @@
+{
+    "UploadPhoto": "Upload new photo",
+    "profile": "My Profile",
+    "edit": "Edit",
+    "PrimaryEmail": "Primary Email",
+    "PleaseVerify":"Please verify new email address",
+    "MakePrimary": "Make Primary",
+    "NotVerified": "Not Verified",
+    "remove": "Remove",
+    "AddEmail": "Add New Email",
+    "cancel": "Cancel",
+    "SaveChanges": "Save Changes",
+    "PasswordsContain": "Passwords should contain:",
+    "EeghtOrmore": "8 or more characters",
+    "fifteenOrless": "less than 15 lowercase character",
+    "add": "Add",
+    "EditName": "Edit Name",
+    "EnterUsername": "Enter new username",
+    "YouSure": "Are you sure to make changes ?",
+    "confirm": "Confirm",
+    "UsernameChanged":"Username changed succsessfully",
+    "EmailAdded":"Email added succsessfully",
+    "PleaseCheck":"Please check email to verify new address",
+    "PasswordUpdated": "Password updated successfully"
+    
+
+}

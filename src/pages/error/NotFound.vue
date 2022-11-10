@@ -1,7 +1,7 @@
 <template>
   <error-page
     title="Whoops!"
-    text="We can't see the page you are looking for"
+    :text="$t('NotFound')"
     image="ghost.svg"
   ></error-page>
 </template>

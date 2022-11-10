@@ -38,7 +38,7 @@
           <textarea
             disabled
             class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
-            placeholder="Write a comment"
+            :placeholder="$t('WriteComment')"
             name=""
             cols="30"
             rows="1"

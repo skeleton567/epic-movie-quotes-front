@@ -12,7 +12,7 @@
     >
       <div class="md:bg-inherit">
         <div class="bg-[#11101A] w-full p-6 rounded mb-8">
-          <h2 class="text-white mb-4">Passwords should contain:</h2>
+          <h2 class="text-white mb-4">{{ $t("PasswordsContain") }}</h2>
           <ul>
             <li
               :class="
@@ -27,7 +27,7 @@
                 "
                 >&#x2022;</span
               >
-              8 or more characters
+              {{ $t("EeghtOrmore") }}
             </li>
             <li
               :class="
@@ -42,30 +42,28 @@
                 "
                 >&#x2022;</span
               >
-              less than 15 lowercase character
+              {{ $t("fifteenOrless") }}
             </li>
           </ul>
         </div>
         <text-input
-          v-model="profileStore.password"
           name="password"
-          label="Password"
+          :label="$t('password')"
           type="password"
-          placeholder="Password"
+          :placeholder="$t('password')"
           rule="required|min:8|max:15|alpha_num|lowercase"
         ></text-input>
         <text-input
-          v-model="profileStore.password_confirmation"
           name="confirmation"
-          label="Confirm password"
+          :label="$t('ConfirmPassword')"
           type="password"
-          placeholder="Enter your name"
+          :placeholder="$t('ConfirmPassword')"
           rule="confirmed:@password"
         ></text-input>
       </div>
     </div>
     <input id="submit" type="submit" value="" class="hidden" />
-    <profile-buttons text="Add" />
+    <profile-buttons :text="$t('add')" />
   </Form>
 </template>
 

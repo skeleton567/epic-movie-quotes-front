@@ -7,13 +7,13 @@
         :to="{ name: 'registration' }"
         class="hidden lg:inline text-white py-2 px-3 bg-[#E31221] rounded-[4px]"
       >
-        Sign up
+        {{ $t("SignIn") }}
       </router-link>
       <router-link
         :to="{ name: 'login' }"
         class="text-white text-sm border border-white py-2 px-3 rounded-[4px]"
       >
-        Log In
+        {{ $t("LogIn") }}
       </router-link>
     </nav>
   </header>

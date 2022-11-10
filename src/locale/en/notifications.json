@@ -1,0 +1,15 @@
+{
+    "NoNotification": "No notifications yet!!",
+    "notifications": "Notifications",
+    "MarkasRead": "Mark as all read",
+    "commented":"Commented to your quote..",
+    "reacted":"Reacted to your quote",
+    "NewPost": "New",
+    "SecAgo":" sec ago",
+    "MinAgo":" min ago",
+    "HoursAgo":" hours ago",
+    "DaysAgo":" days ago",
+    "MonthsAgo": " months ago",
+    "YearsAgo": " years ago"
+    
+}
