@@ -1,7 +1,7 @@
 <template>
   <error-page
-    title="You shall not pass!"
-    text="Sorry, but  you don’t have permission to access this page"
+    :title="$t('Shall_Not_Pass')"
+    :text="$t('No_Permission')"
     image="Gandolf.svg"
   ></error-page>
 </template>

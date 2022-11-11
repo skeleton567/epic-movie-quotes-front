@@ -1,0 +1,22 @@
+{
+    "total": "Total",
+    "My_List":"My list of movies",
+    "category": "Category",
+    "director": "Director",
+    "Release_Year": "Release Year",
+    "budget": "Budget",
+    "Dragn_Drop":"Drag & drop your image here or",
+    "Choose_File":  "Choose File",
+    "Add_Movie": "Add Movie",
+    "Upload_Image": "Upload image",
+    "Movie_Discription": "Movie discription",
+    "Add_Quote":"Add quote",
+    "All_Quotes":"All quotes",
+    "Image_Uploaded": "Image Uploaded",
+    "View_Post":"View post",
+    "edit":"Edit",
+    "Delete_Post": "Delete",
+    "Edit_Movie": "Edit Movie",
+    "Edit_Quote": "Edit Quote",
+    "Save_Changes": "Save changes"
+}

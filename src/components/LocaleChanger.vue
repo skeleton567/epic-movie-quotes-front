@@ -5,6 +5,7 @@
       class="selecttxt text-white"
       name="locale"
       @change="changeLocale"
+      @click.stop
     >
       <option class="text-black" value="en">Eng</option>
       <option class="text-black" value="ka">ქარ</option>
@@ -21,7 +22,11 @@ const props = defineProps({
 });
 const changeLocale = (event) => {
   setLocale(event.target.value);
+  localStorage.setItem("lang", event.target.value);
 };
+if (localStorage.getItem("lang")) {
+  setLocale(localStorage.getItem("lang"));
+}
 </script>
 
 <style scoped>

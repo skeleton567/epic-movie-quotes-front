@@ -4,7 +4,7 @@
       <new-quote-form
         :movie-id="movieStore.movie.id"
         :link="{ name: 'viewMovie', query: { id: movieStore.movie.id } }"
-        title="Add Quote"
+        :title="$t('Add_Quote')"
       >
         <div class="px-10">
           <div class="bg-black rounded py-4 px-2">
@@ -20,19 +20,19 @@
               />
               <div>
                 <h1 class="text-[#DDCCAA]">
-                  {{ movieStore.movie.title }}
+                  {{ movieStore.movie?.title?.[$i18n.locale] }}
                   <span>({{ movieStore.movie.year }})</span>
                 </h1>
                 <p class="my-2">
-                  <span class="text-[#CED4DA]">Director: </span>
-                  <span> {{ movieStore.movie.director }}</span>
+                  <span class="text-[#CED4DA]">{{ $t("director") }}: </span>
+                  <span> {{ movieStore.movie?.director?.[$i18n.locale] }}</span>
                 </p>
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                   <p
                     v-for="category in movieStore.movie.categories"
                     class="w-[70px] text-center bg-[#6C757D] rounded text-sm"
                   >
-                    {{ category.category }}
+                    {{ category.category[$i18n.locale] }}
                   </p>
                 </div>
               </div>

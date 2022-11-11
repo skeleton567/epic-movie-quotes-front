@@ -1,4 +1,7 @@
 
     {
-     "findQuote":  "Find any quote in millions of movie lines"
+     "find_Quote":  "Find any quote in millions of movie lines",
+     "Sign_In": "Sign up",
+     "Get_Started": "Get started",
+     "Login":"Log in"
     }

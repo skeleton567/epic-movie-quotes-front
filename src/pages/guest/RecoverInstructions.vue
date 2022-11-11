@@ -1,9 +1,8 @@
 <template>
   <mailing-message
-    title="Check your email"
-    text="We have sent a password recover instructions 
-    to your email"
-    button-text="Go home"
+    :title="$t('Thank_You')"
+    :text="$t('Instructions_Sent')"
+    :button-text="$t('Go_Home')"
     image="upArrow.png"
     url="home"
   ></mailing-message>

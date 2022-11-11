@@ -1,6 +1,6 @@
 <template>
   <movie-form
-    title="Edit Movie"
+    :title="$t('Edit_Movie')"
     :link="{ name: 'viewMovie', query: { id: movieStore?.movie?.id } }"
     :categories="categories"
     @submit-event="submit"
@@ -37,8 +37,8 @@ const submit = async (values, actions, categories) => {
     const response = await axios.post(`movies/${route.query.id}`, fd);
     await movieStore.getMovie(route.query.id);
     router.push({ name: "viewMovie", query: { id: movieStore.movie.id } });
-    movieStore.upload = "Upload image";
-    movieStore.uploadBig = "Drag & drop your image here or";
+    movieStore.upload = "Upload_Image";
+    movieStore.uploadBig = "Dragn_Drop";
     movieStore.file = null;
   } catch (error) {
     const errors = error.response?.data.errors;

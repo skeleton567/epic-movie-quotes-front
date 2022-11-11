@@ -1,0 +1,22 @@
+{
+    "total": "სულ",
+    "My_List":"ჩემი ფილმების სია",
+    "category": "კატეგორია",
+    "director": "რეჟისორი",
+    "Release_Year": "გამოშვების წელი",
+    "budget": "ბიუჟეტი",
+    "Dragn_Drop":"ჩააგდე სურათი აქ ან ",
+    "Choose_File":  "ატვირთე ფაილი",
+    "Add_Movie": "დაამატე ფილმი",
+    "Upload_Image": "ატვირთე სურათი",
+    "Movie_Discription": "ფილმის აღწერა",
+    "Add_Quote":"დაამატე ციტატა",
+    "All_Quotes":"ციტატები",
+    "Image_Uploaded": "სურათი ატვირთულია",
+    "View_Post":"პოსტის ნახვა",
+    "edit":"შეცვლა",
+    "Delete_Post": "წაშლა",
+    "Edit_Movie": "ფილმის რედაქტირება",
+    "Edit_Quote": "ციტატის რედაქტირება",
+    "Save_Changes": "შენახვა"
+}

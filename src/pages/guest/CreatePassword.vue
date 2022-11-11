@@ -1,23 +1,22 @@
 <template>
   <reset-component
-    title="Create new password"
-    text="Your new password must be different from 
-    previous used passwords"
-    button-text="Reset password"
+    :title="$t('Create_Password')"
+    :text="$t('Different_Password')"
+    :button-text="$t('Reset_Password')"
     @submit-event="submit"
   >
     <text-input
       name="password"
-      label="Password"
+      :label="$t('password')"
       type="password"
-      placeholder="Password"
+      :placeholder="$t('password')"
       rule="required|min:8|max:15|alpha_num|lowercase"
     ></text-input>
     <text-input
       name="confirmation"
-      label="Confirm password"
+      :label="$t('Confirm_Password')"
       type="password"
-      placeholder="Enter your name"
+      :placeholder="$t('Confirm_Password')"
       rule="confirmed:@password"
     ></text-input>
   </reset-component>

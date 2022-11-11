@@ -10,7 +10,9 @@
             :to="{ name: 'writeQuote' }"
             class="flex items-center space-x-4"
             ><write-icon></write-icon>
-            <p class="text-white inline">Write new quote</p></router-link
+            <p class="text-white inline">
+              {{ $t("Write_Quote") }}
+            </p></router-link
           >
         </div>
         <div
@@ -26,13 +28,13 @@
             class="text-white inline"
             @click="toggleSearch"
           >
-            Search by
+            {{ $t("search") }}
           </p>
           <input
             v-else
             v-model="store.searchValue"
             type="text"
-            placeholder="Enter @ to search movies, Enter # to search quotes"
+            :placeholder="$t('search_By', ['@', '#'])"
             class="outline-none bg-inherit text-xs text-white w-full"
           />
         </div>

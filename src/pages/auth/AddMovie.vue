@@ -1,6 +1,6 @@
 <template>
   <movie-form
-    title="Add Movie"
+    :title="$t('Add_Movie')"
     :link="{ name: 'movieList' }"
     :categories="categories"
     @submit-event="submit"
@@ -34,8 +34,8 @@ const submit = async (values, actions, categories) => {
     router.push({
       name: "movieList"
     });
-    movieStore.upload = "Upload image";
-    movieStore.uploadBig = "Drag & drop your image here or";
+    movieStore.upload = "Upload_Image";
+    movieStore.uploadBig = "Dragn_Drop";
     movieStore.file = null;
   } catch (error) {
     const errors = error.response?.data.errors;

@@ -7,7 +7,7 @@
       class="fixed top-0 z-10 bg-[#11101a] w-full md:w-[400px] lg:block lg:w-[600px] lg:h-fit md:bg-black md:relative"
       @click.stop
     >
-      <new-quote-form :link="{ name: 'newsFeed' }" title="Write new quote">
+      <new-quote-form :link="{ name: 'newsFeed' }" :title="$t('Write_Quote')">
       </new-quote-form>
     </div>
   </div>

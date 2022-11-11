@@ -1,8 +1,8 @@
 <template>
   <mailing-message
-    title="Success!"
-    text="Your password changed successfully."
-    button-text="Login"
+    :title="$t('Success')"
+    :text="$t('Changed_Successfully')"
+    :button-text="$t('Login')"
     image="checked.png"
     url="login"
   ></mailing-message>

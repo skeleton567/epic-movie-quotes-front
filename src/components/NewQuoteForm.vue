@@ -49,7 +49,7 @@
       class="w-full bg-[#E31221] rounded text-xl py-3 mt-4 mb-10"
       type="submit"
     >
-      Add Quote
+      {{ $t("Add_Quote") }}
     </button>
   </Form>
 </template>

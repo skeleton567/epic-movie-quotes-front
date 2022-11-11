@@ -1,38 +1,38 @@
 <template>
   <form-wrap @submit-event="submit">
     <auth-form
-      title="Create an account"
-      text="Start your journey!"
-      button-text="Get started"
-      account="Already have an account? "
+      :title="$t('Create_Account')"
+      :text="$t('Start_Journey')"
+      :button-text="$t('Get_Started')"
+      :account="$t('Already_Have')"
       route="login"
-      auth="Log in"
+      :auth="$t('Login')"
     >
       <text-input
         name="name"
-        label="Name"
-        placeholder="Enter your name"
+        :label="$t('name')"
+        :placeholder="$t('Enter_Name')"
         rule="required|min:3|max:15|alpha_num|lowercase"
       ></text-input>
       <text-input
         name="email"
-        label="Email"
+        :label="$t('email')"
         type="email"
-        placeholder="Enter your email"
+        :placeholder="$t('Enter_Email')"
         rule="required|email"
       ></text-input>
       <text-input
         name="password"
-        label="Password"
+        :label="$t('password')"
         type="password"
-        placeholder="Password"
+        :placeholder="$t('password')"
         rule="required|min:8|max:15|alpha_num|lowercase"
       ></text-input>
       <text-input
         name="confirmation"
-        label="Confirm password"
+        :label="$t('Confirm_Password')"
         type="password"
-        placeholder="Enter your name"
+        :placeholder="$t('Confirm_Password')"
         rule="confirmed:@password"
       ></text-input>
     </auth-form>
@@ -44,6 +44,8 @@ import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
 import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
@@ -57,7 +59,7 @@ const submit = async (values, actions) => {
     const errors = error.response?.data.errors;
     console.log(error);
     for (const loopError in errors) {
-      actions.setFieldError(loopError, errors[loopError]);
+      actions.setFieldError(loopError, errors[loopError][0][locale.value]);
     }
   }
 };

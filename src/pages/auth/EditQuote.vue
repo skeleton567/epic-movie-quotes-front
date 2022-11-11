@@ -4,14 +4,14 @@
       <Form @submit="submit">
         <form-header
           :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
-          title="Edit Quote"
+          :title="$t('Edit_Quote')"
         />
         <show-quote>
           <button
             class="w-full bg-[#E31221] rounded text-xl py-3 mt-4 mb-10"
             type="submit"
           >
-            Save changes
+            {{ $t("Save_Changes") }}
           </button>
         </show-quote>
       </Form>

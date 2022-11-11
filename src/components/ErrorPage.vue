@@ -9,7 +9,7 @@
       :to="url"
       class="text-white py-2 px-3 bg-[#E31221] rounded-md my-6 lg:my-12 text-sm lg:text-base"
     >
-      Return Home
+      {{ $t("Go_Home") }}
     </router-link>
   </div>
 </template>

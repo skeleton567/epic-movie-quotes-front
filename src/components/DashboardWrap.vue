@@ -3,7 +3,9 @@
     <header
       class="h-20 px-10 md:px-16 flex justify-between items-center fixed w-full bg-[#22203033] z-10"
     >
-      <h2 class="text-sm uppercase text-[#DDCCAA] font-bold hidden md:block">
+      <h2
+        class="text-sm uppercase text-[#DDCCAA] font-bold hidden md:block font-[HelveticaEnglish]"
+      >
         Movie quotes
       </h2>
       <responsive-button @showEvent="showSide" />
@@ -16,8 +18,9 @@
             @click.stop
           />
           <span
-            class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem]"
+            class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem] cursor-pointer"
             @click="notificationOpened = !notificationOpened"
+            @click.stop
             >{{ counter }}</span
           >
           <div
@@ -29,16 +32,16 @@
               v-if="!notifications.length"
               class="bg-black z-20 w-full block py-5 px-6"
             >
-              <p class="text-center">No notifications yet!!</p>
+              <p class="text-center">{{ $t("No_Notification") }}</p>
             </div>
             <div
               v-else
               class="bg-black z-20 w-full block py-5 px-6 max-h-[80vh] md:w-[500px] overflow-y-scroll scrollbar"
             >
               <div class="flex justify-between items-center">
-                <h1 class="font-bold text-xl">Notifications</h1>
+                <h1 class="font-bold text-xl">{{ $t("notifications") }}</h1>
                 <button class="underline text-sm" @click="markAsRead(false)">
-                  Mark as all read
+                  {{ $t("Markas_Read") }}
                 </button>
               </div>
               <div
@@ -73,28 +76,34 @@
                           class="flex items-center text-center space-x-2"
                         >
                           <like-notification />
-                          <span>Reacted to your quote</span>
+                          <span class="text-xs md:text-sm">{{
+                            $t("reacted")
+                          }}</span>
                         </span>
                         <span
                           v-else
                           class="flex items-center text-center space-x-2"
                         >
                           <comment-notification />
-                          <span>Commented to your quote..</span></span
+                          <span class="text-xs md:text-sm">{{
+                            $t("commented")
+                          }}</span></span
                         >
                       </p>
                     </div>
                   </div>
                   <div class="flex space-x-5 mt-1 md:flex-col-reverse">
                     <p
-                      class="w-12 md:text-right md:w-full"
+                      class="w-12 md:text-right md:w-full md:mt-4 text-sm"
                       :class="
                         !notification.seen ? 'text-[#198754]' : 'text-black'
                       "
                     >
-                      New
+                      {{ $t("New_Post") }}
                     </p>
-                    <p>{{ timeSince(notification.created_at) }}</p>
+                    <p class="text-sm">
+                      {{ timeSince(notification.created_at) }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -106,14 +115,14 @@
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] hidden md:inline"
           @click="logOut"
         >
-          Log Out
+          {{ $t("Log_Out") }}
         </button>
       </nav>
     </header>
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:h-full md:w-auto md:max-w-sm"
+        class="h-[60vh] w-[87vw] md:h-[100vh] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:w-auto md:max-w-sm"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
@@ -127,30 +136,26 @@
             <router-link
               class="text-sm text-[#CED4DA]"
               :to="{ name: 'profile' }"
-              >Edit your profile</router-link
+              >{{ $t("Edit_Profile") }}</router-link
             >
           </div>
         </div>
-        <div class="flex space-x-10 ml-11">
+        <router-link :to="{ name: 'newsFeed' }" class="flex space-x-10 ml-11">
           <home-icon />
-          <router-link
-            class="text-xl text-white my-10"
-            :to="{ name: 'newsFeed' }"
-            >News feed</router-link
-          >
-        </div>
-        <div class="flex space-x-10 ml-11">
+          <p class="text-xl text-white my-10">{{ $t("News_feed") }}</p>
+        </router-link>
+        <router-link :to="{ name: 'movieList' }" class="flex space-x-10 ml-11">
           <camera-icon />
-          <router-link class="text-xl text-white" :to="{ name: 'movieList' }"
-            >List of movies</router-link
-          >
-        </div>
+          <p class="text-xl text-white">
+            {{ $t("Movie_List") }}
+          </p>
+        </router-link>
         <locale-changer class="md:hidden flex ml-11 my-10" />
         <button
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] md:hidden inline ml-11"
           @click="logOut"
         >
-          Log Out
+          {{ $t("Log_Out") }}
         </button>
       </div>
       <div
@@ -166,14 +171,16 @@
             v-model="postStore.searchValue"
             class="outline-none w-full bg-inherit text-white py-1 px-1 placeholder-white"
             type="text"
-            placeholder="Search"
+            :placeholder="$t('search')"
           />
         </div>
         <p class="mt-6 text-[#CED4DA] ml-20">
-          Enter <span class="text-white">@</span> to search movies
+          {{ $t("enter") }}<span class="text-white">@</span>
+          {{ $t("Searc_hMovie") }}
         </p>
         <p class="mt-5 text-[#CED4DA] ml-20">
-          Enter <span class="text-white">#</span> to search quotes
+          {{ $t("enter") }}<span class="text-white">#</span>
+          {{ $t("Search_Quote") }}
         </p>
       </div>
     </div>
@@ -193,7 +200,6 @@ import SearchLoop from "@/components/icons/SearchLoop.vue";
 import HomeIcon from "@/components/icons/HomeIcon.vue";
 import CameraIcon from "@/components/icons/CameraIcon.vue";
 import ArrowLeft from "@/components/icons/ArrowLeft.vue";
-import ArrowDown from "@/components/icons/ArrowDown.vue";
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
 import CommentNotification from "@/components/icons/CommentNotification.vue";
 import LikeNotification from "@/components/icons/LikeNotification.vue";
@@ -203,6 +209,8 @@ import { ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
 import Pusher from "pusher-js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const store = useUserStore();
 const postStore = usePostStore();
 const router = useRouter();
@@ -277,25 +285,25 @@ const timeSince = (sqldate) => {
   let interval = seconds / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + " years ago";
+    return Math.floor(interval) + t("Years_Ago");
   }
   interval = seconds / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + " months ago";
+    return Math.floor(interval) + t("Months_Ago");
   }
   interval = seconds / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + " days ago";
+    return Math.floor(interval) + t("Days_Ago");
   }
   interval = seconds / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + " hours ago";
+    return Math.floor(interval) + t("Hours_Ago");
   }
   interval = seconds / 60;
   if (interval > 1) {
-    return Math.floor(interval) + " min ago";
+    return Math.floor(interval) + t("Min_Ago");
   }
-  return Math.floor(seconds) + " sec ago";
+  return Math.floor(seconds) + t("Sec_Ago");
 };
 const markAsRead = async (id) => {
   try {

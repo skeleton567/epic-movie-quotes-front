@@ -13,7 +13,7 @@
     <button class="text-white py-2 px-3 bg-[#E31221] rounded-md w-full my-6">
       {{ buttonText }}
     </button>
-    <router-link class="text-[#6C757D] text-center block" :to="{ name: 'login' }">&#8592 Back to log in</router-link>
+    <router-link class="text-[#6C757D] text-center block" :to="{ name: 'login' }">&#8592 {{$t('Back_Login')}}</router-link>
   </div>
   </form-wrap>
   

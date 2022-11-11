@@ -1,8 +1,8 @@
 <template>
   <mailing-message
-    title="Thank you!"
-    text="Your account has been activated."
-    button-text="Go to my news feed"
+    :title="$t('Thank_You')"
+    :text="$t('activated')"
+    :button-text="$t('Go_Feed')"
     image="checked.png"
     url="newsFeed"
   ></mailing-message>
