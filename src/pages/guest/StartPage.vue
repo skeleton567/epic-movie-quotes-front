@@ -8,13 +8,13 @@
           class="flex flex-col items-center space-y-6 w-[400px] lg:w-[800px]"
         >
           <h1 class="text-[#DDCCAA] text-2xl lg:text-6xl text-center">
-            {{ $t("findQuote") }}
+            {{ $t("find_Quote") }}
           </h1>
           <router-link
             :to="{ name: 'registration' }"
             class="text-white py-2 px-3 bg-[#E31221] rounded-[4px] lg:text-xl"
           >
-            {{ $t("GetStarted") }}
+            {{ $t("Get_Started") }}
           </router-link>
         </div>
       </div>

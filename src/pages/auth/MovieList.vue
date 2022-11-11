@@ -7,9 +7,9 @@
     >
       <div class="flex justify-between items-center md:h-10 mb-10">
         <div class="md:flex md:space-x-3 md:items-center shrink-2 basis-80">
-          <h2 class="text-xl">My list of movies</h2>
+          <h2 class="text-xl">{{ $t("My_List") }}</h2>
           <p class="mt-5 md:mb-0 md:mt-0">
-            (Total {{ movieStore?.movies?.length }})
+            ({{ $t("total") }} {{ movieStore?.movies?.length }})
           </p>
         </div>
         <div
@@ -19,7 +19,10 @@
             :to="{ name: 'addMovie' }"
             class="w-24 h-10 text-center border border-white py-2 px-1 rounded flex justify-center items-center space-x-3 bg-[#E31221]"
           >
-            <plus-icon /> <span>Add</span>
+            <plus-icon />
+            <span :class="{ 'text-xs': $i18n.locale === 'ka' }">{{
+              $t("add")
+            }}</span>
           </router-link>
           <div class="flex space-x-4 mt-3 md:w-40">
             <search-icon @showEvent="openedSearch = !openedSearch" />
@@ -37,7 +40,7 @@
               class="text-sm md:text-base w-full"
               @click="openedSearch = !openedSearch"
             >
-              Search
+              {{ $t("search") }}
             </p>
           </div>
         </div>

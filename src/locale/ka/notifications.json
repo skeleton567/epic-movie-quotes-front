@@ -1,15 +1,15 @@
 {
-    "NoNotification": "შეტყობინებები ჯერ არ გაქვთ!!",
+    "No_Notification": "შეტყობინებები ჯერ არ გაქვთ!!",
     "notifications": "შეტყობინებები",
-    "MarkasRead": "წაკითხულად მონიშვნა",
+    "Markas_Read": "წაკითხულად მონიშვნა",
     "commented":"დააკომენტარა თქვენი ციტატა",
     "reacted":"გამოეხმაურა თქვენს ციტატას",
-    "NewPost": "ახალი",
-    "SecAgo":" წამ წინ",
-    "MinAgo":" წუთ წინ",
-    "HoursAgo":" საათ წინ",
-    "DaysAgo":" დღის წინ",
-    "MonthsAgo": " თვის წინ",
-    "YearsAgo": " წლის წინ"
+    "New_Post": "ახალი",
+    "Sec_Ago":" წამ წინ",
+    "Min_Ago":" წუთ წინ",
+    "Hours_Ago":" საათ წინ",
+    "Days_Ago":" დღის წინ",
+    "Months_Ago": " თვის წინ",
+    "Years_Ago": " წლის წინ"
     
 }

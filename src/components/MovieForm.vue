@@ -33,7 +33,7 @@
             @click.stop=""
             @click="openDropdown = !openDropdown"
           >
-            <p v-if="!categories?.length">Category</p>
+            <p v-if="!categories?.length">{{ $t("category") }}</p>
             <p
               v-for="category in categories"
               v-else
@@ -81,14 +81,14 @@
         <movie-input
           :value="movieStore?.movie?.year"
           name="release_year"
-          placeholder="Release year"
+          :placeholder="$t('Release_Year')"
           type="number"
           rule="required|number"
         />
         <movie-input
           :value="movieStore?.movie?.budget"
           name="budget"
-          placeholder="Budget"
+          :placeholder="$t('budget')"
           type="text"
           rule="required"
         />

@@ -6,8 +6,8 @@
   >
     <div class="flex items-center space-x-3">
       <photo-camera />
-      <p class="md:hidden">{{ movieStore.upload }}</p>
-      <p class="hidden md:block">{{ movieStore.uploadBig }}</p>
+      <p class="md:hidden">{{ $t(movieStore.upload) }}</p>
+      <p class="hidden md:block">{{ $t(movieStore.uploadBig) }}</p>
     </div>
     <div>
       <Field
@@ -17,8 +17,10 @@
         name="image"
         @input="movieStore.addfile($event.target.files[0])"
       />
-      <label class="rounded px-2 py-3 bg-[#9747FF66] cursor-pointer" for="file"
-        >Choose file</label
+      <label
+        class="rounded px-2 py-3 bg-[#9747FF66] cursor-pointer text-center"
+        for="file"
+        >{{ $t("Choose_File") }}</label
       >
     </div>
   </div>

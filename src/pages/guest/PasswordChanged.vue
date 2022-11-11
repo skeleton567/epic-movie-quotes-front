@@ -1,8 +1,8 @@
 <template>
   <mailing-message
     :title="$t('Success')"
-    :text="$t('ChangedSuccessfully')"
-    :button-text="$t('LogIn')"
+    :text="$t('Changed_Successfully')"
+    :button-text="$t('Login')"
     image="checked.png"
     url="login"
   ></mailing-message>

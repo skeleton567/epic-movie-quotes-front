@@ -11,9 +11,12 @@ import * as UserProfileKa from './ka/UserProfile.json';
 import * as UserProfileEn from './en/UserProfile.json';
 import * as notificationsKa from './ka/notifications.json';
 import * as notificationsEn from './en/notifications.json';
+import * as MovieListKa from './ka/MovieList.json';
+import * as MovieListEn from './en/MovieList.json';
+
 
 const i18n = createI18n({
-  locale: 'en',
+  locale: localStorage.getItem("lang") ? localStorage.getItem("lang") : 'en',
   fallbackLocale: 'en',
   legacy: false,
   messages: {
@@ -23,7 +26,8 @@ const i18n = createI18n({
       ...errorEn,
       ...newsFeedEn,
       ...UserProfileEn,
-      ...notificationsEn
+      ...notificationsEn,
+      ...MovieListEn
     },
     ka: {
       ...StartPageKa,
@@ -31,7 +35,8 @@ const i18n = createI18n({
       ...errorKa,
       ...newsFeedKa,
       ...UserProfileKa,
-      ...notificationsKa
+      ...notificationsKa,
+      ...MovieListKa
     }
   }
   })

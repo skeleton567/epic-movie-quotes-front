@@ -1,11 +1,11 @@
 <template>
   <profile-popup
     v-if="profileStore.popup"
-    :text="profileStore.popupText"
-    :message = 'profileStore.message'
+    :text="$t(profileStore.popupText)"
+    :message="profileStore.message ? $t(profileStore.message) : ''"
     @close-event="profileStore.popup = false"
   />
-  <dashboard-wrap @click-event="profileStore.popup = false">
+  <dashboard-wrap>
     <div class="m-6 md:hidden">
       <a class="text-white cursor-pointer" @click="$router.back()"><arrow-left/></a>
     </div>
@@ -22,7 +22,7 @@
         >
           <profile-picture height="h-24 w-24 md:m-0" :image="store.profile" />
           <label class="text-white text-xl mt-2 md:m-0 text-center cursor-pointer" for="file">
-            {{$t('UploadPhoto')}}
+            {{$t('Upload_Photo')}}
             <input v-show="false" id="file" type="file" @input="uploadImage($event.target.files[0])">
           </label>
         </div>
@@ -54,7 +54,7 @@
                 <green-check classes="w-4 absolute top-3 right-3" />
               </p>
             </div>
-            <p>{{$t("PrimaryEmail")}}</p>
+            <p>{{$t("Primary_Email")}}</p>
           </div>
 
           <div
@@ -73,13 +73,13 @@
               >
                 {{ email.email }}
                 <div  v-if="!email.email_verified_at" class="absolute top-3 right-3">
-                  <span class="relative tooltip"><p class="absolute left-[50%] top-0 translate-x-[-50%] w-80 bg-white z-10 text-black rounded tooltipText flex space-x-3 px-2 py-4"> <green-check class="w-4"/> <span>{{$t("PleaseVerify")}}</span> </p><warning-icon /></span>
+                  <span class="relative tooltip"><p class="absolute left-[50%] top-0 translate-x-[-50%] w-80 bg-white z-10 text-black rounded tooltipText flex space-x-3 px-2 py-4"> <green-check class="w-4"/> <span>{{$t("Please_Verify")}}</span> </p><warning-icon /></span>
                 </div>
                 
               </p>
             </div>
-            <button  v-if="email.email_verified_at" @click="profileStore.makePrimary(email.email, store.id, email.email_verified_at)" :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('MakePrimary')}}</button>
-            <button class="flex-shrink-2"  v-else >{{$t("NotVerified")}}</button>
+            <button  v-if="email.email_verified_at" @click="profileStore.makePrimary(email.email, store.id, email.email_verified_at)" :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('Make_Primary')}}</button>
+            <button class="flex-shrink-2"  v-else >{{$t("Not_Verified")}}</button>
             <button  @click="profileStore.deleteEmail(email.id)">{{$t('remove')}}</button>
           </div>
           <div
@@ -89,7 +89,7 @@
               :to="{ name: 'editEmail' }"
               class="max-w-[208px] text-center border border-white py-2 px-3 rounded md:flex justify-center items-center space-x-3 mt-10"
             >
-              <plus-icon /> <span :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('AddEmail')}}</span>
+              <plus-icon /> <span :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('Add_Email')}}</span>
             </router-link>
           </div>
           <div
@@ -131,7 +131,7 @@
     <label for="submit"
       class="text-white py-2 px-3 bg-[#E31221] rounded-[4px] cursor-pointer"
     >
-      {{$t("SaveChanges")}}
+      {{$t("Save_Changes")}}
     </label >
   </div>
     </div>

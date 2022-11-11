@@ -3,7 +3,9 @@
     <header
       class="h-20 px-10 md:px-16 flex justify-between items-center fixed w-full bg-[#22203033] z-10"
     >
-      <h2 class="text-sm uppercase text-[#DDCCAA] font-bold hidden md:block">
+      <h2
+        class="text-sm uppercase text-[#DDCCAA] font-bold hidden md:block font-[HelveticaEnglish]"
+      >
         Movie quotes
       </h2>
       <responsive-button @showEvent="showSide" />
@@ -16,8 +18,9 @@
             @click.stop
           />
           <span
-            class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem]"
+            class="absolute -top-1 -right-1 rounded-full bg-[#E33812] text-white px-2 py-1 text-[0.6rem] cursor-pointer"
             @click="notificationOpened = !notificationOpened"
+            @click.stop
             >{{ counter }}</span
           >
           <div
@@ -29,7 +32,7 @@
               v-if="!notifications.length"
               class="bg-black z-20 w-full block py-5 px-6"
             >
-              <p class="text-center">{{ $t("NoNotification") }}</p>
+              <p class="text-center">{{ $t("No_Notification") }}</p>
             </div>
             <div
               v-else
@@ -38,7 +41,7 @@
               <div class="flex justify-between items-center">
                 <h1 class="font-bold text-xl">{{ $t("notifications") }}</h1>
                 <button class="underline text-sm" @click="markAsRead(false)">
-                  {{ $t("MarkasRead") }}
+                  {{ $t("Markas_Read") }}
                 </button>
               </div>
               <div
@@ -96,7 +99,7 @@
                         !notification.seen ? 'text-[#198754]' : 'text-black'
                       "
                     >
-                      {{ $t("NewPost") }}
+                      {{ $t("New_Post") }}
                     </p>
                     <p class="text-sm">
                       {{ timeSince(notification.created_at) }}
@@ -112,7 +115,7 @@
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] hidden md:inline"
           @click="logOut"
         >
-          {{ $t("LogOut") }}
+          {{ $t("Log_Out") }}
         </button>
       </nav>
     </header>
@@ -133,18 +136,18 @@
             <router-link
               class="text-sm text-[#CED4DA]"
               :to="{ name: 'profile' }"
-              >{{ $t("EditProfile") }}</router-link
+              >{{ $t("Edit_Profile") }}</router-link
             >
           </div>
         </div>
         <router-link :to="{ name: 'newsFeed' }" class="flex space-x-10 ml-11">
           <home-icon />
-          <p class="text-xl text-white my-10">{{ $t("Newsfeed") }}</p>
+          <p class="text-xl text-white my-10">{{ $t("News_feed") }}</p>
         </router-link>
         <router-link :to="{ name: 'movieList' }" class="flex space-x-10 ml-11">
           <camera-icon />
           <p class="text-xl text-white">
-            {{ $t("MovieList") }}
+            {{ $t("Movie_List") }}
           </p>
         </router-link>
         <locale-changer class="md:hidden flex ml-11 my-10" />
@@ -152,7 +155,7 @@
           class="text-white text-sm border border-white py-2 px-3 rounded-[4px] md:hidden inline ml-11"
           @click="logOut"
         >
-          {{ $t("LogOut") }}
+          {{ $t("Log_Out") }}
         </button>
       </div>
       <div
@@ -173,11 +176,11 @@
         </div>
         <p class="mt-6 text-[#CED4DA] ml-20">
           {{ $t("enter") }}<span class="text-white">@</span>
-          {{ $t("SearchMovie") }}
+          {{ $t("Searc_hMovie") }}
         </p>
         <p class="mt-5 text-[#CED4DA] ml-20">
           {{ $t("enter") }}<span class="text-white">#</span>
-          {{ $t("SearchQuote") }}
+          {{ $t("Search_Quote") }}
         </p>
       </div>
     </div>
@@ -207,9 +210,7 @@ import { usePostStore } from "@/stores/post.js";
 import Pusher from "pusher-js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
-import { defineEmits } from "vue";
 const { t } = useI18n();
-const emit = defineEmits(["click-event"]);
 const store = useUserStore();
 const postStore = usePostStore();
 const router = useRouter();
@@ -234,7 +235,6 @@ const hideSide = () => {
   notificationOpened.value = false;
   aside.value = true;
   search.value = false;
-  emit("click-event");
 };
 const showSearch = () => {
   return (search.value = true);
@@ -285,25 +285,25 @@ const timeSince = (sqldate) => {
   let interval = seconds / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + t("YearsAgo");
+    return Math.floor(interval) + t("Years_Ago");
   }
   interval = seconds / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + t("MonthsAgo");
+    return Math.floor(interval) + t("Months_Ago");
   }
   interval = seconds / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + t("DaysAgo");
+    return Math.floor(interval) + t("Days_Ago");
   }
   interval = seconds / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + t("HoursAgo");
+    return Math.floor(interval) + t("Hours_Ago");
   }
   interval = seconds / 60;
   if (interval > 1) {
-    return Math.floor(interval) + t("MinAgo");
+    return Math.floor(interval) + t("Min_Ago");
   }
-  return Math.floor(seconds) + t("SecAgo");
+  return Math.floor(seconds) + t("Sec_Ago");
 };
 const markAsRead = async (id) => {
   try {

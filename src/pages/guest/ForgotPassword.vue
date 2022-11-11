@@ -1,15 +1,15 @@
 <template>
   <reset-component
-    :title="$t('ForgotPassword')"
-    :text="$t('InstructionstoReset')"
-    :button-text="$t('SendInstructions')"
+    :title="$t('Forgot_Password')"
+    :text="$t('Instructionsto_Reset')"
+    :button-text="$t('Send_Instructions')"
     @submit-event="submit"
   >
     <text-input
       name="email"
       :label="$t('email')"
       type="email"
-      :placeholder="$t('EnterEmail')"
+      :placeholder="$t('Enter_Email')"
       rule="required|email"
     ></text-input>
   </reset-component>
@@ -19,6 +19,8 @@
 import ResetComponent from "@/components/ResetComponent.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const submit = async (values, actions) => {
   try {
@@ -26,8 +28,10 @@ const submit = async (values, actions) => {
     console.log(response);
     router.push({ name: "recoverInstructions" });
   } catch (error) {
-    console.log(error);
-    actions.setFieldError("email", error.response.data.error);
+    actions.setFieldError(
+      "email",
+      error.response.data.errors.email[0][locale.value]
+    );
   }
 };
 </script>

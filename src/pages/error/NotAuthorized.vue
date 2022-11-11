@@ -1,7 +1,7 @@
 <template>
   <error-page
-    :title="$t('ShallNotPass')"
-    :text="$t('NoPermission')"
+    :title="$t('Shall_Not_Pass')"
+    :text="$t('No_Permission')"
     image="Gandolf.svg"
   ></error-page>
 </template>

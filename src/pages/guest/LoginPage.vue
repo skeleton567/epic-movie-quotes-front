@@ -1,18 +1,18 @@
 <template>
   <form-wrap @submit-event="submit">
     <auth-form
-      :title="$t('LoginAccount')"
-      :text="$t('WelcomeBack')"
-      :button-text="$t('LogIn')"
-      :account="$t('DontHave')"
+      :title="$t('Login_Account')"
+      :text="$t('Welcome_Back')"
+      :button-text="$t('Login')"
+      :account="$t('Dont_Have')"
       route="registration"
-      :auth="$t('SignIn')"
+      :auth="$t('Sign_In')"
     >
       <text-input
         name="name"
         :label="$t('name')"
         type="text"
-        :placeholder="$t('EnterName')"
+        :placeholder="$t('Enter_Name')"
         rule="required|min:3"
       ></text-input>
       <text-input
@@ -53,15 +53,20 @@ import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
 import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const submit = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
-    console.log(response.data.expires_in);
+    console.log(response);
     setJwtToken(response.data.access_token, response.data.expires_in);
     router.replace({ name: "newsFeed" });
   } catch (error) {
-    actions.setFieldError("name", error.response.data.error);
+    actions.setFieldError(
+      "name",
+      error.response.data.errors.name[0][locale.value]
+    );
   }
 };
 </script>

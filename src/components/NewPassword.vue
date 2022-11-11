@@ -12,7 +12,7 @@
     >
       <div class="md:bg-inherit">
         <div class="bg-[#11101A] w-full p-6 rounded mb-8">
-          <h2 class="text-white mb-4">{{ $t("PasswordsContain") }}</h2>
+          <h2 class="text-white mb-4">{{ $t("Passwords_Contain") }}</h2>
           <ul>
             <li
               :class="
@@ -27,7 +27,7 @@
                 "
                 >&#x2022;</span
               >
-              {{ $t("EeghtOrmore") }}
+              {{ $t("Eeght_Ormore") }}
             </li>
             <li
               :class="
@@ -42,7 +42,7 @@
                 "
                 >&#x2022;</span
               >
-              {{ $t("fifteenOrless") }}
+              {{ $t("fifteen_Orless") }}
             </li>
           </ul>
         </div>
@@ -55,9 +55,9 @@
         ></text-input>
         <text-input
           name="confirmation"
-          :label="$t('ConfirmPassword')"
+          :label="$t('Confirm_Password')"
           type="password"
-          :placeholder="$t('ConfirmPassword')"
+          :placeholder="$t('Confirm_Password')"
           rule="confirmed:@password"
         ></text-input>
       </div>

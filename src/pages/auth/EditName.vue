@@ -6,14 +6,14 @@
     @click="router.push({ name: 'profile' })"
   >
     <div class="md:bg-[black] md:rounded-xl md:pt-6 md:pb-10" @click.stop>
-      <h1 class="hidden md:block text-2xl px-8 mb-6">{{ $t("EditName") }}</h1>
+      <h1 class="hidden md:block text-2xl px-8 mb-6">{{ $t("Edit_Name") }}</h1>
       <hr class="hidden md:block" color="blue" />
       <div
         class="px-8 w-full md:w-[450px] h-[30vh] md:h-fit bg-[#24222F] md:bg-inherit flex justify-center items-center mb-10 md:mt-10"
       >
         <text-input
           name="name"
-          :label="$t('EnterUsername')"
+          :label="$t('Enter_Username')"
           rule="required|min:3|max:15|alpha_num|lowercase"
         ></text-input>
       </div>

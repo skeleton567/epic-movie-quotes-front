@@ -44,7 +44,7 @@
             class="flex space-x-4"
           >
             <eye-component />
-            <p>View post</p>
+            <p>{{ $t("View_Post") }}</p>
           </router-link>
           <router-link
             :to="{
@@ -54,11 +54,11 @@
             class="my-8 flex space-x-4"
           >
             <pencil-component />
-            <p>Edit</p>
+            <p>{{ $t("edit") }}</p>
           </router-link>
           <div class="flex space-x-4 cursor-pointer" @click="deleteQuote">
             <trash-component />
-            <p>Delete</p>
+            <p>{{ $t("Delete_Post") }}</p>
           </div>
         </div>
       </div>

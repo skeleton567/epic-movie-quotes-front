@@ -43,7 +43,7 @@
         id=""
         v-model="commentValue"
         class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
-        :placeholder="$t('WriteComment')"
+        :placeholder="$t('Write_Comment')"
         name=""
         cols="30"
         rows="1"

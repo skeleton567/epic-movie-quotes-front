@@ -6,8 +6,8 @@ export const useMoviesStore = defineStore("movies", {
   state: () => ({
         movie: [],
         movies: [],
-        upload: "Upload image",
-        uploadBig: 'Drag & drop your image here or',
+        upload: "Upload_Image",
+        uploadBig: 'Dragn_Drop',
         file: null,
     }),
     getters: {
@@ -22,8 +22,8 @@ export const useMoviesStore = defineStore("movies", {
             }
         },
         addfile(image) {
-            this.upload = "Image Uploaded";
-            this.uploadBig = "Image Uploaded";
+            this.upload = "Image_Uploaded";
+            this.uploadBig = "Image_Uploaded";
             this.file = image;
       },
       async getMovies () {

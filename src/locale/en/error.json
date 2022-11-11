@@ -1,5 +1,5 @@
 {
-    "NotFound": "We can't see the page you are looking for",
-    "ShallNotPass": "You shall not pass!",
-    "NoPermission": "Sorry, but  you don’t have permission to access this page"
+    "Not_Found": "We can't see the page you are looking for",
+    "Shall_Not_Pass": "You shall not pass!",
+    "No_Permission": "Sorry, but  you don’t have permission to access this page"
 }

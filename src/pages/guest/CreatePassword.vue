@@ -1,8 +1,8 @@
 <template>
   <reset-component
-    :title="$t('CreatePassword')"
-    :text="$t('DifferentPassword')"
-    :button-text="$t('ResetPassword')"
+    :title="$t('Create_Password')"
+    :text="$t('Different_Password')"
+    :button-text="$t('Reset_Password')"
     @submit-event="submit"
   >
     <text-input
@@ -14,9 +14,9 @@
     ></text-input>
     <text-input
       name="confirmation"
-      :label="$t('ConfirmPassword')"
+      :label="$t('Confirm_Password')"
       type="password"
-      :placeholder="$t('ConfirmPassword')"
+      :placeholder="$t('Confirm_Password')"
       rule="confirmed:@password"
     ></text-input>
   </reset-component>

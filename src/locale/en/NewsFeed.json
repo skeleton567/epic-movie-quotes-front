@@ -1,15 +1,15 @@
 {
-    "LogOut": "Log out",
-    "WriteQuote":"Write new quote",
-    "search": "Search by",
-    "searchBy": "Enter @ to search movies, Enter # to search quotes",
+    "Log_Out": "Log out",
+    "Write_Quote":"Write new quote",
+    "search": "Search ",
+    "search_By": "Enter {0} to search movies, Enter {1} to search quotes",
     "movie": "movie",
-    "WriteComment": "Write comment....",
-    "SearchMovie": "to search movies",
-    "SearchQuote": "to search quote",
+    "Write_Comment": "Write comment....",
+    "Search_Movie": "to search movies",
+    "Search_Quote": "to search quote",
     "enter": "Enter ",
-    "EditProfile":"Edit your profile",
-    "Newsfeed": "News feed",
-    "MovieList": "List of movies"
+    "Edit_Profile":"Edit your profile",
+    "News_feed": "News feed",
+    "Movie_List": "List of movies"
     
 }

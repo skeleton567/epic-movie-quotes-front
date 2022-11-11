@@ -1,7 +1,7 @@
 <template>
   <div class="p-8 w-full bg-[#24222F] mb-10">
     <div class="pb-6 border-b border-[#CED4DA80]">
-      <h2 class="mb-6">{{ $t("PrimaryEmail") }}</h2>
+      <h2 class="mb-6">{{ $t("Primary_Email") }}</h2>
       <p
         class="relative px-4 py-2 bg-[#19875433] border border-[#198754] rounded"
       >
@@ -27,10 +27,10 @@
             )
           "
         >
-          {{ $t("MakePrimary") }}
+          {{ $t("Make_Primary") }}
         </button>
         <button v-else class="border border-white py-2 px-3 rounded">
-          {{ $t("NotVerified") }}
+          {{ $t("Not_Verified") }}
         </button>
         <button
           class="text-[#CED4DA]"
@@ -40,7 +40,7 @@
         </button>
       </div>
     </div>
-    <h2 class="uppercase mt-12 mb-5">{{ $t("AddEmail") }}</h2>
+    <h2 class="uppercase mt-12 mb-5">{{ $t("Add_Email") }}</h2>
     <router-link
       :to="{ name: 'editEmail' }"
       class="w-full text-center border border-white py-2 px-3 rounded flex justify-center items-center space-x-3"

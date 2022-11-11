@@ -4,7 +4,7 @@
       class="md:px-0 mt-8 lg:block md:w-full md:pl-96 mb-8"
       :class="{ hidden: $route.name === 'editMovie' }"
     >
-      <h1 class="hidden md:block text-2xl">Movie discription</h1>
+      <h1 class="hidden md:block text-2xl">{{ $t("Movie_Discription") }}</h1>
       <div class="px-10 md:px-0 mt-8 w-full">
         <div class="md:flex md:space-x-10">
           <img
@@ -36,11 +36,11 @@
             </div>
             <div class="ml-3 md:ml-0">
               <p class="my-5">
-                <span class="text-[#CED4DA]">Director: </span>
+                <span class="text-[#CED4DA]">{{ $t("director") }}: </span>
                 <span> {{ movieStore?.movie?.director?.[$i18n.locale] }}</span>
               </p>
               <p class="mb-5">
-                <span class="text-[#CED4DA]">Budget: </span>
+                <span class="text-[#CED4DA]">{{ $t("budget") }}: </span>
                 <span> {{ movieStore?.movie?.budget }}$</span>
               </p>
               <p class="max-w-xs">
@@ -58,14 +58,17 @@
                 :to="{ name: 'addQuote', query: { id: movieStore.movie?.id } }"
                 class="w-40 text-center border border-white py-2 px-1 rounded flex justify-center items-center space-x-3 bg-[#E31221]"
               >
-                <plus-icon /> <span>Add quote</span>
+                <plus-icon />
+                <span :class="{ 'text-sm py-1': $i18n.locale === 'ka' }">{{
+                  $t("Add_Quote")
+                }}</span>
               </router-link>
               <edit-delete classes="md:hidden" />
             </div>
             <div class="md:flex md:space-x-3 items-center shrink-0">
-              <h2 class="text-2xl">All quotes</h2>
+              <h2 class="text-2xl">{{ $t("All_Quotes") }}</h2>
               <p class="mb-8 mt-2 md:m-0 md:text-2xl">
-                (Total {{ movieStore.movie?.quote?.length }})
+                ({{ $t("total") }} {{ movieStore.movie?.quote?.length }})
               </p>
             </div>
           </div>

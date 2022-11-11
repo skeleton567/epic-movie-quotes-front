@@ -6,7 +6,7 @@
       <div
         class="pb-2 mb-5 h-[20vh] border-b w-full md:w-[450px] border-[#CED4DA33] md:bg-inherit flex justify-center items-center"
       >
-        <p class="text-white mx-3 text-center">{{ $t("YouSure") }}</p>
+        <p class="text-white mx-3 text-center">{{ $t("You_Sure") }}</p>
       </div>
       <profile-buttons :text="$t('confirm')" @click-event="add" />
     </div>
@@ -21,6 +21,7 @@ import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
+const { locale } = useI18n({ useScope: "global" });
 const store = useUserStore();
 const profileStore = useProfileStore();
 const router = useRouter();
@@ -33,14 +34,14 @@ const add = async () => {
         id: store.id
       });
       profileStore.popup = true;
-      profileStore.popupText = t("UsernameChanged");
       profileStore.message = "";
+      profileStore.popupText = "Username_Changed";
       store.getAuthUser();
       router.replace({ name: "profile" });
     } catch (error) {
       router.replace({
         name: "editName",
-        query: { name: error.response.data.errors?.name[0] }
+        query: { name: error.response.data.errors?.name[0][locale.value] }
       });
     }
   } else if (route.query.email) {
@@ -50,14 +51,14 @@ const add = async () => {
         user_id: store.id
       });
       profileStore.popup = true;
-      profileStore.popupText = t("EmailAdded");
-      profileStore.message = t("PleaseCheck");
+      profileStore.popupText = "Email_Added";
+      profileStore.message = "Please_Check";
       store.getAuthUser();
       router.replace({ name: "profile" });
     } catch (error) {
       router.replace({
         name: "editEmail",
-        query: { email: error.response.data.errors?.email[0] }
+        query: { email: error.response.data.errors?.email[0][locale.value] }
       });
     }
   } else if (route.query.password) {
@@ -69,14 +70,16 @@ const add = async () => {
       });
       console.log(response);
       profileStore.popup = true;
-      profileStore.popupText = t("PasswordUpdated");
       profileStore.message = "";
+      profileStore.popupText = "Password_Updated";
       router.replace({ name: "profile" });
     } catch (error) {
       console.log(error);
       router.replace({
         name: "editPassword",
-        query: { password: error.response.data.errors?.password[0] }
+        query: {
+          password: error.response.data.errors?.password
+        }
       });
     }
   }

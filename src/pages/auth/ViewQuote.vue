@@ -3,7 +3,7 @@
     <quote-crud>
       <form-header
         :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
-        title="View Quote"
+        :title="$t('View_Post')"
         :edit-link="{
           name: 'editQuote',
           query: { id: quoteStore?.quote?.id, movie_id: route.query.movie_id }
@@ -38,7 +38,7 @@
           <textarea
             disabled
             class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
-            :placeholder="$t('WriteComment')"
+            :placeholder="$t('Write_Comment')"
             name=""
             cols="30"
             rows="1"

@@ -10,7 +10,7 @@
       </div>
     </div>
     <h1 class="text-3xl w-full text-center">{{ title }}</h1>
-    <router-link :to="link"><x-icon /></router-link>
+    <router-link :to="link"><x-icon @click-event="reset" /></router-link>
   </div>
   <div class="px-8 mt-9">
     <div class="flex items-center space-x-5 mb-3">
@@ -28,6 +28,8 @@ import { useUserStore } from "@/stores/user.js";
 import { useQuotesStore } from "@/stores/quotes.js";
 import { useRouter, useRoute } from "vue-router";
 import { computed } from "vue";
+import { useMoviesStore } from "@/stores/movies.js";
+const movieStore = useMoviesStore();
 const router = useRouter();
 const route = useRoute();
 const quoteStore = useQuotesStore();
@@ -44,4 +46,8 @@ const deleteQuote = async () => {
 const correctRoute = computed(() => {
   return route.name === "editQuote" || route.name === "viewQuote";
 });
+const reset = () => {
+  movieStore.upload = "Upload_Image";
+  movieStore.uploadBig = "Dragn_Drop";
+};
 </script>

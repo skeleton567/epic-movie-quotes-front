@@ -10,7 +10,9 @@
             :to="{ name: 'writeQuote' }"
             class="flex items-center space-x-4"
             ><write-icon></write-icon>
-            <p class="text-white inline">{{ $t("WriteQuote") }}</p></router-link
+            <p class="text-white inline">
+              {{ $t("Write_Quote") }}
+            </p></router-link
           >
         </div>
         <div
@@ -32,7 +34,7 @@
             v-else
             v-model="store.searchValue"
             type="text"
-            :placeholder="$t('searchBy')"
+            :placeholder="$t('search_By', ['@', '#'])"
             class="outline-none bg-inherit text-xs text-white w-full"
           />
         </div>
