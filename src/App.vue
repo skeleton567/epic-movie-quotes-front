@@ -7,6 +7,7 @@
 <script setup>
 import "@/assets/tailwind.css";
 import BaseWrap from "@/components/BaseWrap.vue";
+document.title = "Movie Quotes";
 </script>
 
 <style>

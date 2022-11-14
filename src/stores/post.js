@@ -7,33 +7,33 @@ export const usePostStore = defineStore("post", {
     state: () => ({
         posts: [],
         page: 1,
+        searchPage: 2,
         searchValue: '',
         locale: useI18n({ useScope: 'global' })['locale']
     }),
-    getters: {
-        postSearch(state) {
-            if (state.searchValue.indexOf('@') === 0) {
-                let value = state.searchValue.slice(1);
-                return state.posts.filter(post => post.movie.title[state.locale].toLowerCase().includes(value.toLowerCase()));
-            } else if (state.searchValue.indexOf('#') === 0) {
-                let value = state.searchValue.slice(1);
-                return state.posts.filter(post => post.quote[state.locale].toLowerCase().includes(value.toLowerCase()));
-            }
-            return state.posts.filter(post => post.quote[state.locale].toLowerCase().includes(state.searchValue.toLowerCase()) || post.movie.title[state.locale].toLowerCase().includes(state.searchValue.toLowerCase()));
-        },
-    },
     actions: {
         async getPosts() {
-            try {
-                const response = await axios.get(`post?page=${this.page}`);
-                if (response.data.length) {
-                    this.page++;
-                }
-                this.posts.push(...response.data)
+            if (this.searchValue) {
+                const response = await axios.get(`search-post?page=${this.searchPage}`, {
+                    params: {
+                        search: this.searchValue
+                    }
+                });
+                this.searchPage++;
+                this.posts.push(...response.data);
                 console.log(response);
-                console.log(this.posts);
-            } catch (error) {
-                console.log(error);
+            } else {
+                try {
+                    const response = await axios.get(`post?page=${this.page}`);
+                    if (response.data.length) {
+                        this.page++;
+                    }
+                    this.posts.push(...response.data)
+                    console.log(response);
+                    console.log(this.posts);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         },
         handleScroll() {
@@ -52,6 +52,25 @@ export const usePostStore = defineStore("post", {
                 console.log(this.posts);
             } catch (error) {
                 console.log(error);
+            }
+        },
+        async searchPosts() {
+            if (this.searchValue === '') {
+                this.refreshPosts();
+            } else {
+                try {
+                    const response = await axios.get(`search-post?page=1`, {
+                        params: {
+                            search: this.searchValue
+                        }
+                    });
+                    this.searchPage = 2;
+                    this.posts = response.data;
+                    console.log(response);
+                    console.log(this.posts);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
     }

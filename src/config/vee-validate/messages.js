@@ -46,6 +46,7 @@ configure({
         description_ka: 'ქართული აღწერა',
         release_year: 'გამოშვების წელი',
         budget: 'ბიუჯეტი',
+        image: 'სურათი'
       }
     },
   }),

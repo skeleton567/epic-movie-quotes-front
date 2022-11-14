@@ -29,7 +29,7 @@
         />
         <div class="relative">
           <div
-            class="grid grid-cols-3 md:grid-cols-6 gap-2 border border-[#6C757D] rounded mb-4 px-3 py-3"
+            class="grid grid-cols-2 md:grid-cols-4 gap-2 border border-[#6C757D] rounded mb-4 px-3 py-3"
             @click.stop=""
             @click="openDropdown = !openDropdown"
           >
@@ -37,9 +37,9 @@
             <p
               v-for="category in categories"
               v-else
-              class="w-[100px] text-center bg-[#6C757D] rounded flex justify-between items-center space-x-1 py-1 px-2"
+              class="w-[150px] text-center bg-[#6C757D] rounded flex justify-between items-center space-x-1 py-1 px-2"
             >
-              <span class="text-xs">{{
+              <span class="text-xs text-center w-full">{{
                 category.category?.[$i18n.locale]
               }}</span>
               <x-icon
@@ -125,7 +125,7 @@ import { ref, defineEmits } from "vue";
 import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
-const emits = defineEmits("submit-event");
+const emits = defineEmits(["submit-event"]);
 const movieStore = useMoviesStore();
 const openDropdown = ref(false);
 const allCategories = ref([]);

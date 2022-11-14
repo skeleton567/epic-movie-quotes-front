@@ -29,7 +29,7 @@
             <div class="grid grid-cols-3 md:grid-cols-4 gap-4 mb-4">
               <p
                 v-for="category in movieStore?.movie?.categories"
-                class="w-24 text-center bg-[#6C757D] rounded"
+                class="md:w-[150px] text-center w-28 bg-[#6C757D] rounded text-sm md:text-base"
               >
                 {{ category.category?.[$i18n.locale] }}
               </p>

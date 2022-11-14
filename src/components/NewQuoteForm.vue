@@ -65,6 +65,8 @@ import ArrowDown from "@/components/icons/ArrowDown.vue";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { usePostStore } from "@/stores/post.js";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n({ useScope: "global" });
 const postStore = usePostStore();
 const router = useRouter();
 const route = useRoute();
@@ -102,7 +104,7 @@ const submit = async (values, actions) => {
     const errors = error.response?.data.errors;
     console.log(error);
     for (const loopError in errors) {
-      actions.setFieldError(loopError, errors[loopError]);
+      actions.setFieldError(loopError, errors[loopError][0][locale.value]);
     }
   }
 };

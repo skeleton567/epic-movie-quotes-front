@@ -1,5 +1,5 @@
 import { defineRule } from "vee-validate"; 
-import { required, email, min, max, confirmed, alpha_num, alpha_spaces, numeric } from "@vee-validate/rules"; 
+import { required, email, min, max, confirmed, alpha_num, alpha_spaces, numeric, image } from "@vee-validate/rules"; 
 
 defineRule("required", required);
 defineRule("email", email);
@@ -9,6 +9,7 @@ defineRule("confirmed", confirmed);
 defineRule("alpha_num", alpha_num);
 defineRule("alpha_spaces", alpha_spaces);
 defineRule("number", numeric);
+defineRule("image", image);
 defineRule("lowercase", (value) => {
     if (!value || !value.length) {
         return true;

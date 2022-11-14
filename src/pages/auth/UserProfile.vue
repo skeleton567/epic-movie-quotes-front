@@ -7,7 +7,7 @@
   />
   <dashboard-wrap>
     <div class="m-6 md:hidden">
-      <a class="text-white cursor-pointer" @click="$router.back()"><arrow-left/></a>
+      <arrow-left @hide-event="$router.back()"/>
     </div>
     <div class="mb-10">
       <div class="hidden md:block pl-20 mb-16">
@@ -172,7 +172,7 @@ const submitPassword = async (values, actions) => {
       });
       console.log(response);
       profileStore.popup = true;
-      profileStore.popupText = t("PasswordUpdated");
+      profileStore.popupText = 'Password_Updated';
       profileStore.message = "";
       changePassword.value = false;
   } catch (error) {
