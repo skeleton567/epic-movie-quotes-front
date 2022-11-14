@@ -16,6 +16,8 @@ import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n({ useScope: "global" });
 const movieStore = useMoviesStore();
 movieStore.movie = null;
 const categories = ref([]);
@@ -41,7 +43,7 @@ const submit = async (values, actions, categories) => {
     const errors = error.response?.data.errors;
     console.log(error);
     for (const loopError in errors) {
-      actions.setFieldError(loopError, errors[loopError]);
+      actions.setFieldError(loopError, errors[loopError][0][locale.value]);
     }
   }
 };

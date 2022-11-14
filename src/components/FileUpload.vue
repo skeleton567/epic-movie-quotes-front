@@ -15,6 +15,7 @@
         type="file"
         class="hidden"
         name="image"
+        rules="image"
         @input="movieStore.addfile($event.target.files[0])"
       />
       <label

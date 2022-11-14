@@ -10,9 +10,11 @@
       class="hidden"
       type="file"
       name="image"
+      rules="image"
       @input="$emit('showImage', $event.target.files[0])"
     />
     <label class="" for="file"><change-photo /></label>
+    <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" name="image" />
   </div>
 </template>
 

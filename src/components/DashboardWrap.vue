@@ -1,5 +1,5 @@
 <template>
-  <div class="m-0 bg-[#11101a]" @click="hideSide">
+  <div class="m-0 bg-[#11101a]">
     <header
       class="h-20 px-10 md:px-16 flex justify-between items-center fixed w-full bg-[#22203033] z-10"
     >
@@ -122,7 +122,7 @@
     <div class="md:inline-block mt-0">
       <div
         :class="{ hidden: aside }"
-        class="h-[60vh] w-[87vw] md:h-[100vh] fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:w-auto md:max-w-sm"
+        class="h-[60vh] w-[87vw] md:h-fit fixed z-10 md:mt-10 bg-[#11101a] md:bg-none md:block md:fixed md:z-0 md:w-auto md:max-w-sm"
         @click.stop=""
       >
         <div class="flex space-x-5 ml-11 mt-11">
@@ -176,7 +176,7 @@
         </div>
         <p class="mt-6 text-[#CED4DA] ml-20">
           {{ $t("enter") }}<span class="text-white">@</span>
-          {{ $t("Searc_hMovie") }}
+          {{ $t("Search_Movie") }}
         </p>
         <p class="mt-5 text-[#CED4DA] ml-20">
           {{ $t("enter") }}<span class="text-white">#</span>
@@ -239,7 +239,8 @@ const hideSide = () => {
 const showSearch = () => {
   return (search.value = true);
 };
-const hideSearch = () => {
+const hideSearch = async () => {
+  await postStore.searchPosts();
   return (search.value = false);
 };
 const props = defineProps({
@@ -249,11 +250,7 @@ let counter = ref(0);
 const getNotification = async () => {
   try {
     await store.getAuthUser();
-    const response = await axios.get("notifications", {
-      params: {
-        id: store.id
-      }
-    });
+    const response = await axios.get("notifications");
     for (let data of response.data) {
       if (!data.seen) {
         counter.value++;
@@ -311,11 +308,7 @@ const markAsRead = async (id) => {
       id: id,
       user_to_notify: store.id
     });
-    const response = await axios.get("notifications", {
-      params: {
-        id: store.id
-      }
-    });
+    const response = await axios.get("notifications");
     counter.value = 0;
     for (let data of response.data) {
       if (!data.seen) {
@@ -327,6 +320,7 @@ const markAsRead = async (id) => {
     console.log(error);
   }
 };
+window.addEventListener("click", hideSide);
 </script>
 
 <style scoped>

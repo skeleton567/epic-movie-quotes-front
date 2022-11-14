@@ -36,10 +36,12 @@
             type="text"
             :placeholder="$t('search_By', ['@', '#'])"
             class="outline-none bg-inherit text-xs text-white w-full"
+            @keyup.enter="store.searchPosts()"
+            @blur="store.searchPosts()"
           />
         </div>
       </div>
-      <div v-for="post in store.postSearch" :key="post.id">
+      <div v-for="post in store.posts" :key="post.id">
         <user-post
           :user="post.user?.name ? post.user.name : post.user.email"
           :image="post.user.image"
