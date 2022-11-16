@@ -30,8 +30,7 @@ const add = async () => {
   if (route.query.name) {
     try {
       const response = await axios.patch("name", {
-        name: route.query.name,
-        id: store.id
+        name: route.query.name
       });
       profileStore.popup = true;
       profileStore.message = "";
@@ -65,8 +64,7 @@ const add = async () => {
     try {
       const response = await axios.patch("password", {
         password: route.query.password,
-        password_confirmation: route.query.confirmation,
-        id: store.id
+        password_confirmation: route.query.confirmation
       });
       console.log(response);
       profileStore.popup = true;

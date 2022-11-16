@@ -35,11 +35,7 @@ export const useUserStore = defineStore("user", {
     },
     async getUserEmails() {
       try {
-        const response = await axios.get('secondary-email', {
-          params: {
-            id: this.id
-          }
-        });
+        const response = await axios.get('secondary-email');
         this.secondaryEmails = response.data.secondary_emails;
       } catch (error) {
         console.log(error);

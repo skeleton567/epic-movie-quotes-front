@@ -12,9 +12,9 @@ export const useProfileStore = defineStore("profile", {
         message: ''
     }),
     actions: {
-        async makePrimary(email, id, verified) {
+        async makePrimary(email, verified) {
             try {
-                const response = await axios.post('make-primary', { email: email, id: id, verified: verified });
+                const response = await axios.post('make-primary', { email, verified });
                 this.store.getAuthUser();
             } catch (error) {
                 console.log(error);
@@ -23,7 +23,7 @@ export const useProfileStore = defineStore("profile", {
         },
         async deleteEmail(id) {
             try {
-                const response = await axios.delete('destroy-email', { data: { id: id } });
+                const response = await axios.delete('email', { data: { id: id } });
                 this.store.getAuthUser();
             } catch (error) {
                 console.log(error);

@@ -78,7 +78,7 @@
                 
               </p>
             </div>
-            <button  v-if="email.email_verified_at" @click="profileStore.makePrimary(email.email, store.id, email.email_verified_at)" :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('Make_Primary')}}</button>
+            <button  v-if="email.email_verified_at" @click="profileStore.makePrimary(email.email, email.email_verified_at)" :class="{'text-sm': $i18n.locale === 'ka'}">{{$t('Make_Primary')}}</button>
             <button class="flex-shrink-2"  v-else >{{$t("Not_Verified")}}</button>
             <button  @click="profileStore.deleteEmail(email.id)">{{$t('remove')}}</button>
           </div>
@@ -185,7 +185,6 @@ const uploadImage = async (file) => {
   try {
     const fd = new FormData();
     fd.set('image', file);
-    fd.set('id', store.id);
     const response = await axios.post("profile-image", fd);
     store.getAuthUser();
   } catch (error) {

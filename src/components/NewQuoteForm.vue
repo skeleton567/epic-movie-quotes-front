@@ -118,6 +118,9 @@ const getMovies = async () => {
   }
 };
 getMovies();
+const g = () => {
+  console.log("wotk");
+};
 </script>
 
 <style scoped>

@@ -31,7 +31,6 @@ const submit = async (values, actions, categories) => {
     for (let value in values) {
       fd.set(value, values[value]);
     }
-    fd.set("user_id", store.id);
     fd.set("categories", JSON.stringify(categories));
     if (movieStore.file) fd.set("image", movieStore.file);
     const response = await axios.post(`movies/${route.query.id}`, fd);

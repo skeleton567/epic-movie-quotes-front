@@ -304,7 +304,7 @@ const timeSince = (sqldate) => {
 };
 const markAsRead = async (id) => {
   try {
-    await axios.patch("notifications/update", {
+    await axios.patch("notifications", {
       id: id,
       user_to_notify: store.id
     });

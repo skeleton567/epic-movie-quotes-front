@@ -20,11 +20,7 @@
           v-if="email.email_verified_at"
           class="border border-white py-2 px-3 rounded"
           @click="
-            profileStore.makePrimary(
-              email.email,
-              store.id,
-              email.email_verified_at
-            )
+            profileStore.makePrimary(email.email, email.email_verified_at)
           "
         >
           {{ $t("Make_Primary") }}
