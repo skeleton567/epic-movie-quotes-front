@@ -63,6 +63,7 @@ import { computed, ref, watch } from "vue";
 import axios from "@/config/axios/index.js";
 import { usePostStore } from "@/stores/post.js";
 import UserComment from "@/components/UserComment.vue";
+import Pusher from "pusher-js";
 const postStore = usePostStore();
 const props = defineProps({
   user: { type: String, required: true },
@@ -101,7 +102,6 @@ const like = async () => {
       quote_id: props.index,
       user_to_notify: props.post.user.id
     });
-    likes.value.push(response.data);
   }
 };
 const addComment = async (e) => {
@@ -111,7 +111,6 @@ const addComment = async (e) => {
     comment: commentValue.value,
     user_to_notify: props.post.user.id
   });
-  props.post.comment.push(response.data);
   commentValue.value = "";
   e.blur();
 };
@@ -121,4 +120,17 @@ const deleteComment = async (id) => {
     (comment) => comment.id !== id
   );
 };
+const pusher = new Pusher("7d784fb1c6f937c3410d", {
+  cluster: "eu"
+});
+const channel = pusher.subscribe("notificaitons");
+channel.bind("notificaiton", function (data) {
+  if (data.data.quote_id === props.post.id) {
+    if (data?.data?.comment) {
+      props.post.comment.push(data.data);
+    } else {
+      likes.value.push(data.data);
+    }
+  }
+});
 </script>
