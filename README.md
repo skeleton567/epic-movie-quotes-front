@@ -45,7 +45,9 @@ And now you should provide **.env** file all the necessary environment variables
 #
 **App urls:**
 >VITE_API_BASE_URL=*****
+
 >VITE_BASE_URL=*****
+
 >VITE_IMAGE_BASE_URL=****
 
 #
@@ -55,6 +57,7 @@ And now you should provide **.env** file all the necessary environment variables
 #
 **Pusher:**
 >VITE_PUSHER_APP_KEY=*****
+
 >VITE_PUSHER_APP_CLUSTER=*****
 
 ##### Now, you should be good to go!
