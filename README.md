@@ -1,48 +1,72 @@
-# frontend
+<div style="display:flex; align-items: center">
+  <h1 style="position:relative; top: -6px" >Movie Quotes Upgraded</h1>
+</div>
 
-This template should help get you started developing with Vue 3 in Vite.
+---
+Movie Quotes is an App where you are able to register and see, add, share, comment and like hundreds of movie quotes.
 
-## Recommended IDE Setup
+#
+### Table of Contents
+* [Prerequisites](#prerequisites)
+* [Tech Stack](#tech-stack)
+* [Getting Started](#getting-started)
+* [Development](#development)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+#
+### Prerequisites
 
-## Customize configuration
+* *npm@7 and up*
+#
+### Tech Stack
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* [VueJs@3.x](https://vuejs.org/guide/introduction.html) - front-end framework
+* [Vee-validate@4.x](https://vee-validate.logaretm.com/v4/) - package for form validations
+* [Tailwind CSS](https://tailwindcss.com) - CSS library
+* [Pusher](https://pusher.com) - Real time notification package
+* [Vue 3 Google Login](https://yobaji.github.io/vue3-google-login/) - Google authentificaiton package
 
-## Project Setup
+#
+### Getting Started
+1\. First of all you need to clone >Movie Quotes Upgraded repository from github:
+```sh
+git clone https://github.com/RedberryInternship/guram-tsagareishvili-epic-movie-quotes-front
+```
 
+2\. Next step requires you to run *npm install* in order to install all the dependencies.
 ```sh
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
+3\. Now we need to set our env file. 
 ```sh
-npm run dev
+cp .env.example .env
 ```
+And now you should provide **.env** file all the necessary environment variables:
 
-### Compile and Minify for Production
+#
+**App urls:**
+>VITE_API_BASE_URL=*****
+
+>VITE_BASE_URL=*****
+
+>VITE_IMAGE_BASE_URL=****
+
+#
+**Google Login:**
+>VITE_GOOGLE_CLIENT_ID=****
+
+#
+**Pusher:**
+>VITE_PUSHER_APP_KEY=*****
+
+>VITE_PUSHER_APP_CLUSTER=*****
+
+##### Now, you should be good to go!
+
+#
+### Development
+
+You can run Vite built-in development server by executing:
 
 ```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run build
-npm run test:e2e # or `npm run test:e2e:ci` for headless testing
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+  npm run dev
 ```

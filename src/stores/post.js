@@ -72,6 +72,12 @@ export const usePostStore = defineStore("post", {
                     console.log(error);
                 }
             }
+        },
+        resetPosts() {
+            this.posts = [];
+            this.page = 1;
+            this.searchPage = 2;
+            this.searchValue = '';
         }
     }
 });

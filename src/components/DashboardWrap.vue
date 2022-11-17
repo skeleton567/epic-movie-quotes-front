@@ -207,9 +207,9 @@ import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
-import Pusher from "pusher-js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
+import channel from "@/config/pusher";
 const { t } = useI18n();
 const store = useUserStore();
 const postStore = usePostStore();
@@ -221,6 +221,7 @@ const logOut = async () => {
     document.cookie =
       "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     store.removeAuthUser();
+    postStore.resetPosts();
     router.replace({ name: "home" });
   } catch (error) {
     console.log(error);
@@ -264,14 +265,12 @@ const getNotification = async () => {
 const notificationOpened = ref(false);
 getNotification();
 let notifications = ref([]);
-const pusher = new Pusher("7d784fb1c6f937c3410d", {
-  cluster: "eu"
-});
-const channel = pusher.subscribe("notificaitons");
-channel.bind("notificaiton", function (data) {
-  if (data.notification.user_to_notify.id === store.id) {
-    counter.value++;
-    notifications.value.unshift(data.notification);
+channel.bind("notification", function (data) {
+  if (data.notification) {
+    if (data.notification.user_to_notify.id === store.id) {
+      counter.value++;
+      notifications.value.unshift(data.notification);
+    }
   }
 });
 

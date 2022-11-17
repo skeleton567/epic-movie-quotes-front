@@ -64,6 +64,7 @@ import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
 import { usePostStore } from "@/stores/post.js";
 import { onUnmounted, onMounted, ref } from "vue";
+import channel from "@/config/pusher";
 const store = usePostStore();
 let searchActive = ref(false);
 const toggleSearch = () => {
@@ -71,5 +72,28 @@ const toggleSearch = () => {
 };
 onMounted(() => store.getPosts());
 window.addEventListener("scroll", store.handleScroll);
-onUnmounted(() => window.removeEventListener("scroll", store.handleScroll));
+channel.bind("notification", function (data) {
+  const post = store.posts.filter((post) => post.id === data.data.quote_id)[0];
+  if (data.notification) {
+    if (data?.data?.comment) {
+      post.comment.push(data.data);
+    } else {
+      post.like.push(data.data);
+    }
+  } else {
+    if (data?.data?.comment) {
+      post.comment = post.comment.filter(
+        (comment) => comment.id !== data.data.id
+      );
+    } else {
+      post.like = post.like.filter(
+        (filterLike) => data.data.id !== filterLike.id
+      );
+    }
+  }
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", store.handleScroll);
+  channel.unbind("notification");
+});
 </script>

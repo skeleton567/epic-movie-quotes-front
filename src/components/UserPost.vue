@@ -63,8 +63,6 @@ import { computed, ref, watch } from "vue";
 import axios from "@/config/axios/index.js";
 import { usePostStore } from "@/stores/post.js";
 import UserComment from "@/components/UserComment.vue";
-import Pusher from "pusher-js";
-const postStore = usePostStore();
 const props = defineProps({
   user: { type: String, required: true },
   movie: { type: String, required: true },
@@ -86,16 +84,15 @@ const bgStyle = computed(() => {
   }
 });
 const store = useUserStore();
-const likes = ref(props.likes);
+
 let liked = computed(() => {
-  return !!likes.value.filter((like) => like.user.id === store.id).length;
+  return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
 
 const like = async () => {
   if (liked.value) {
-    const like = likes.value.filter((like) => like.user.id === store.id)[0];
+    const like = props.likes.filter((like) => like.user.id === store.id)[0];
     await axios.delete(`likes/${like.id}`);
-    likes.value = likes.value.filter((filterLike) => like.id !== filterLike.id);
   } else {
     const response = await axios.post("likes", {
       user_id: store.id,
@@ -116,21 +113,5 @@ const addComment = async (e) => {
 };
 const deleteComment = async (id) => {
   const response = await axios.delete(`comment/${id}`);
-  props.post.comment = props.post.comment.filter(
-    (comment) => comment.id !== id
-  );
 };
-const pusher = new Pusher("7d784fb1c6f937c3410d", {
-  cluster: "eu"
-});
-const channel = pusher.subscribe("notificaitons");
-channel.bind("notificaiton", function (data) {
-  if (data.data.quote_id === props.post.id) {
-    if (data?.data?.comment) {
-      props.post.comment.push(data.data);
-    } else {
-      likes.value.push(data.data);
-    }
-  }
-});
 </script>
