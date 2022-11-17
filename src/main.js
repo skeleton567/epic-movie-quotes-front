@@ -30,8 +30,7 @@ app.use(createPinia());
 app.use(router);
 app.use(i18n);
 
-const id = import.meta.env.VITE_CLIENT_ID;
 app.use(vue3GoogleLogin, {
-  clientId: id
+  clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID
 })
 app.mount("#app");

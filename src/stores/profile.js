@@ -24,6 +24,7 @@ export const useProfileStore = defineStore("profile", {
         async deleteEmail(id) {
             try {
                 const response = await axios.delete('email', { data: { id: id } });
+                console.log(response);
                 this.store.getAuthUser();
             } catch (error) {
                 console.log(error);
