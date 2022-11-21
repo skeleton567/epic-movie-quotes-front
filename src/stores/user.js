@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "@/config/axios/index.js";
-
+import { useAuthStore } from "@/stores/auth";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -11,6 +11,7 @@ export const useUserStore = defineStore("user", {
     gAuth: false,
     secondaryEmails: [],
     profile: '',
+    authStore: useAuthStore()
   }),
   actions: {
     async getAuthUser() {
@@ -23,7 +24,9 @@ export const useUserStore = defineStore("user", {
         this.email_verified_at = response.data.email_verified_at;
         this.gAuth = response.data?.google_auth;
         this.profile = response.data?.profile_picture;
+        this.authStore.authenticated = true;
       } catch (error) {
+        this.authStore.authenticated = false;
         console.log(error);
       }
     },
@@ -32,6 +35,7 @@ export const useUserStore = defineStore("user", {
       this.email = "";
       this.id = null;
       this.email_verified_at = "";
+      this.authStore.authenticated = false;
     },
     async getUserEmails() {
       try {

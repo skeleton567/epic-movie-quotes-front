@@ -96,7 +96,7 @@
           :value="movieStore?.movie?.description_en"
           name="description_en"
           placeholder="Description"
-          rule="required"
+          rule="required|alpha_spaces"
           label="Eng"
         />
         <textarea-component
@@ -125,29 +125,34 @@ import { ref, defineEmits } from "vue";
 import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const emits = defineEmits(["submit-event"]);
 const movieStore = useMoviesStore();
 const openDropdown = ref(false);
 const allCategories = ref([]);
 const props = defineProps({
   title: { type: String, required: true },
-  link: { type: Object, required: true },
-  categories: { type: Object, required: false }
+  link: { type: Object, required: true }
 });
+const categories = ref([]);
+if (route.name === "editMovie") {
+  categories.value = movieStore.movie.categories;
+}
 const isCategory = ref(true);
 const addCategory = (value) => {
-  if (!props.categories.includes(value)) {
-    props.categories.push(value);
+  if (!categories.value.filter((category) => category.id === value.id).length) {
+    categories.value.push(value);
+    isCategory.value = false;
+    openDropdown.value = false;
   }
-  isCategory.value = false;
-  openDropdown.value = false;
 };
 const removeCategory = (value) => {
-  const index = props.categories.indexOf(value);
-  props.categories.splice(index, 1);
+  const index = categories.value.indexOf(value);
+  categories.value.splice(index, 1);
 };
 const submit = async (values, actions) => {
-  emits("submit-event", values, actions, props.categories);
+  emits("submit-event", values, actions, categories.value);
 };
 const getCategory = async () => {
   const response = await axios.get("categories");

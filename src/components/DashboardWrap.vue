@@ -210,6 +210,8 @@ import { usePostStore } from "@/stores/post.js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
 import channel from "@/config/pusher";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const { t } = useI18n();
 const store = useUserStore();
 const postStore = usePostStore();
@@ -218,8 +220,6 @@ const logOut = async () => {
   try {
     const response = await axios.post("logout");
     console.log(response);
-    document.cookie =
-      "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     store.removeAuthUser();
     postStore.resetPosts();
     router.replace({ name: "home" });

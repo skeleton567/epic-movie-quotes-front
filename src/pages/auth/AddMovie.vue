@@ -2,7 +2,6 @@
   <movie-form
     :title="$t('Add_Movie')"
     :link="{ name: 'movieList' }"
-    :categories="categories"
     @submit-event="submit"
   >
     <file-upload />
@@ -20,7 +19,6 @@ import { useI18n } from "vue-i18n";
 const { locale } = useI18n({ useScope: "global" });
 const movieStore = useMoviesStore();
 movieStore.movie = null;
-const categories = ref([]);
 const router = useRouter();
 const submit = async (values, actions, categories) => {
   try {
@@ -30,7 +28,6 @@ const submit = async (values, actions, categories) => {
     }
     if (movieStore.file) fd.set("image", movieStore.file);
     fd.set("categories", JSON.stringify(categories));
-    console.log(JSON.stringify(categories));
     const response = await axios.post("movies", fd);
     await movieStore.getMovies();
     router.push({

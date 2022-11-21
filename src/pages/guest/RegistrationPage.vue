@@ -42,16 +42,17 @@
 <script setup>
 import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
-import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
     const response = await axios.post("register", values);
-    setJwtToken(response.data.access_token, response.data.expires_in);
+    authStore.authenticated = true;
     router.push({
       name: "emailSent"
     });
@@ -59,6 +60,7 @@ const submit = async (values, actions) => {
     const errors = error.response?.data.errors;
     console.log(error);
     for (const loopError in errors) {
+      authStore.authenticated = false;
       actions.setFieldError(loopError, errors[loopError][0][locale.value]);
     }
   }

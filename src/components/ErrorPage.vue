@@ -17,16 +17,16 @@
 <script setup>
 import { defineProps } from "vue";
 import { computed } from "vue";
-import { getJwtToken } from "@/helpers/jwt";
 import ErrorIcon from "@/components/icons/ErrorIcon.vue";
-
+import { useAuthStore } from "@/stores/auth";
 const props = defineProps({
   title: { type: String, required: true },
   text: { type: String, required: true },
   image: { type: String, required: true }
 });
+const authStore = useAuthStore();
 const url = computed(() => {
-  if (getJwtToken()) return { name: "newsFeed" };
+  if (authStore.authenticated) return { name: "newsFeed" };
   return { name: "home" };
 });
 </script>

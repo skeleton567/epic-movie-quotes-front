@@ -26,7 +26,8 @@ import ViewQuote from '@/pages/auth/ViewQuote.vue';
 import EditQuote from '@/pages/auth/EditQuote.vue';
 import WriteQuote from '@/pages/auth/WriteQuote.vue';
 import { useUserStore } from "@/stores/user.js";
-import { getJwtToken } from "@/helpers/jwt";
+import isAuthenticated from "./guards";
+import { useAuthStore } from "@/stores/auth";
 
 
 const router = createRouter({
@@ -189,19 +190,19 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.auth && !getJwtToken()) {
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  const store = useUserStore();
+  if (authStore.authenticated === null) {
+      await store.getAuthUser(); 
+  }
+
+  if (to.meta.auth && !authStore.authenticated) {
     next({ name: 'notAuthorized' })
-  } else if (to.name === 'home' && getJwtToken()) {
+  } else if (to.name === 'home' && authStore.authenticated) {
     next({ name: 'newsFeed' })
-  } else if (to.meta.guest && getJwtToken()) {
+  } else if (to.meta.guest && authStore.authenticated) {
     next({ name: 'notAuthorized' })
-  } else if (to.meta.auth && getJwtToken()) {
-    const store = useUserStore();
-    if (!store.id) {
-      store.getAuthUser();
-    }
-    next();
   } else {
     next();
   }
