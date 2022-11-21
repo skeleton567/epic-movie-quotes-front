@@ -2,7 +2,6 @@
   <movie-form
     :title="$t('Edit_Movie')"
     :link="{ name: 'viewMovie', query: { id: movieStore?.movie?.id } }"
-    :categories="categories"
     @submit-event="submit"
   >
     <image-upload :image="movie" @show-image="showImage" />
@@ -20,7 +19,6 @@ import ImageUpload from "@/components/ImageUpload.vue";
 import { computed, ref } from "vue";
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const movieStore = useMoviesStore();
-const categories = ref(movieStore.movie.categories);
 const router = useRouter();
 const store = useUserStore();
 const submit = async (values, actions, categories) => {
@@ -31,7 +29,6 @@ const submit = async (values, actions, categories) => {
     for (let value in values) {
       fd.set(value, values[value]);
     }
-    fd.set("categories", JSON.stringify(categories));
     if (movieStore.file) fd.set("image", movieStore.file);
     const response = await axios.post(`movies/${route.query.id}`, fd);
     await movieStore.getMovie(route.query.id);

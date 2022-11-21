@@ -10,14 +10,12 @@ export const useMoviesStore = defineStore("movies", {
         uploadBig: 'Dragn_Drop',
         file: null,
     }),
-    getters: {
-    },
     actions: {
         async getMovie(id) {
-            try {
+        try {
               const response = await axios.get(`movies/${id}`);
-              this.movie = response.data;
-            } catch (error) {
+          this.movie = response.data;
+        } catch (error) {
               console.log(error);
             }
         },

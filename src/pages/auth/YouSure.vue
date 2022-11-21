@@ -20,7 +20,6 @@ import { useProfileStore } from "@/stores/profile.js";
 import axios from "@/config/axios/index.js";
 import { useUserStore } from "@/stores/user.js";
 import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 const { locale } = useI18n({ useScope: "global" });
 const store = useUserStore();
 const profileStore = useProfileStore();
@@ -36,7 +35,7 @@ const add = async () => {
       profileStore.message = "";
       profileStore.popupText = "Username_Changed";
       store.getAuthUser();
-      router.replace({ name: "profile" });
+      router.back();
     } catch (error) {
       router.replace({
         name: "editName",
@@ -53,7 +52,7 @@ const add = async () => {
       profileStore.popupText = "Email_Added";
       profileStore.message = "Please_Check";
       store.getAuthUser();
-      router.replace({ name: "profile" });
+      router.back();
     } catch (error) {
       router.replace({
         name: "editEmail",
@@ -70,7 +69,7 @@ const add = async () => {
       profileStore.popup = true;
       profileStore.message = "";
       profileStore.popupText = "Password_Updated";
-      router.replace({ name: "profile" });
+      router.back();
     } catch (error) {
       console.log(error);
       router.replace({

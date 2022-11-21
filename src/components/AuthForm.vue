@@ -33,9 +33,10 @@
 <script setup>
 import { defineProps } from "vue";
 import axios from "@/config/axios/index.js";
-import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
 import { googleTokenLogin } from "vue3-google-login";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const router = useRouter();
 const props = defineProps({
   title: { type: String, required: true },
@@ -46,12 +47,17 @@ const props = defineProps({
   auth: { type: String, required: true }
 });
 const login = async () => {
-  const response = await googleTokenLogin();
-  const resp = await axios.post("google-login", {
-    token: response.access_token
-  });
-  setJwtToken(resp.data.access_token, resp.data.expires_in);
-  router.replace({ name: "newsFeed" });
-  console.log(resp);
+  try {
+    const response = await googleTokenLogin();
+    const resp = await axios.post("google-login", {
+      token: response.access_token
+    });
+    authStore.authenticated = true;
+    router.replace({ name: "newsFeed" });
+    console.log(resp);
+  } catch (error) {
+    authStore.authenticated = false;
+    console.log(error);
+  }
 };
 </script>

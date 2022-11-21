@@ -51,22 +51,21 @@
 import { Field } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import AuthForm from "@/components/AuthForm.vue";
-import { setJwtToken } from "@/helpers/jwt/index.js";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const submit = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
+    authStore.authenticated = true;
     console.log(response);
-    setJwtToken(response.data.access_token, response.data.expires_in);
     router.replace({ name: "newsFeed" });
   } catch (error) {
-    actions.setFieldError(
-      "name",
-      error.response.data.errors.name[0][locale.value]
-    );
+    authStore.authenticated = false;
+    actions.setFieldError("name", error.response.data.errors[locale.value]);
   }
 };
 </script>

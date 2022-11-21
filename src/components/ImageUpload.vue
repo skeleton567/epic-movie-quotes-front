@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { Field } from "vee-validate";
+import { Field, ErrorMessage } from "vee-validate";
 import ChangePhoto from "@/components/icons/ChangePhoto.vue";
 import { useMoviesStore } from "@/stores/movies.js";
 const movieStore = useMoviesStore();
