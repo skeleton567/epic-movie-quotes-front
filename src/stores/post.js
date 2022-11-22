@@ -21,7 +21,6 @@ export const usePostStore = defineStore("post", {
                 });
                 this.searchPage++;
                 this.posts.push(...response.data);
-                console.log(response);
             } else {
                 try {
                     const response = await axios.get(`post?page=${this.page}`);
@@ -29,8 +28,6 @@ export const usePostStore = defineStore("post", {
                         this.page++;
                     }
                     this.posts.push(...response.data)
-                    console.log(response);
-                    console.log(this.posts);
                 } catch (error) {
                     console.log(error);
                 }
@@ -48,8 +45,6 @@ export const usePostStore = defineStore("post", {
                     this.page = 2;
                 }
                 this.posts = response.data;
-                console.log(response);
-                console.log(this.posts);
             } catch (error) {
                 console.log(error);
             }
@@ -66,8 +61,6 @@ export const usePostStore = defineStore("post", {
                     });
                     this.searchPage = 2;
                     this.posts = response.data;
-                    console.log(response);
-                    console.log(this.posts);
                 } catch (error) {
                     console.log(error);
                 }

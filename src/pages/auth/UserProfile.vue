@@ -170,7 +170,6 @@ const submitPassword = async (values, actions) => {
         password_confirmation: values.confirmation,
         id: store.id
       });
-      console.log(response);
       profileStore.popup = true;
       profileStore.popupText = 'Password_Updated';
       profileStore.message = "";

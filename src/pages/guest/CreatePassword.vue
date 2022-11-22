@@ -35,7 +35,6 @@ const submit = async (values, actions) => {
     values.token = route.query.token;
     values["password_confirmation"] = values.confirmation;
     const response = await axios.post("reset-password", values);
-    console.log(response);
     router.push({ name: "passwordChanged" });
   } catch (error) {
     console.log(error);

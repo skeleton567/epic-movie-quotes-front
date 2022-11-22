@@ -14,7 +14,6 @@ import FileUpload from "@/components/FileUpload.vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
-import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { locale } = useI18n({ useScope: "global" });
 const movieStore = useMoviesStore();
@@ -27,7 +26,7 @@ const submit = async (values, actions, categories) => {
       fd.set(value, values[value]);
     }
     if (movieStore.file) fd.set("image", movieStore.file);
-    fd.set("categories", JSON.stringify(categories));
+    fd.set("categories", categories.value);
     const response = await axios.post("movies", fd);
     await movieStore.getMovies();
     router.push({

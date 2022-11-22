@@ -27,7 +27,6 @@ export const useUserStore = defineStore("user", {
         this.authStore.authenticated = true;
       } catch (error) {
         this.authStore.authenticated = false;
-        console.log(error);
       }
     },
     removeAuthUser() {

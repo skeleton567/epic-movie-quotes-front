@@ -26,7 +26,7 @@ defineRule("georgian", (value) => {
   if (!value || !value.length) {
       return true;
   }
-  const georgianRegex = /^[აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ.,!?\s]*$/gi;
+  const georgianRegex = /^[ა-ჰ.,!?\s]*$/gi;
   if (georgianRegex.test(value)) {
   return true;
 } else {

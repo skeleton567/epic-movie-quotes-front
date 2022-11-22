@@ -16,7 +16,6 @@
         :class="{ 'border-2 border-red-500': !!errors?.length }"
         :type="textType"
         :placeholder="placeholder"
-        @input="$emit('update:modelValue', $event.target.value)"
       />
     </Field>
     <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" :name="name" />
