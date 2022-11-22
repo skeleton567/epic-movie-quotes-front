@@ -66,5 +66,4 @@ const movieStore = useMoviesStore();
 const quoteStore = useQuotesStore();
 
 quoteStore.getQuote(route.query.id);
-console.log(quoteStore?.quote);
 </script>

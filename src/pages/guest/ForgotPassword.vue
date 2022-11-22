@@ -25,7 +25,6 @@ const router = useRouter();
 const submit = async (values, actions) => {
   try {
     const response = await axios.post("forgot-password", values);
-    console.log(response);
     router.push({ name: "recoverInstructions" });
   } catch (error) {
     actions.setFieldError(

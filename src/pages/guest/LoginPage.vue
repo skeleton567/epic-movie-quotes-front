@@ -61,7 +61,6 @@ const submit = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
     authStore.authenticated = true;
-    console.log(response);
     router.replace({ name: "newsFeed" });
   } catch (error) {
     authStore.authenticated = false;

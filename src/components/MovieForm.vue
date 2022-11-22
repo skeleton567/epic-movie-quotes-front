@@ -121,7 +121,7 @@
 <script setup>
 import XIcon from "@/components/icons/XIcon.vue";
 import { Form } from "vee-validate";
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, onMounted } from "vue";
 import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
@@ -137,7 +137,7 @@ const props = defineProps({
 });
 const categories = ref([]);
 if (route.name === "editMovie") {
-  categories.value = movieStore.movie.categories;
+  categories.value = movieStore?.movie?.categories;
 }
 const isCategory = ref(true);
 const addCategory = (value) => {

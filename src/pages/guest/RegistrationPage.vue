@@ -52,13 +52,12 @@ const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
     const response = await axios.post("register", values);
-    authStore.authenticated = true;
+    authStore.authenticated = false;
     router.push({
       name: "emailSent"
     });
   } catch (error) {
     const errors = error.response?.data.errors;
-    console.log(error);
     for (const loopError in errors) {
       authStore.authenticated = false;
       actions.setFieldError(loopError, errors[loopError][0][locale.value]);

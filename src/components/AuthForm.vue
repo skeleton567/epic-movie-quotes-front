@@ -54,7 +54,6 @@ const login = async () => {
     });
     authStore.authenticated = true;
     router.replace({ name: "newsFeed" });
-    console.log(resp);
   } catch (error) {
     authStore.authenticated = false;
     console.log(error);

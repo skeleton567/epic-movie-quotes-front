@@ -24,11 +24,11 @@ const store = useUserStore();
 const submit = async (values, actions, categories) => {
   try {
     const fd = new FormData();
-    console.log(values);
     fd.append("_method", "PATCH");
     for (let value in values) {
       fd.set(value, values[value]);
     }
+    fd.set("categories", JSON.stringify(categories));
     if (movieStore.file) fd.set("image", movieStore.file);
     const response = await axios.post(`movies/${route.query.id}`, fd);
     await movieStore.getMovie(route.query.id);
@@ -59,7 +59,6 @@ const showImage = (event) => {
   movieStore.file = event;
 };
 const route = useRoute();
-onBeforeMount(() => {
-  movieStore.getMovie(route.query.id);
-});
+
+movieStore.getMovie(route.query.id);
 </script>

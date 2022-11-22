@@ -12,8 +12,6 @@ export const useQuotesStore = defineStore("quotes", {
             try {
                 const response = await axios.get(`quote`);
                 this.quotes.push(...response.data)
-                console.log(response);
-                console.log(this.posts);
             } catch (error) {
                 console.log(error);
             }
@@ -22,7 +20,6 @@ export const useQuotesStore = defineStore("quotes", {
             try {
                 const response = await axios.get(`quote/${id}`);
                 this.quote = response.data
-                console.log(response);
             } catch (error) {
                 console.log(error);
             }
@@ -30,8 +27,6 @@ export const useQuotesStore = defineStore("quotes", {
         async delete(id = this.quote.id) {
             try {
                 const response = await axios.delete(`quote/${id}`);
-               
-                console.log(response);
             } catch (error) {
                 console.log(error);
             }

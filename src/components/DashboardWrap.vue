@@ -219,7 +219,6 @@ const router = useRouter();
 const logOut = async () => {
   try {
     const response = await axios.post("logout");
-    console.log(response);
     store.removeAuthUser();
     postStore.resetPosts();
     router.replace({ name: "home" });

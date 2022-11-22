@@ -88,12 +88,14 @@ const store = useUserStore();
 let liked = computed(() => {
   return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
-
+const newLike = ref(false);
 const like = async () => {
-  if (liked.value) {
+  if (liked.value || newLike.value) {
     const like = props.likes.filter((like) => like.user.id === store.id)[0];
     await axios.delete(`likes/${like.id}`);
+    newLike.value = false;
   } else {
+    newLike.value = true;
     const response = await axios.post("likes", {
       user_id: store.id,
       quote_id: props.index,

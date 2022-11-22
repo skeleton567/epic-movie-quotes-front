@@ -16,6 +16,7 @@
       <three-dots
         classes="md:block hidden absolute right-2 top-3"
         @click-event="edit = !edit"
+        @click.stop
       />
     </div>
 
@@ -35,6 +36,7 @@
         <div
           v-if="edit"
           class="w-40 absolute bg-[#24222F] p-8 -bottom-4 right-10 rounded-xl"
+          @click.stop
         >
           <router-link
             :to="{
@@ -88,4 +90,5 @@ const deleteQuote = async () => {
   await quoteStore.delete(props.quote.id);
   movieStore.getMovie(props.movie_id);
 };
+window.addEventListener("click", () => (edit.value = false));
 </script>
