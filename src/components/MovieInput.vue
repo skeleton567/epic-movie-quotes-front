@@ -5,7 +5,7 @@
     >
       <Field
         :id="name"
-        v-model="value"
+        :value="value"
         :type="type"
         :name="name"
         class="outline-none w-full bg-inherit placeholder-white px-1"
