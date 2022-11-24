@@ -5,7 +5,7 @@
     >
       <Field
         v-slot="{ field }"
-        v-model="value"
+        :value="value"
         :name="name"
         :rules="rule"
         :validate-on-input="true"
@@ -13,7 +13,7 @@
         <textarea
           :id="name"
           v-bind="field"
-          v-model="value"
+          :value="value"
           class="outline-none w-full bg-inherit placeholder-white px-1 focus:outline-0 focus:border-none"
           :placeholder="placeholder"
           rows="2"

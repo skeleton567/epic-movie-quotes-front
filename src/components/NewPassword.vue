@@ -86,12 +86,16 @@ const moreSpan = (errors) => {
 };
 
 const less = (errors) => {
-  return !errors?.includes(15) && !errors?.includes("lowercase")
+  return !errors?.includes(15) &&
+    !errors?.includes("lowercase") &&
+    !errors?.includes("დაბალი")
     ? "text-white"
     : "text-[#9C9A9A]";
 };
 const lessSpan = (errors) => {
-  return !errors?.includes(15) && !errors?.includes("lowercase")
+  return !errors?.includes(15) &&
+    !errors?.includes("lowercase") &&
+    !errors?.includes("დაბალი")
     ? "text-[#198754]"
     : "text-[#9C9A9A]";
 };

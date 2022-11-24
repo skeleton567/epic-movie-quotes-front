@@ -26,7 +26,7 @@ const submit = async (values, actions, categories) => {
       fd.set(value, values[value]);
     }
     if (movieStore.file) fd.set("image", movieStore.file);
-    fd.set("categories", categories.value);
+    fd.set("categories", JSON.stringify(categories));
     const response = await axios.post("movies", fd);
     await movieStore.getMovies();
     router.push({
