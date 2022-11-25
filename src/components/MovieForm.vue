@@ -1,7 +1,7 @@
 <template>
   <div
     class="absolute md:fixed z-50 bg-[#11101a] lg:bg-opacity-75 lg:h-[100vh] top-0 w-full flex justify-center md:mt-0"
-    @click="$router.push(link)"
+    @click="goBack"
   >
     <div
       class="w-full bg-black lg:w-[700px] lg:h-fit"
@@ -125,8 +125,9 @@ import { ref, defineEmits, onMounted } from "vue";
 import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
+const router = useRouter();
 const emits = defineEmits(["submit-event"]);
 const movieStore = useMoviesStore();
 const openDropdown = ref(false);
@@ -159,6 +160,12 @@ const getCategory = async () => {
   allCategories.value.push(...response.data);
 };
 getCategory();
+const goBack = () => {
+  router.push(props.link);
+  movieStore.upload = "Upload_Image";
+  movieStore.uploadBig = "Dragn_Drop";
+  movieStore.file = null;
+};
 </script>
 
 <style scoped>

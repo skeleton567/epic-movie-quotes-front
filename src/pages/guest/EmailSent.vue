@@ -3,7 +3,11 @@
     :title="$t('Thank_You')"
     :text="$t('Check_Email')"
     :button-text="$t('Go_Feed')"
-    image="upArrow.png"
     url="newsFeed"
-  ></mailing-message>
+    ><up-arrow
+  /></mailing-message>
 </template>
+
+<script setup>
+import UpArrow from "@/components/icons/UpArrow.vue";
+</script>

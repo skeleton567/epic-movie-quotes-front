@@ -1,8 +1,16 @@
 <template>
   <img
+    v-if="image"
     class="rounded-full"
     :class="classes"
-    :src="profilePicture"
+    :src="`${link}${image}`"
+    alt="profile"
+  />
+  <img
+    v-else
+    class="rounded-full"
+    :class="classes"
+    src="@/assets/images/profile.jpg"
     alt="profile"
   />
 </template>

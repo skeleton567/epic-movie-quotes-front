@@ -13,7 +13,6 @@
         <textarea
           :id="name"
           v-bind="field"
-          :value="value"
           class="outline-none w-full bg-inherit placeholder-white px-1 focus:outline-0 focus:border-none"
           :placeholder="placeholder"
           rows="2"
