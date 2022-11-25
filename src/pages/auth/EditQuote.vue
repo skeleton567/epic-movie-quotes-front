@@ -40,11 +40,13 @@ const submit = async (values, actions) => {
     }
     if (quoteStore.file) fd.set("image", quoteStore.file);
     const response = await axios.post(`quote/${route.query.id}`, fd);
-    quoteStore.file = null;
     router.push({
       name: "viewMovie",
       query: { id: route.query.movie_id }
     });
+    movieStore.upload = "Upload_Image";
+    movieStore.uploadBig = "Dragn_Drop";
+    quoteStore.file = null;
   } catch (error) {
     const errors = error.response?.data.errors;
     console.log(error);

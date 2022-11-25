@@ -88,6 +88,8 @@ const submit = async (values, actions) => {
     }
     const response = await axios.post("quote", fd);
     postStore.refreshPosts();
+    movieStore.upload = "Upload_Image";
+    movieStore.uploadBig = "Dragn_Drop";
     movieStore.file = null;
     if (route.name === "writeQuote") {
       router.push({

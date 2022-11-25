@@ -1,6 +1,6 @@
 <template>
   <div class="h-[100vh] flex flex-col justify-center items-center">
-    <error-icon :image="image" />
+    <slot></slot>
     <h2 class="text-white text-2xl lg:text-3xl text-center mt-4 lg:mt-8">
       {{ title }}
     </h2>
@@ -17,7 +17,6 @@
 <script setup>
 import { defineProps } from "vue";
 import { computed } from "vue";
-import ErrorIcon from "@/components/icons/ErrorIcon.vue";
 import { useAuthStore } from "@/stores/auth";
 const props = defineProps({
   title: { type: String, required: true },
