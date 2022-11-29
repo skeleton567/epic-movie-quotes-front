@@ -9,12 +9,12 @@
       :value="quoteStore.quote.quote_en"
     />
     <textarea-component
-      v-if="quoteStore?.quote?.quote_en"
+      v-if="quoteStore?.quote?.quote_ka"
       name="quote_ka"
       placeholder="ახალი ციტატა"
       rule="required|georgian"
       label="ქარ"
-      :value="quoteStore.quote.quote_en"
+      :value="quoteStore.quote.quote_ka"
     />
     <image-upload :image="quote" @show-image="showImage" />
     <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" name="image" />
