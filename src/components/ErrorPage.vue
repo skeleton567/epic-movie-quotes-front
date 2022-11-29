@@ -20,8 +20,7 @@ import { computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 const props = defineProps({
   title: { type: String, required: true },
-  text: { type: String, required: true },
-  image: { type: String, required: true }
+  text: { type: String, required: true }
 });
 const authStore = useAuthStore();
 const url = computed(() => {

@@ -37,14 +37,17 @@ const store = useUserStore();
 const props = defineProps({
   title: { type: String, required: true },
   link: { type: Object, required: true },
-  editLink: { type: Object, required: false }
+  editLink: { type: Object, required: false },
+  id: { type: Number, required: false }
 });
 const deleteQuote = async () => {
   await quoteStore.delete();
   router.push(props.link);
 };
 const correctRoute = computed(() => {
-  return route.name === "editQuote" || route.name === "viewQuote";
+  if ((store.id = props.id)) {
+    return route.name === "editQuote" || route.name === "viewQuote";
+  }
 });
 const reset = () => {
   movieStore.upload = "Upload_Image";

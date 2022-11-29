@@ -2,6 +2,7 @@
   <dashboard-wrap>
     <quote-crud>
       <form-header
+        :id="quoteStore?.quote?.user.id"
         :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
         :title="$t('View_Post')"
         :edit-link="{
@@ -16,32 +17,50 @@
             <p class="text-white text-xl">
               {{ quoteStore?.quote?.comment?.length }}
             </p>
-            <comment-icon></comment-icon>
+            <comment-icon
+              @click-event="showComment = !showComment"
+            ></comment-icon>
           </div>
           <div class="flex items-center space-x-3">
             <p class="text-white text-xl">
               {{ quoteStore?.quote?.like?.length }}
             </p>
-            <heart-icon></heart-icon>
+            <heart-icon
+              :already-liked="liked"
+              @like-event="
+                notificationStore.like(liked, quoteStore?.quote, store.id)
+              "
+            ></heart-icon>
           </div>
         </div>
         <user-comment
           v-for="comment in quoteStore?.quote?.comment"
+          v-if="showComment"
+          :id="comment.user.id"
           :user="
             comment?.user?.name ? comment?.user?.name : comment?.user?.email
           "
           :comment="comment?.comment"
           :image="comment?.user?.image"
+          @delete-event="notificationStore.deleteComment(comment.id, store.id)"
         />
         <div class="flex space-x-2 mt-4 mb-6">
           <profile-picture :image="store.profile" />
           <textarea
-            disabled
+            v-model="commentValue"
             class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
             :placeholder="$t('Write_Comment')"
             name=""
             cols="30"
             rows="1"
+            @keyup.enter="
+              notificationStore.addComment(
+                $event.target,
+                store.id,
+                quoteStore?.quote?.id,
+                quoteStore?.quote?.user?.id
+              )
+            "
           ></textarea>
         </div>
       </show-quote>
@@ -52,7 +71,6 @@
 <script setup>
 import FormHeader from "@/components/FormHeader.vue";
 import { useQuotesStore } from "@/stores/quotes.js";
-import { useMoviesStore } from "@/stores/movies.js";
 import UserComment from "@/components/UserComment.vue";
 import { useRoute } from "vue-router";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
@@ -60,10 +78,40 @@ import HeartIcon from "@/components/icons/HeartIcon.vue";
 import { useUserStore } from "@/stores/user.js";
 import ShowQuote from "@/components/ShowQuote.vue";
 import QuoteCrud from "@/components/QuoteCrud.vue";
-const store = useUserStore();
+import { computed, ref, onUnmounted } from "vue";
+import channel from "@/config/pusher";
+import { useNotificationStore } from "@/stores/notification.js";
+const notificationStore = useNotificationStore();
 const route = useRoute();
-const movieStore = useMoviesStore();
 const quoteStore = useQuotesStore();
-
 quoteStore.getQuote(route.query.id);
+const store = useUserStore();
+const showComment = ref(false);
+let commentValue = ref("");
+let liked = computed(() => {
+  return !!quoteStore?.quote?.like.filter((like) => like.user.id === store.id)
+    .length;
+});
+channel.bind("notification", function (data) {
+  if (data.notification) {
+    if (data?.data?.comment) {
+      quoteStore?.quote.comment.push(data.data);
+    } else {
+      quoteStore?.quote.like.push(data.data);
+    }
+  } else {
+    if (data?.data?.comment) {
+      quoteStore.quote.comment = quoteStore?.quote.comment.filter(
+        (comment) => comment.id !== data.data.id
+      );
+    } else {
+      quoteStore.quote.like = quoteStore.quote.like.filter(
+        (filterLike) => data.data.id !== filterLike.id
+      );
+    }
+  }
+});
+onUnmounted(() => {
+  channel.unbind("notification");
+});
 </script>

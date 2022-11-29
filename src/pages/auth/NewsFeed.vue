@@ -45,7 +45,7 @@
         <user-post
           :user="post.user?.name ? post.user.name : post.user.email"
           :image="post.user.image"
-          :movie="post.movie.title[$i18n.locale]"
+          :movie="post.movie[$i18n.locale]"
           :qoute="post.quote[$i18n.locale]"
           :comment="post.comment.length"
           :likes="post.like"

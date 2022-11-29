@@ -71,6 +71,6 @@ export const usePostStore = defineStore("post", {
             this.page = 1;
             this.searchPage = 2;
             this.searchValue = '';
-        }
+        },
     }
 });
