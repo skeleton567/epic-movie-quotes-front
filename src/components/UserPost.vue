@@ -24,7 +24,10 @@
       </div>
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ likes.length }}</p>
-        <heart-icon :already-liked="liked" @like-event="like"></heart-icon>
+        <heart-icon
+          :already-liked="liked"
+          @like-event="notificationStore.like(liked, post, store.id)"
+        ></heart-icon>
       </div>
     </div>
     <user-comment
@@ -35,13 +38,12 @@
       :user="comment.user?.name ? comment.user.name : comment.user.email"
       :comment="comment.comment"
       :image="comment.user.image"
-      @delete-event="deleteComment(comment.id)"
+      @delete-event="notificationStore.deleteComment(comment.id, store.id)"
     />
     <div class="flex space-x-2 mt-4 mb-6">
       <profile-picture :image="store.profile" />
       <textarea
         id=""
-        v-model="commentValue"
         class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
         :placeholder="$t('Write_Comment')"
         name=""
@@ -49,7 +51,14 @@
         rows="1"
         onclick="this.rows = 4;"
         onblur="this.rows = 1;"
-        @keyup.enter="addComment($event.target)"
+        @keyup.enter="
+          notificationStore.addComment(
+            $event.target,
+            store.id,
+            index,
+            post.user.id
+          )
+        "
       ></textarea>
     </div>
   </div>
@@ -59,10 +68,10 @@
 import HeartIcon from "@/components/icons/HeartIcon.vue";
 import CommentIcon from "@/components/icons/CommentIcon.vue";
 import { useUserStore } from "@/stores/user.js";
-import { computed, ref, watch } from "vue";
-import axios from "@/config/axios/index.js";
-import { usePostStore } from "@/stores/post.js";
+import { computed, ref } from "vue";
 import UserComment from "@/components/UserComment.vue";
+import { useNotificationStore } from "@/stores/notification.js";
+const notificationStore = useNotificationStore();
 const props = defineProps({
   user: { type: String, required: true },
   movie: { type: String, required: true },
@@ -74,7 +83,6 @@ const props = defineProps({
   image: { type: String, required: false }
 });
 const showComment = ref(false);
-let commentValue = ref("");
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const bgStyle = computed(() => {
   if (props.index % 2 === 0) {
@@ -84,36 +92,7 @@ const bgStyle = computed(() => {
   }
 });
 const store = useUserStore();
-
 let liked = computed(() => {
   return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
-const newLike = ref(false);
-const like = async () => {
-  if (liked.value || newLike.value) {
-    const like = props.likes.filter((like) => like.user.id === store.id)[0];
-    await axios.delete(`likes/${like.id}`);
-    newLike.value = false;
-  } else {
-    newLike.value = true;
-    const response = await axios.post("likes", {
-      user_id: store.id,
-      quote_id: props.index,
-      user_to_notify: props.post.user.id
-    });
-  }
-};
-const addComment = async (e) => {
-  const response = await axios.post("comment", {
-    user_id: store.id,
-    quote_id: props.index,
-    comment: commentValue.value,
-    user_to_notify: props.post.user.id
-  });
-  commentValue.value = "";
-  e.blur();
-};
-const deleteComment = async (id) => {
-  const response = await axios.delete(`comment/${id}`);
-};
 </script>

@@ -1,18 +1,20 @@
 <template>
   <div class="px-10 w-[100vw] md:w-full">
     <textarea-component
+      v-if="quoteStore?.quote?.quote_en"
       name="quote_en"
       placeholder="Create new quote"
       rule="required|alpha_spaces"
       label="Eng"
-      :value="quoteStore?.quote?.quote_en"
+      :value="quoteStore.quote.quote_en"
     />
     <textarea-component
+      v-if="quoteStore?.quote?.quote_ka"
       name="quote_ka"
       placeholder="ახალი ციტატა"
       rule="required|georgian"
       label="ქარ"
-      :value="quoteStore?.quote?.quote_ka"
+      :value="quoteStore.quote.quote_ka"
     />
     <image-upload :image="quote" @show-image="showImage" />
     <ErrorMessage class="text-red-400 text-xs lg:text-sm px-5" name="image" />

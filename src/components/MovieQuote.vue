@@ -32,7 +32,11 @@
         </div>
       </div>
       <div class="relative">
-        <three-dots classes="md:hidden" @click-event="edit = !edit" />
+        <three-dots
+          classes="md:hidden"
+          @click-event="edit = !edit"
+          @click.stop
+        />
         <div
           v-if="edit"
           class="w-40 absolute bg-[#24222F] p-8 -bottom-4 right-10 rounded-xl"

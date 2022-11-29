@@ -3,6 +3,7 @@
     <quote-crud>
       <Form @submit="submit">
         <form-header
+          :id="quoteStore?.quote?.user.id"
           :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
           :title="$t('Edit_Quote')"
         />
@@ -27,6 +28,8 @@ import ShowQuote from "@/components/ShowQuote.vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "@/config/axios/index.js";
 import QuoteCrud from "@/components/QuoteCrud.vue";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const quoteStore = useQuotesStore();
@@ -38,14 +41,13 @@ const submit = async (values, actions) => {
     for (let value in values) {
       fd.set(value, values[value]);
     }
+    fd.set("user_id", store.id);
     if (quoteStore.file) fd.set("image", quoteStore.file);
     const response = await axios.post(`quote/${route.query.id}`, fd);
     router.push({
       name: "viewMovie",
       query: { id: route.query.movie_id }
     });
-    movieStore.upload = "Upload_Image";
-    movieStore.uploadBig = "Dragn_Drop";
     quoteStore.file = null;
   } catch (error) {
     const errors = error.response?.data.errors;
