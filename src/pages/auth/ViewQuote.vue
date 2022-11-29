@@ -25,12 +25,7 @@
             <p class="text-white text-xl">
               {{ quoteStore?.quote?.like?.length }}
             </p>
-            <heart-icon
-              :already-liked="liked"
-              @like-event="
-                notificationStore.like(liked, quoteStore?.quote, store.id)
-              "
-            ></heart-icon>
+            <heart-icon :already-liked="liked" @like-event="like"></heart-icon>
           </div>
         </div>
         <user-comment
@@ -42,13 +37,14 @@
           "
           :comment="comment?.comment"
           :image="comment?.user?.image"
-          @delete-event="notificationStore.deleteComment(comment.id, store.id)"
+          @delete-event="
+            notificationStore.deleteComment(comment.id, store.id, true)
+          "
         />
         <div class="flex space-x-2 mt-4 mb-6">
           <profile-picture :image="store.profile" />
           <textarea
-            v-model="commentValue"
-            class="utline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
+            class="outline-none bg-[#24222F] text-white w-full rounded-xl focus:outline-0 focus:border-black pl-1 py-2"
             :placeholder="$t('Write_Comment')"
             name=""
             cols="30"
@@ -58,7 +54,8 @@
                 $event.target,
                 store.id,
                 quoteStore?.quote?.id,
-                quoteStore?.quote?.user?.id
+                quoteStore?.quote?.user?.id,
+                true
               )
             "
           ></textarea>
@@ -81,13 +78,15 @@ import QuoteCrud from "@/components/QuoteCrud.vue";
 import { computed, ref, onUnmounted } from "vue";
 import channel from "@/config/pusher";
 import { useNotificationStore } from "@/stores/notification.js";
+import axios from "@/config/axios/index.js";
+import { usePostStore } from "@/stores/post.js";
+const postStore = usePostStore();
 const notificationStore = useNotificationStore();
 const route = useRoute();
 const quoteStore = useQuotesStore();
 quoteStore.getQuote(route.query.id);
 const store = useUserStore();
 const showComment = ref(false);
-let commentValue = ref("");
 let liked = computed(() => {
   return !!quoteStore?.quote?.like.filter((like) => like.user.id === store.id)
     .length;
@@ -111,6 +110,23 @@ channel.bind("notification", function (data) {
     }
   }
 });
+const newLike = ref(false);
+const like = async () => {
+  if (liked.value || newLike.value) {
+    const like = quoteStore?.quote.like.filter(
+      (like) => like.user.id === store.id
+    )[0];
+    await axios.delete(`likes/${like.id}`);
+    newLike.value = false;
+  } else {
+    newLike.value = true;
+    const response = await axios.post("likes", {
+      user_id: store.id,
+      quote_id: quoteStore?.quote.id,
+      user_to_notify: quoteStore?.quote.user.id
+    });
+  }
+};
 onUnmounted(() => {
   channel.unbind("notification");
 });

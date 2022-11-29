@@ -24,10 +24,7 @@
       </div>
       <div class="flex items-center space-x-3">
         <p class="text-white text-xl">{{ likes.length }}</p>
-        <heart-icon
-          :already-liked="liked"
-          @like-event="notificationStore.like(liked, post, store.id)"
-        ></heart-icon>
+        <heart-icon :already-liked="liked" @like-event="like"></heart-icon>
       </div>
     </div>
     <user-comment
@@ -38,7 +35,9 @@
       :user="comment.user?.name ? comment.user.name : comment.user.email"
       :comment="comment.comment"
       :image="comment.user.image"
-      @delete-event="notificationStore.deleteComment(comment.id, store.id)"
+      @delete-event="
+        notificationStore.deleteComment(comment.id, store.id, false)
+      "
     />
     <div class="flex space-x-2 mt-4 mb-6">
       <profile-picture :image="store.profile" />
@@ -56,7 +55,8 @@
             $event.target,
             store.id,
             index,
-            post.user.id
+            post.user.id,
+            false
           )
         "
       ></textarea>
@@ -71,7 +71,9 @@ import { useUserStore } from "@/stores/user.js";
 import { computed, ref } from "vue";
 import UserComment from "@/components/UserComment.vue";
 import { useNotificationStore } from "@/stores/notification.js";
+import axios from "@/config/axios/index.js";
 const notificationStore = useNotificationStore();
+const store = useUserStore();
 const props = defineProps({
   user: { type: String, required: true },
   movie: { type: String, required: true },
@@ -91,8 +93,22 @@ const bgStyle = computed(() => {
     return "bg-[#0a0a12]";
   }
 });
-const store = useUserStore();
 let liked = computed(() => {
   return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
+const newLike = ref(false);
+const like = async () => {
+  if (liked.value || newLike.value) {
+    const like = props.likes.filter((like) => like.user.id === store.id)[0];
+    await axios.delete(`likes/${like.id}`);
+    newLike.value = false;
+  } else {
+    newLike.value = true;
+    const response = await axios.post("likes", {
+      user_id: store.id,
+      quote_id: props.index,
+      user_to_notify: props.post.user.id
+    });
+  }
+};
 </script>
