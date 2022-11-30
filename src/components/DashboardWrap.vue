@@ -205,12 +205,14 @@ import CommentNotification from "@/components/icons/CommentNotification.vue";
 import LikeNotification from "@/components/icons/LikeNotification.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
 import channel from "@/config/pusher";
 import { useAuthStore } from "@/stores/auth";
+import { useQuotesStore } from "@/stores/quotes.js";
+const quoteStore = useQuotesStore();
 const authStore = useAuthStore();
 const { t } = useI18n();
 const store = useUserStore();
@@ -263,6 +265,7 @@ const getNotification = async () => {
 };
 const notificationOpened = ref(false);
 getNotification();
+
 let notifications = ref([]);
 channel.bind("notification", function (data) {
   if (data.notification) {

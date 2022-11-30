@@ -126,8 +126,7 @@ const like = async () => {
       user_to_notify: quoteStore?.quote.user.id
     });
   }
+  postStore.refreshPosts();
+  store.getAuthUser();
 };
-onUnmounted(() => {
-  channel.unbind("notification");
-});
 </script>

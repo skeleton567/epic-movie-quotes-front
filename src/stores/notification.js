@@ -10,7 +10,7 @@ export const useNotificationStore = defineStore("notification", {
     postStore: usePostStore(),
     }),
     actions: {
-        async addComment(e, id, index, user_id) {
+        async addComment(e, id, index, user_id, refresh) {
             const response = await axios.post("comment", {
               user_id: id,
               quote_id: index,
@@ -19,9 +19,15 @@ export const useNotificationStore = defineStore("notification", {
             });
             e.value = '';
         e.blur();
+        if (refresh) {
+          this.postStore.refreshPosts();
+            }
         },
-        async deleteComment(id, user_id)  {
+        async deleteComment(id, user_id, refresh)  {
           await axios.delete(`comment/${id}`, { data: { user_id } });
+          if (refresh) {
+            this.postStore.refreshPosts();
+              }
         }
       
     }
