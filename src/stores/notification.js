@@ -1,30 +1,16 @@
 import { defineStore } from "pinia";
 import axios from "@/config/axios/index.js";
-import { useI18n } from 'vue-i18n'
+import { usePostStore } from "@/stores/post.js";
+
 
 
 export const useNotificationStore = defineStore("notification", {
     state: () => ({
-        newLike: false
+    newLike: false,
+    postStore: usePostStore(),
     }),
     actions: {
-        async like(liked, post, id) {
-            if (liked || this.newLike) {
-              const like = post.like.filter(
-                (like) => like.user.id === id
-              )[0];
-              await axios.delete(`likes/${like.id}`);
-              this.newLike = false;
-            } else {
-                this.newLike = true;
-              const response = await axios.post("likes", {
-                user_id: id,
-                quote_id: post.id,
-                user_to_notify: post.user.id
-              });
-            }
-        },
-        async addComment(e, id, index, user_id) {
+        async addComment(e, id, index, user_id, refresh) {
             const response = await axios.post("comment", {
               user_id: id,
               quote_id: index,
@@ -32,10 +18,17 @@ export const useNotificationStore = defineStore("notification", {
               user_to_notify: user_id
             });
             e.value = '';
-            e.blur();
+        e.blur();
+        if (refresh) {
+          this.postStore.refreshPosts();
+            }
         },
-        async deleteComment(id, user_id)  {
-            await axios.delete(`comment/${id}`, { data: { user_id } });
-          }
+        async deleteComment(id, user_id, refresh)  {
+          await axios.delete(`comment/${id}`, { data: { user_id } });
+          if (refresh) {
+            this.postStore.refreshPosts();
+              }
+        }
+      
     }
 });

@@ -66,6 +66,8 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { usePostStore } from "@/stores/post.js";
 import { useI18n } from "vue-i18n";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const { locale } = useI18n({ useScope: "global" });
 const postStore = usePostStore();
 const router = useRouter();
@@ -87,6 +89,7 @@ const submit = async (values, actions) => {
       fd.set("movie_id", props.movieId);
     }
     const response = await axios.post("quote", fd);
+    store.getAuthUser();
     postStore.refreshPosts();
     movieStore.upload = "Upload_Image";
     movieStore.uploadBig = "Dragn_Drop";
