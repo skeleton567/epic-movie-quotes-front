@@ -36,6 +36,8 @@ import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { googleTokenLogin } from "vue3-google-login";
 import { useAuthStore } from "@/stores/auth";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const authStore = useAuthStore();
 const router = useRouter();
 const props = defineProps({
@@ -52,7 +54,7 @@ const login = async () => {
     const resp = await axios.post("google-login", {
       token: response.access_token
     });
-    authStore.authenticated = true;
+    await store.getAuthUser();
     router.replace({ name: "newsFeed" });
   } catch (error) {
     authStore.authenticated = false;

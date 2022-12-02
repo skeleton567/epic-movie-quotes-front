@@ -2,8 +2,10 @@
   <dashboard-wrap>
     <quote-crud>
       <new-quote-form
+        v-if="movieStore.movie.id"
+        :id="movieStore.movie.user_id"
         :movie-id="movieStore.movie.id"
-        :link="{ name: 'viewMovie', query: { id: movieStore.movie.id } }"
+        :link="{ name: 'viewMovie', params: { id: movieStore.movie.id } }"
         :title="$t('Add_Quote')"
       >
         <div class="px-10">
@@ -55,6 +57,6 @@ const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const route = useRoute();
 const movieStore = useMoviesStore();
 onBeforeMount(() => {
-  movieStore.getMovie(route.query.id);
+  movieStore.getMovie(route.params.id);
 });
 </script>

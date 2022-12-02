@@ -63,6 +63,7 @@ const submit = async (values, actions) => {
     authStore.authenticated = true;
     router.replace({ name: "newsFeed" });
   } catch (error) {
+    console.log(error);
     authStore.authenticated = false;
     actions.setFieldError("name", error.response.data.errors[locale.value]);
   }

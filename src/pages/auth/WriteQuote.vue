@@ -7,7 +7,11 @@
       class="fixed top-0 z-10 bg-[#11101a] w-full md:w-[400px] lg:block lg:w-[600px] lg:h-fit md:bg-black md:relative"
       @click.stop
     >
-      <new-quote-form :link="{ name: 'newsFeed' }" :title="$t('Write_Quote')">
+      <new-quote-form
+        :id="store.id"
+        :link="{ name: 'newsFeed' }"
+        :title="$t('Write_Quote')"
+      >
       </new-quote-form>
     </div>
   </div>
@@ -17,6 +21,8 @@
 import NewQuoteForm from "@/components/NewQuoteForm.vue";
 import { useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const movieStore = useMoviesStore();
 const router = useRouter();
 const goBack = () => {

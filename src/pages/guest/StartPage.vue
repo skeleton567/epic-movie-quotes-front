@@ -19,29 +19,27 @@
         </div>
       </div>
     </div>
-    <div
-      v-for="quote in store.quotes"
-      :key="quote.id"
-      class="h-[100vh] fit pt-[50%] pl-[10%] lg:pt-[200px] lg:pl-44"
-      :class="{ paralax: scrolled }"
-      :style="{ backgroundImage: 'url(' + url(quote) + ')' }"
-    >
-      <div
-        class="max-w-[200px] md:max-w-[500px] lg:max-w-[900px] flex space-x-1"
-      >
-        <div class="flex items-center h-4 lg:h-12">
-          <div class="w-3 lg:w-14 h-1 bg-white"></div>
-        </div>
-        <div>
-          <blockquote class="text-white text-sm lg:text-5xl">
-            “{{ quote.quote[$i18n.locale] }}”
-          </blockquote>
-          <address class="text-white text-xs lg:text-3xl mt-4">
-            {{ quote.movie[$i18n.locale] }}
-          </address>
-        </div>
-      </div>
-    </div>
+    <quote-compilation
+      :scrolled="scrolled"
+      bg="bg-[url('@/assets/images/interstelar.png')]"
+      :quote="$t('interstellar_quote')"
+      :movie="$t('interstellar_title')"
+      margin="mt-48"
+    />
+    <quote-compilation
+      :scrolled="scrolled"
+      bg="bg-[url('@/assets/images/pair.png')]"
+      :quote="$t('tenenbaums_quote')"
+      :movie="$t('tenenbaums_title')"
+      margin="mt-48"
+    />
+    <quote-compilation
+      :scrolled="scrolled"
+      bg="bg-[url('@/assets/images/lord.png')]"
+      :quote="$t('lord_quote')"
+      :movie="$t('lord_title')"
+      margin="mt-72"
+    />
   </div>
 </template>
 
@@ -49,9 +47,8 @@
 import TheNavigation from "@/components/TheNavigation.vue";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useQuotesStore } from "@/stores/quotes.js";
+import QuoteCompilation from "@/components/QuoteCompilation.vue";
 let scrolled = ref(false);
-const store = useQuotesStore();
 const route = useRoute();
 const routeName = computed(() => {
   return route.name !== "home";
@@ -63,13 +60,6 @@ window.addEventListener("scroll", () => {
     scrolled.value = false;
   }
 });
-onMounted(() => store.getQuotes());
-const link = import.meta.env.VITE_IMAGE_BASE_URL;
-const url = (quote) => {
-  return quote.image
-    ? `${link}${quote.image}`
-    : "../src/assets/images/no-image.jpg";
-};
 </script>
 
 <style scoped>

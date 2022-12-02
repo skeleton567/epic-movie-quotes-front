@@ -24,7 +24,10 @@
                 {{ movieStore?.movie?.title?.[$i18n.locale] }}
                 <span>({{ movieStore?.movie?.year }})</span>
               </h1>
-              <edit-delete classes="md:flex hidden" />
+              <edit-delete
+                v-if="store.id === movieStore.movie.user_id"
+                classes="md:flex hidden"
+              />
             </div>
             <div class="grid grid-cols-3 md:grid-cols-4 gap-4 mb-4">
               <p
@@ -55,7 +58,10 @@
               class="border-b md:border-l md:border-b-0 md:pl-5 md:pb-0 pb-10 border-[#54535A] my-10 md:w-full md:max-w-[300px] lg:max-w-[800px] lg:w-[full] flex justify-between"
             >
               <router-link
-                :to="{ name: 'addQuote', query: { id: movieStore.movie?.id } }"
+                v-if="
+                  movieStore.movie?.id && store.id === movieStore.movie.user_id
+                "
+                :to="{ name: 'addQuote', params: { id: movieStore.movie?.id } }"
                 class="w-40 text-center border border-white py-2 px-1 rounded flex justify-center items-center space-x-3 bg-[#E31221]"
               >
                 <plus-icon />
@@ -63,7 +69,10 @@
                   $t("Add_Quote")
                 }}</span>
               </router-link>
-              <edit-delete classes="md:hidden" />
+              <edit-delete
+                v-if="store.id === movieStore.movie.user_id"
+                classes="md:hidden"
+              />
             </div>
             <div class="md:flex md:space-x-3 items-center shrink-0">
               <h2 class="text-2xl">{{ $t("All_Quotes") }}</h2>
@@ -91,8 +100,10 @@ import PlusIcon from "@/components/icons/PlusIcon.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import { useMoviesStore } from "@/stores/movies.js";
 import EditDelete from "@/components/EditDelete.vue";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const movieStore = useMoviesStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
 const route = useRoute();
-movieStore.getMovie(route.query.id);
+movieStore.getMovie(route.params.id);
 </script>
