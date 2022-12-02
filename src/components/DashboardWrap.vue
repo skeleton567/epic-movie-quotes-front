@@ -209,7 +209,7 @@ import { onUnmounted, ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
-import channel from "@/config/pusher";
+import pusher from "@/config/pusher";
 import { useAuthStore } from "@/stores/auth";
 import { useQuotesStore } from "@/stores/quotes.js";
 const quoteStore = useQuotesStore();
@@ -265,17 +265,12 @@ const getNotification = async () => {
 };
 const notificationOpened = ref(false);
 getNotification();
-
 let notifications = ref([]);
+let channel = pusher.subscribe("private-notifications." + store.id);
 channel.bind("notification", function (data) {
-  if (data.notification) {
-    if (data.notification.user_to_notify.id === store.id) {
-      counter.value++;
-      notifications.value.unshift(data.notification);
-    }
-  }
+  counter.value++;
+  notifications.value.unshift(data.notification);
 });
-
 const timeSince = (sqldate) => {
   let date = new Date(sqldate).getTime();
   let seconds = Math.floor((new Date() - date) / 1000);

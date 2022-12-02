@@ -46,6 +46,9 @@
       name="movie_id"
     />
     <button
+      :class="{
+        'pointer-events-none': store.id !== id
+      }"
       class="w-full bg-[#E31221] rounded text-xl py-3 mt-4 mb-10"
       type="submit"
     >
@@ -76,7 +79,8 @@ const movieStore = useMoviesStore();
 const props = defineProps({
   title: { type: String, required: true },
   link: { type: Object, required: true },
-  movieId: { type: Number, required: false }
+  movieId: { type: Number, required: false },
+  id: { type: Number, required: true }
 });
 const submit = async (values, actions) => {
   try {
@@ -96,13 +100,12 @@ const submit = async (values, actions) => {
     movieStore.file = null;
     if (route.name === "writeQuote") {
       router.push({
-        name: "newsFeed",
-        query: { id: props.movieId }
+        name: "newsFeed"
       });
     } else {
       router.push({
         name: "viewMovie",
-        query: { id: props.movieId }
+        params: { id: props.movieId }
       });
     }
   } catch (error) {
@@ -116,7 +119,7 @@ const submit = async (values, actions) => {
 const movies = ref([]);
 const getMovies = async () => {
   try {
-    const response = await axios.get("movies-all");
+    const response = await axios.get("movies");
     movies.value = response.data;
   } catch (error) {
     console.log(error);

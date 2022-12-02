@@ -49,7 +49,7 @@
         <router-link
           v-for="movie in searchesMovies"
           :key="movie.id"
-          :to="{ name: 'viewMovie', query: { id: movie.id } }"
+          :to="{ name: 'viewMovie', params: { id: movie.id } }"
         >
           <div class="mb-12">
             <div>

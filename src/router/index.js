@@ -147,32 +147,32 @@ const router = createRouter({
       ]
     },
     {
-      path: "/view-movie/",
+      path: "/view-movie/:id",
       name: "viewMovie",
       component: ViewMovie,
       meta: { auth: true },
       children: [
         {
-          path: "/edit-movie",
+          path: "/edit-movie/:id",
           name: "editMovie",
           component: EditMovie,
         },
       ]
     },
     {
-      path: "/add-quote/",
+      path: "/add-quote/:id",
       name: "addQuote",
       component: AddQuote,
       meta: { auth: true },
     },
     {
-      path: "/view-quote/",
+      path: "/view-quote/:id",
       name: "viewQuote",
       component: ViewQuote,
       meta: { auth: true },
     },
     {
-      path: "/edit-quote/",
+      path: "/edit-quote/:id",
       name: "editQuote",
       component: EditQuote,
       meta: { auth: true },

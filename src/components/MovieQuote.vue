@@ -45,7 +45,7 @@
           <router-link
             :to="{
               name: 'viewQuote',
-              query: { id: quote.id, movie_id: movieStore.movie.id }
+              params: { id: quote.id }
             }"
             class="flex space-x-4"
           >
@@ -53,16 +53,21 @@
             <p>{{ $t("View_Post") }}</p>
           </router-link>
           <router-link
+            v-if="quote.user_id === store.id"
             :to="{
               name: 'editQuote',
-              query: { id: quote.id, movie_id: movieStore.movie.id }
+              params: { id: quote.id }
             }"
             class="my-8 flex space-x-4"
           >
             <pencil-component />
             <p>{{ $t("edit") }}</p>
           </router-link>
-          <div class="flex space-x-4 cursor-pointer" @click="deleteQuote">
+          <div
+            v-if="quote.user_id === store.id"
+            class="flex space-x-4 cursor-pointer"
+            @click="deleteQuote"
+          >
             <trash-component />
             <p>{{ $t("Delete_Post") }}</p>
           </div>
@@ -82,6 +87,8 @@ import ThreeDots from "@/components/icons/ThreeDots.vue";
 import { useMoviesStore } from "@/stores/movies.js";
 import { useQuotesStore } from "@/stores/quotes.js";
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const movieStore = useMoviesStore();
 const quoteStore = useQuotesStore();
 const link = import.meta.env.VITE_IMAGE_BASE_URL;

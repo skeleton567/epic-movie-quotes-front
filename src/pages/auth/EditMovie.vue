@@ -1,7 +1,8 @@
 <template>
   <movie-form
+    :id="movieStore.movie.user_id"
     :title="$t('Edit_Movie')"
-    :link="{ name: 'viewMovie', query: { id: movieStore?.movie?.id } }"
+    :link="{ name: 'viewMovie' }"
     @submit-event="submit"
   >
     <image-upload :image="movie" @show-image="showImage" />
@@ -14,7 +15,6 @@ import { useUserStore } from "@/stores/user.js";
 import axios from "@/config/axios/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
-import { onBeforeMount } from "vue";
 import ImageUpload from "@/components/ImageUpload.vue";
 import { computed, ref } from "vue";
 const link = import.meta.env.VITE_IMAGE_BASE_URL;
@@ -30,9 +30,9 @@ const submit = async (values, actions, categories) => {
     }
     fd.set("categories", JSON.stringify(categories));
     if (movieStore.file) fd.set("image", movieStore.file);
-    const response = await axios.post(`movies/${route.query.id}`, fd);
-    await movieStore.getMovie(route.query.id);
-    router.push({ name: "viewMovie", query: { id: movieStore.movie.id } });
+    const response = await axios.post(`movies/${route.params.id}`, fd);
+    await movieStore.getMovie(route.params.id);
+    router.push({ name: "viewMovie", params: { id: movieStore.movie.id } });
     movieStore.upload = "Upload_Image";
     movieStore.uploadBig = "Dragn_Drop";
     movieStore.file = null;
@@ -59,6 +59,5 @@ const showImage = (event) => {
   movieStore.file = event;
 };
 const route = useRoute();
-
-movieStore.getMovie(route.query.id);
+movieStore.getMovie(route.params.id);
 </script>

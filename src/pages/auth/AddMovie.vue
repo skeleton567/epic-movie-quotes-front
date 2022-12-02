@@ -1,5 +1,6 @@
 <template>
   <movie-form
+    :id="store.id"
     :title="$t('Add_Movie')"
     :link="{ name: 'movieList' }"
     @submit-event="submit"
@@ -15,6 +16,8 @@ import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { useMoviesStore } from "@/stores/movies.js";
 import { useI18n } from "vue-i18n";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const { locale } = useI18n({ useScope: "global" });
 const movieStore = useMoviesStore();
 movieStore.movie = null;

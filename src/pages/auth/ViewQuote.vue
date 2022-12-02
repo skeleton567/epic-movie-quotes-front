@@ -2,12 +2,18 @@
   <dashboard-wrap>
     <quote-crud>
       <form-header
+        v-if="quoteStore?.quote?.movie_id"
         :id="quoteStore?.quote?.user.id"
-        :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
+        :link="{
+          name: 'viewMovie',
+          params: { id: quoteStore?.quote?.movie_id }
+        }"
         :title="$t('View_Post')"
         :edit-link="{
           name: 'editQuote',
-          query: { id: quoteStore?.quote?.id, movie_id: route.query.movie_id }
+          params: {
+            id: quoteStore?.quote?.id
+          }
         }"
       />
 
@@ -76,7 +82,7 @@ import { useUserStore } from "@/stores/user.js";
 import ShowQuote from "@/components/ShowQuote.vue";
 import QuoteCrud from "@/components/QuoteCrud.vue";
 import { computed, ref, onUnmounted } from "vue";
-import channel from "@/config/pusher";
+import { channel } from "@/config/pusher";
 import { useNotificationStore } from "@/stores/notification.js";
 import axios from "@/config/axios/index.js";
 import { usePostStore } from "@/stores/post.js";
@@ -84,15 +90,11 @@ const postStore = usePostStore();
 const notificationStore = useNotificationStore();
 const route = useRoute();
 const quoteStore = useQuotesStore();
-quoteStore.getQuote(route.query.id);
+quoteStore.getQuote(route.params.id);
 const store = useUserStore();
 const showComment = ref(false);
-let liked = computed(() => {
-  return !!quoteStore?.quote?.like.filter((like) => like.user.id === store.id)
-    .length;
-});
-channel.bind("notification", function (data) {
-  if (data.notification) {
+channel.bind("feedback", function (data) {
+  if (data.response) {
     if (data?.data?.comment) {
       quoteStore?.quote.comment.push(data.data);
     } else {
@@ -111,6 +113,10 @@ channel.bind("notification", function (data) {
   }
 });
 const newLike = ref(false);
+let liked = computed(() => {
+  return !!quoteStore?.quote?.like.filter((like) => like.user.id === store.id)
+    .length;
+});
 const like = async () => {
   if (liked.value || newLike.value) {
     const like = quoteStore?.quote.like.filter(
@@ -126,7 +132,6 @@ const like = async () => {
       user_to_notify: quoteStore?.quote.user.id
     });
   }
-  postStore.refreshPosts();
-  store.getAuthUser();
+  await postStore.refreshPosts();
 };
 </script>

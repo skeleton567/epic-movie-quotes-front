@@ -6,7 +6,7 @@
     </div>
     <p class="text-white mt-3 text-sm">
       “{{ qoute }}” {{ $t("movie") }}-
-      <span class="text-[#DDCCAA]">{{ movie }} ({{ post.movie.year }})</span>
+      <span class="text-[#DDCCAA]">{{ movie }} ({{ post.year }})</span>
     </p>
     <img
       class="rounded-lg mt-3"
@@ -93,9 +93,11 @@ const bgStyle = computed(() => {
     return "bg-[#0a0a12]";
   }
 });
+
 let liked = computed(() => {
   return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
+
 const newLike = ref(false);
 const like = async () => {
   if (liked.value || newLike.value) {

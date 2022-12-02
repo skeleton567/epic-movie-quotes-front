@@ -45,9 +45,10 @@ const deleteQuote = async () => {
   router.push(props.link);
 };
 const correctRoute = computed(() => {
-  if ((store.id = props.id)) {
+  if (store.id === props.id) {
     return route.name === "editQuote" || route.name === "viewQuote";
   }
+  return false;
 });
 const reset = () => {
   movieStore.upload = "Upload_Image";

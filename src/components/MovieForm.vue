@@ -109,6 +109,9 @@
         <slot></slot>
         <button
           class="w-full bg-[#E31221] rounded text-xl py-3 mt-4"
+          :class="{
+            'pointer-events-none': store.id !== id
+          }"
           type="submit"
         >
           {{ title }}
@@ -126,6 +129,8 @@ import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user.js";
+const store = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const emits = defineEmits(["submit-event"]);
@@ -134,7 +139,8 @@ const openDropdown = ref(false);
 const allCategories = ref([]);
 const props = defineProps({
   title: { type: String, required: true },
-  link: { type: Object, required: true }
+  link: { type: Object, required: true },
+  id: { type: Number, required: false }
 });
 const categories = ref([]);
 if (route.name === "editMovie") {

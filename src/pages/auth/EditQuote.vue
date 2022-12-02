@@ -3,8 +3,12 @@
     <quote-crud>
       <Form @submit="submit">
         <form-header
+          v-if="quoteStore?.quote?.movie_id"
           :id="quoteStore?.quote?.user.id"
-          :link="{ name: 'viewMovie', query: { id: route.query.movie_id } }"
+          :link="{
+            name: 'viewMovie',
+            params: { id: quoteStore.quote.movie_id }
+          }"
           :title="$t('Edit_Quote')"
         />
         <show-quote>
@@ -33,7 +37,7 @@ const store = useUserStore();
 const route = useRoute();
 const router = useRouter();
 const quoteStore = useQuotesStore();
-quoteStore.getQuote(route.query.id);
+quoteStore.getQuote(route.params.id);
 const submit = async (values, actions) => {
   try {
     const fd = new FormData();
@@ -43,10 +47,10 @@ const submit = async (values, actions) => {
     }
     fd.set("user_id", store.id);
     if (quoteStore.file) fd.set("image", quoteStore.file);
-    const response = await axios.post(`quote/${route.query.id}`, fd);
+    const response = await axios.post(`quote/${route.params.id}`, fd);
     router.push({
       name: "viewMovie",
-      query: { id: route.query.movie_id }
+      params: { id: quoteStore?.quote?.movie_id }
     });
     quoteStore.file = null;
   } catch (error) {

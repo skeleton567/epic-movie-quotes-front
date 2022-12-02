@@ -64,17 +64,19 @@ import WriteIcon from "@/components/icons/WriteIcon.vue";
 import UserPost from "@/components/UserPost.vue";
 import { usePostStore } from "@/stores/post.js";
 import { onUnmounted, onMounted, ref } from "vue";
-import channel from "@/config/pusher";
+import { useUserStore } from "@/stores/user.js";
+import { channel } from "@/config/pusher";
 const store = usePostStore();
+const userStore = useUserStore();
 let searchActive = ref(false);
 const toggleSearch = () => {
   return (searchActive.value = !searchActive.value);
 };
 onMounted(() => store.getPosts());
 window.addEventListener("scroll", store.handleScroll);
-channel.bind("notification", function (data) {
+channel.bind("feedback", function (data) {
   const post = store.posts.filter((post) => post.id === data.data.quote_id)[0];
-  if (data.notification) {
+  if (data.response) {
     if (data?.data?.comment) {
       post.comment.push(data.data);
     } else {
@@ -94,6 +96,6 @@ channel.bind("notification", function (data) {
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", store.handleScroll);
-  channel.unbind("notification");
+  channel.unbind("feedback");
 });
 </script>

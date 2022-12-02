@@ -14,7 +14,7 @@ export const useMoviesStore = defineStore("movies", {
         async getMovie(id) {
         try {
               const response = await axios.get(`movies/${id}`);
-          this.movie = response.data;
+              this.movie = response.data;
         } catch (error) {
               console.log(error);
             }
