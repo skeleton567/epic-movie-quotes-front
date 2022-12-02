@@ -1,8 +1,9 @@
 import Pusher from "pusher-js";
+let url = import.meta.env.VITE_BACK_BASE_URL;
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
   cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
   channelAuthorization: {
-    endpoint: "http://localhost:8000/broadcasting/auth",
+    endpoint: `${url}/broadcasting/auth`, 
     headers: { "X-CSRF-Token": "<%= form_authenticity_token %>"},
   },
 }); 

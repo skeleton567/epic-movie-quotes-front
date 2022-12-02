@@ -50,6 +50,8 @@ And now you should provide **.env** file all the necessary environment variables
 
 >VITE_IMAGE_BASE_URL=****
 
+>VITE_BACK_BASE_URL=****
+
 #
 **Google Login:**
 >VITE_GOOGLE_CLIENT_ID=****
