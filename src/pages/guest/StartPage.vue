@@ -45,7 +45,7 @@
 
 <script setup>
 import TheNavigation from "@/components/TheNavigation.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import QuoteCompilation from "@/components/QuoteCompilation.vue";
 let scrolled = ref(false);

@@ -51,7 +51,7 @@ const router = useRouter();
 const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
-    const response = await axios.post("register", values);
+    await axios.post("register", values);
     authStore.authenticated = true;
     router.push({
       name: "emailSent"
