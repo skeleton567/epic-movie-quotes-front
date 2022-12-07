@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import { computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 const props = defineProps({

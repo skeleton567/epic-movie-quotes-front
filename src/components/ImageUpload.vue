@@ -21,8 +21,6 @@
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
 import ChangePhoto from "@/components/icons/ChangePhoto.vue";
-import { useMoviesStore } from "@/stores/movies.js";
-const movieStore = useMoviesStore();
 const props = defineProps({
   image: { type: String, required: false }
 });

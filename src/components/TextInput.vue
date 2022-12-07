@@ -31,8 +31,7 @@
 
 <script setup>
 import { Field, ErrorMessage } from "vee-validate";
-import { defineProps, ref } from "vue";
-
+import { ref } from "vue";
 const props = defineProps({
   rule: { type: String, required: true },
   label: { type: String, required: true },

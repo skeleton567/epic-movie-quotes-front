@@ -93,11 +93,9 @@ const bgStyle = computed(() => {
     return "bg-[#0a0a12]";
   }
 });
-
 let liked = computed(() => {
   return !!props.likes.filter((like) => like.user.id === store.id).length;
 });
-
 const newLike = ref(false);
 const like = async () => {
   if (liked.value || newLike.value) {

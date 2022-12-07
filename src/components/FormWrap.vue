@@ -15,7 +15,6 @@
 
 <script setup>
 import { Form } from "vee-validate";
-import { defineEmits } from "vue";
 const emit = defineEmits(["submit-event"]);
 const submit = (values, actions) => {
   emit("submit-event", values, actions);

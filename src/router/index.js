@@ -26,7 +26,6 @@ import ViewQuote from '@/pages/auth/ViewQuote.vue';
 import EditQuote from '@/pages/auth/EditQuote.vue';
 import WriteQuote from '@/pages/auth/WriteQuote.vue';
 import { useUserStore } from "@/stores/user.js";
-import isAuthenticated from "./guards";
 import { useAuthStore } from "@/stores/auth";
 
 

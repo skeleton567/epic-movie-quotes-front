@@ -70,7 +70,6 @@
 <script setup>
 import ProfileButtons from "@/components/ProfileButtons.vue";
 import { Form } from "vee-validate";
-import { defineEmits } from "vue";
 import { useProfileStore } from "@/stores/profile.js";
 const profileStore = useProfileStore();
 const emit = defineEmits(["submit-event"]);

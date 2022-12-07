@@ -31,7 +31,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import axios from "@/config/axios/index.js";
 import { useRouter } from "vue-router";
 import { googleTokenLogin } from "vue3-google-login";
@@ -51,7 +50,7 @@ const props = defineProps({
 const login = async () => {
   try {
     const response = await googleTokenLogin();
-    const resp = await axios.post("google-login", {
+    await axios.post("google-login", {
       token: response.access_token
     });
     await store.getAuthUser();
