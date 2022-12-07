@@ -45,6 +45,8 @@ import AuthForm from "@/components/AuthForm.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
+import { useUserStore } from "@/stores/user";
+const store = useUserStore();
 const authStore = useAuthStore();
 const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
@@ -52,12 +54,13 @@ const submit = async (values, actions) => {
   values["password_confirmation"] = values.confirmation;
   try {
     await axios.post("register", values);
-    authStore.authenticated = true;
+    await store.getAuthUser();
     router.push({
       name: "emailSent"
     });
   } catch (error) {
     const errors = error.response?.data.errors;
+    authStore.authenticated = false;
     for (const loopError in errors) {
       actions.setFieldError(loopError, errors[loopError][0][locale.value]);
     }

@@ -20,8 +20,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-import { defineEmits } from "vue";
 const emit = defineEmits(["submit-event"]);
 const submit = (values, actions) => {
   emit("submit-event", values, actions);

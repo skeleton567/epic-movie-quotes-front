@@ -205,22 +205,18 @@ import CommentNotification from "@/components/icons/CommentNotification.vue";
 import LikeNotification from "@/components/icons/LikeNotification.vue";
 import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
-import { onUnmounted, ref } from "vue";
+import { ref } from "vue";
 import { usePostStore } from "@/stores/post.js";
 import LocaleChanger from "@/components/LocaleChanger.vue";
 import { useI18n } from "vue-i18n";
 import pusher from "@/config/pusher";
-import { useAuthStore } from "@/stores/auth";
-import { useQuotesStore } from "@/stores/quotes.js";
-const quoteStore = useQuotesStore();
-const authStore = useAuthStore();
 const { t } = useI18n();
 const store = useUserStore();
 const postStore = usePostStore();
 const router = useRouter();
 const logOut = async () => {
   try {
-    const response = await axios.post("logout");
+    await axios.post("logout");
     store.removeAuthUser();
     postStore.resetPosts();
     router.replace({ name: "home" });

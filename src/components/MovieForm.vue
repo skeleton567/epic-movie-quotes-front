@@ -124,7 +124,7 @@
 <script setup>
 import XIcon from "@/components/icons/XIcon.vue";
 import { Form } from "vee-validate";
-import { ref, defineEmits, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "@/config/axios/index.js";
 import FormHeader from "@/components/FormHeader.vue";
 import { useMoviesStore } from "@/stores/movies.js";
